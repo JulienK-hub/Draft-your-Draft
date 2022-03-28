@@ -18,7 +18,7 @@ Pour le moment 3 pages:
 Elle permet de créer des labels et de les assigner
 ![image](https://user-images.githubusercontent.com/54982321/160364609-f5d0cfcd-ea73-4cdb-aac4-27444a783fc9.png)  
 **la page création des règles**  
-Elle permet de créer les règles
+Elle permet de créer les règles  
 à faire (2 choix: *formulaire* ou *language dédié*, language dédié étant beaucoup plus complexe à implémenter mais plus libre dans son utilisation)  
 **la page draft**  
 Elle permet d'entrée les champ pick durant la draft et d'afficher les messages programmés via les règles  
