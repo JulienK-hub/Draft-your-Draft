@@ -13,6 +13,19 @@ Chef de projet : 5ième année d'école d'ingénieur à Polytech spécialité in
 Dev1 : école - github - discord  
 Dev2 : école - github - discord  
 ## Le projet
+Pour le moment 3 pages:  
+**la page gestion des labels**  
+elle permet de créer des labels et de les assigner
+![image](https://user-images.githubusercontent.com/54982321/160364609-f5d0cfcd-ea73-4cdb-aac4-27444a783fc9.png)  
+**la page créations des règles**  
+elle permet de créer les règles
+à faire (2 choix: *formulaire* ou *language dédié*, language dédié étant beaucoup plus complexe à implémenter mais plus libre dans son utilisation)  
+**la page draft**  
+elle permet d'entrée les champ pick durant la draft et d'afficher les messages programmés via les règles  
+![image](https://user-images.githubusercontent.com/54982321/160367519-6ccd87f3-d4b1-49fd-b51d-2eb7e7246456.png) 
+  
+Si certaines veulent se rajouter une page pour une fonctionnalité annexe qu'ils souhaitent tester pour s'amuser, pourquoi pas, il faut juste en discuter, mais le projet sera considéré comme utilisable quand ces 3 pages seront implémentées et fonctionelles.
+
 ## Bonnes pratiques
 Nous utilisons les fonctionnalités d'issues et de milestones pour une meilleur organisation.  
 Vous pouvez envoyez des messages sur le discord et ping les développeurs concernés.
