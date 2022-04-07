@@ -16,13 +16,13 @@ Dev2 : école - github - discord
 Pour le moment 3 pages:  
 **la page gestion des labels**  
 Elle permet de créer des labels et de les assigner
-![image](https://user-images.githubusercontent.com/54982321/160364609-f5d0cfcd-ea73-4cdb-aac4-27444a783fc9.png)  
+![image](https://user-images.githubusercontent.com/54982321/162160757-d3fc57b0-2ad7-4093-90e6-802bd7c5c61b.png)
 **la page création des règles**  
 Elle permet de créer les règles  
 à faire (2 choix: *formulaire* ou *language dédié*, language dédié étant beaucoup plus complexe à implémenter mais plus libre dans son utilisation)  
 **la page draft**  
 Elle permet d'entrée les champ pick durant la draft et d'afficher les messages programmés via les règles  
-![image](https://user-images.githubusercontent.com/54982321/160367519-6ccd87f3-d4b1-49fd-b51d-2eb7e7246456.png) 
+![image](https://user-images.githubusercontent.com/54982321/162160674-207e5d9f-d59d-4a23-99d6-cd439c3ff2a8.png)
   
 Si des développeurs veulent se rajouter une page pour ajouter une fonctionnalité pour s'amuser, pourquoi pas, il faut juste en discuter, mais le projet sera considéré comme utilisable quand ces 3 pages seront implémentées et fonctionelles.
 
