@@ -23,8 +23,8 @@ Elle permet de créer les règles
 
 **la page draft**  
 Elle permet d'entrée les champ pick durant la draft et d'afficher les messages programmés via les règles  
-![image](https://user-images.githubusercontent.com/54982321/162160674-207e5d9f-d59d-4a23-99d6-cd439c3ff2a8.png)
-  
+![image](https://user-images.githubusercontent.com/54982321/162442929-dea14e9f-66e3-4ab2-bbf3-1c84b04c45f1.png)  
+
 Si des développeurs veulent se rajouter une page pour ajouter une fonctionnalité pour s'amuser, pourquoi pas, il faut juste en discuter, mais le projet sera considéré comme utilisable quand ces 3 pages seront implémentées et fonctionelles.
 
 ## Bonnes pratiques
