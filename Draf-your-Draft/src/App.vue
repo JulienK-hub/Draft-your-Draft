@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view/>
-    <button v-on:click="increment">test</button>
   </div>
 </template>
 
