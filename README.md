@@ -7,7 +7,12 @@ Tool to help coaches drafting in League Of Legends
 Toutes personnes souhaitant théoricrafter des compo et devenir pixel sur le drafting tout en n'oubliant rien lors de la draft.
 # Développement
 ## Setup
-choisir la techno..  
+Dans un git bash (https://git-scm.com/downloads)  
+git clone https://github.com/JulienK-hub/Draft-your-Draft.git  
+cd Draft-your-Draft  
+cd Draft-your-draft  
+npm install  
+npm run dev  
 ## Equipe
 Chef de projet : 5ième année d'école d'ingénieur à Polytech spécialité info => IHM - JulienK-hub - julgrim#0705  
 Dev1 : école - github - discord  
