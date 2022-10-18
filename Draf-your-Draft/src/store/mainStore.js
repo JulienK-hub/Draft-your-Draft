@@ -1,10 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import champData from '../assets/champion.json'
 
 Vue.use(Vuex)
 // Create a new store instance.
 export default new Vuex.Store({
     state: {
+      labels : [
+        {id: 0, text: "prends un redbull"},
+        {id: 1, text: "prends une bite"},
+      ],
+      champions : champData,
         count: 0
     },
     mutations: {
@@ -13,6 +19,28 @@ export default new Vuex.Store({
         }
     },
     getters:{
+    
+      getChampionById: (state) => (keyChampion) => {
+        for(let i = 0; i < state.champions.length ;i++){
+          console.log("looking for keyCHampion : "+ keyChampion +" in store")
+           if(state.champions[i].key == keyChampion) {
+             console.log(state.champions[i].id);
+             return state.champions[i];
+           }
+         };
+       },
+    getLabels: state => {
+        return state.labels;
+    },
+    getLabelById: (state) => (idLabel) => {
+     for(let i = 0; i < state.labels.length;i++){
+       console.log("looking for idLabel : "+ idLabel +" in store")
+        if(state.labels[i].id == idLabel) {
+          console.log(state.labels[i].text);
+          return state.labels[i];
+        }
+      };
+    },
     }
 })
 

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import DraftPage from '@/components/DraftPage/DraftPage'
 import RulesPage from '@/components/RulesPage/RulesPage'
 import LabelsPage from '@/components/LabelsPage/LabelsPage'
+import ChampList from '@/components/ChampList/ChampList'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/DraftPage',
       name: 'DraftPage',
       component: DraftPage
+    },
+    {
+      path: '/ChampList',
+      name: 'champList',
+      component: ChampList
     },
   ]
 })
