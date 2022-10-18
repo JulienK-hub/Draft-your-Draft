@@ -1,7 +1,12 @@
 <template>
   <div>
-      labels
-    
+  <h1> Label gestion </h1>
+  <button v-on:click="goToPage('/RulesPage')">
+    Rules gestion
+  </button>
+  <button v-on:click="goToPage('/DraftPage')">
+    Draft
+  </button>
   </div>
 </template>
 
@@ -11,7 +16,13 @@ export default {
   data () {
     return {
     }
-  }
+  },
+  
+  methods: {
+    goToPage(pageURL){
+      this.$router.push(pageURL)
+    }
+  },
 }
 </script>
 
