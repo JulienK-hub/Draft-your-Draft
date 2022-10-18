@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="champion-list">
         <div v-for="champion in champions">
             <LolChamp  v-bind:champ="champion">
             </LolChamp>
@@ -15,9 +15,7 @@ import championsJSON from'../../assets/champion.json'
     name: "ChampList",
     data() {
         return {
-            champions: championsJSON
-        
-            
+            champions: championsJSON    
         };
     },
     components: { LolChamp }
@@ -25,5 +23,14 @@ import championsJSON from'../../assets/champion.json'
   </script>
   
   <style scoped>
+  .champion-list {
+    margin: auto;
+    width: 75%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+
   </style>
   

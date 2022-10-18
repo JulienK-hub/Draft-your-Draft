@@ -10,7 +10,10 @@ export default new Vuex.Store({
         {id: 0, text: "prends un redbull"},
         {id: 1, text: "prends une bite"},
       ],
-      champions : champData,
+      championsLabels : [
+        {championKey: 266, idLabel: 0},
+        {championKey: 103, idLabel: 1}
+      ],
         count: 0
     },
     mutations: {
@@ -19,6 +22,16 @@ export default new Vuex.Store({
         }
     },
     getters:{
+
+      getLabelsByChampId: (state, getters) => (keyChampion) => {
+        var labels = [];
+        for(let i = 0; i< state.championsLabels.length; i++){
+          if(state.championsLabels[i].championKey == keyChampion){
+            labels.push(getters.getLabelById(state.championsLabels[i].idLabel))
+          }
+        }
+        return labels;
+      },
     
       getChampionById: (state) => (keyChampion) => {
         for(let i = 0; i < state.champions.length ;i++){
