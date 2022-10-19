@@ -12,14 +12,27 @@ export default new Vuex.Store({
       ],
       championsLabels : [
         {championKey: 266, idLabel: 0},
-        {championKey: 103, idLabel: 1}
+        {championKey: 103, idLabel: 1},
+        {championKey: 84, idLabel: 1},
+        {championKey: 84, idLabel: 0}
       ],
         count: 0
     },
     mutations: {
         increment (state) {
             state.count++
-        }
+        },
+        deleteChampionLabelById (state, championLabel)  {
+          for(let i = 0; i < state.championsLabels.length; ++i){
+            if(state.championsLabels[i].championKey == championLabel.championKey &&
+              state.championsLabels[i].idLabel == championLabel.idLabel){
+                state.championsLabels.splice(i, 1);
+                return true;
+              }
+          }
+          return false;
+        },
+
     },
     getters:{
 

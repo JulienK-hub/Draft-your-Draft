@@ -1,6 +1,7 @@
 <template>
     <div class="champion-list">
-        <div v-for="champion in champions">
+      <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
+        <div v-for="champion in champions"> 
             <LolChamp  v-bind:champ="champion">
             </LolChamp>
         </div>
