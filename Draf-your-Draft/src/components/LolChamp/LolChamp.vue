@@ -37,6 +37,9 @@
         console.log(event.currentTarget.id + "ee")
         this.deleteChampionLabelById(championLabel)
         this.labels = this.$store.getters.getLabelsByChampId(this.champ.key)
+      },
+      addLabel: function(){
+        console.log("création d'un label + ajout au champion");
       }
     },
   }
