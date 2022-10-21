@@ -43,6 +43,9 @@ export default new Vuex.Store({
 
           var newChampionLabel = {"championKey": championLabel.championKey, "idLabel": newLabelId}
           state.championsLabels.push(newChampionLabel);
+        },
+        addChampionLabel (state, championLabel)  {
+          state.championsLabels.push(championLabel);
         }
 
     },
@@ -79,6 +82,18 @@ export default new Vuex.Store({
         }
       };
     },
+    getAvailableLabels: (state, getters) => (championKey) => {
+      var avalaible = state.labels.slice();
+      var index = 0
+      var championLabels = getters.getLabelsByChampId(championKey);
+      for(var i = 0; i < championLabels.length; ++i){
+        if( (index = avalaible.findIndex(label => label.id == championLabels[i].id) ) != undefined){
+          avalaible.splice(index, 1);
+        }
+      }
+        return avalaible;
+    }
+    
     }
 })
 
