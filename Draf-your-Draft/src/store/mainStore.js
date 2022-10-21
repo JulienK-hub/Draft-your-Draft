@@ -35,7 +35,7 @@ export default new Vuex.Store({
         getLastLabelId(){
           return state.labels[labels.length];
         },
-        
+
         addChampionLabelById (state, championLabel) {
           var newLabelId = getLastLabelId()
           var label = {"id" : newLabelId, "text": championLabel.text}; 

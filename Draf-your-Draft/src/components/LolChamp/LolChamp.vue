@@ -34,7 +34,7 @@
         'deleteChampionLabelById'
       ]),
       deleteLabel: function(event){
-        console.log(event.currentTarget.id + "ee")
+        var championLabel = {"championKey" : this.champ.key, "idLabel" : event.currentTarget.id}
         this.deleteChampionLabelById(championLabel)
         this.labels = this.$store.getters.getLabelsByChampId(this.champ.key)
       },
