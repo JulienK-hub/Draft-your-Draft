@@ -7,16 +7,16 @@
   <button v-on:click="goToPage('/DraftPage')">
     Draft
   </button>
+  <div>
   <h2 class="title">Create a label</h2>
-  <p style="display:inline">Name</p>
-  <input v-model="labelName" type="text"/>
-  <p style="display:inline">Color</p>
-  <input style="display:inline" v-model="labelBGColor" type="color" id="colorpicker" value="#0000ff"/>
-  
-    <p style="display:inline">Black</p>
-    <input id="black" type="checkbox" @change="changeTextLabelColor()"/>
+
+  Name : <input id="inputText" v-model="labelName" type="text"/>
+  Color : <input v-model="labelBGColor" type="color" id="colorpicker" value="#0000ff"/>
+  Black : <input id="checkBox" type="checkbox" @change="changeTextLabelColor()"/>
 
   <p :style="{'background-color':labelBGColor,'color':labelTextColor}">{{labelName}}</p>
+    <button v-on:click="createLabel()">Validate</button>
+</div>
 </div>
 </template>
 
@@ -39,6 +39,10 @@ export default {
       else{
         this.labelTextColor = "white";
       }
+    },
+    createLabel(){
+      this.$store.commit('createLabel',{a:this.labelName,b:this.labelBGColor,c:this.labelTextColor});
+      
     },
     goToPage(pageURL){
       this.$router.push(pageURL)

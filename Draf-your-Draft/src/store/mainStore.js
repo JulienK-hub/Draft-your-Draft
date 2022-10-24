@@ -7,8 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
       labels : [
-        {id: 0, text: "prends un redbull"},
-        {id: 1, text: "prends une bite"},
+        {id: 0, text: "prends un redbull",colorBG:"#0000ffff",color:"black"},
+        {id: 1, text: "prends une bite",colorBG: "#0000ffff",color:"black"},
       ],
       championsLabels : [
         {championKey: 266, idLabel: 0},
@@ -22,6 +22,11 @@ export default new Vuex.Store({
         increment (state) {
             state.count++
         },
+        createLabel (state,{a,b,c}) {
+          var label = {id: state.labels.length, text: a,colorBG: b,color: c}
+          state.labels.push(label);
+          console.log("label created:", state.labels[state.labels.length -1])
+      },
         deleteChampionLabelById (state, championLabel)  {
           for(let i = 0; i < state.championsLabels.length; ++i){
             if(state.championsLabels[i].championKey == championLabel.championKey &&
