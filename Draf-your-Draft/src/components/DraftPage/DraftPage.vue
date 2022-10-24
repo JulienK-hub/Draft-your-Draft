@@ -103,7 +103,7 @@ export default {
 }
 
 .blueSidePicks, .redSidePicks {
-  width: 33%;
+  width: 25%;
   height: 300px;
   display: flex;
   flex-direction: column;
@@ -121,7 +121,7 @@ export default {
 }
 
 .rules {
-  width: 33%;
+  width: 50%;
   height: 300px;
 }
 </style>
