@@ -36,9 +36,21 @@
     </div>
 
     <div class="picksAndRules test">
-      <div class="blueSidePicks test">Blue side</div>
+      <div class="blueSidePicks test">
+        <div class="bluePick1 pick"></div>
+        <div class="bluePick2 pick"></div>
+        <div class="bluePick3 pick"></div>
+        <div class="bluePick4 pick"></div>
+        <div class="bluePick5 pick"></div>
+      </div>
       <div class="rules test">Rules</div>
-      <div class="redSidePicks test">Red side</div>
+      <div class="redSidePicks test">
+        <div class="redPick1 pick"></div>
+        <div class="redPick2 pick"></div>
+        <div class="redPick3 pick"></div>
+        <div class="redPick4 pick"></div>
+        <div class="redPick5 pick"></div>
+      </div>
     </div>
 
   </div>
@@ -60,11 +72,6 @@ export default {
 </script>
 
 <style scoped>
-.picksAndRules {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
 
 .test {
   border: solid;
@@ -89,9 +96,28 @@ export default {
   gap: 10px;
 }
 
+.picksAndRules {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 .blueSidePicks, .redSidePicks {
   width: 33%;
   height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.pick {
+  border: solid;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .rules {
