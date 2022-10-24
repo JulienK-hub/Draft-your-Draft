@@ -5,83 +5,90 @@ import champData from '../assets/champion.json'
 Vue.use(Vuex)
 // Create a new store instance.
 export default new Vuex.Store({
-    state: {
-      labels : [
-        {id: 0, text: "prends un redbull",colorBG:"#0000ffff",color:"black"},
-        {id: 1, text: "prends une bite",colorBG: "#0000ffff",color:"black"},
-      ],
-      championsLabels : [
-        {championKey: 266, idLabel: 0},
-        {championKey: 103, idLabel: 1},
-        {championKey: 84, idLabel: 1},
-        {championKey: 84, idLabel: 0}
-      ],
-        count: 0
+  state: {
+    labels: [
+      { id: 0, text: "prends un redbull", colorBG: "#0000ffff", color: "black" },
+      { id: 1, text: "prends une bite", colorBG: "#0000ffff", color: "black" },
+    ],
+    championsLabels: [
+      { championKey: 266, idLabel: 0 },
+      { championKey: 103, idLabel: 1 },
+      { championKey: 84, idLabel: 1 },
+      { championKey: 84, idLabel: 0 }
+    ],
+    rules: [
+      { id: 0, text: "Règle numéro 1", color: "black" },
+      { id: 1, text: "Règle numéro 2", color: "black" },
+      { id: 2, text: "Règle numéro 3", color: "black" },
+    ]
+  },
+  mutations: {
+    createLabel(state, { newText, newColorBG, newColor }) {
+      var label = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.labels.push(label);
+      console.log("label created:", state.labels[state.labels.length - 1])
     },
-    mutations: {
-        increment (state) {
-            state.count++
-        },
-        createLabel (state,{a,b,c}) {
-          var label = {id: state.labels.length, text: a,colorBG: b,color: c}
-          state.labels.push(label);
-          console.log("label created:", state.labels[state.labels.length -1])
-      },
-        deleteChampionLabelById (state, championLabel)  {
-          for(let i = 0; i < state.championsLabels.length; ++i){
-            if(state.championsLabels[i].championKey == championLabel.championKey &&
-              state.championsLabels[i].idLabel == championLabel.idLabel){
-                state.championsLabels.splice(i, 1);
-                return true;
-              }
-          }
-          return false;
-        },
-        getLastLabelId(){
-          return state.labels[labels.length];
-        },
-
-        addChampionLabelById (state, championLabel) {
-          var newLabelId = getLastLabelId()
-          var label = {"id" : newLabelId, "text": championLabel.text}; 
-          state.labels.push(label)
-
-          var newChampionLabel = {"championKey": championLabel.championKey, "idLabel": newLabelId}
-          state.championsLabels.push(newChampionLabel);
-        },
-        addChampionLabel (state, championLabel)  {
-          state.championsLabels.push(championLabel);
+    deleteChampionLabelById(state, championLabel) {
+      for (let i = 0; i < state.championsLabels.length; ++i) {
+        if (state.championsLabels[i].championKey == championLabel.championKey &&
+          state.championsLabels[i].idLabel == championLabel.idLabel) {
+          state.championsLabels.splice(i, 1);
+          return true;
         }
-
+      }
+      return false;
     },
-    getters:{
+    getLastLabelId() {
+      return state.labels[labels.length];
+    },
 
-      getLabelsByChampId: (state, getters) => (keyChampion) => {
-        var labels = [];
-        for(let i = 0; i< state.championsLabels.length; i++){
-          if(state.championsLabels[i].championKey == keyChampion){
-            labels.push(getters.getLabelById(state.championsLabels[i].idLabel))
-          }
+    addChampionLabelById(state, championLabel) {
+      var newLabelId = getLastLabelId()
+      var label = { "id": newLabelId, "text": championLabel.text };
+      state.labels.push(label)
+
+      var newChampionLabel = { "championKey": championLabel.championKey, "idLabel": newLabelId }
+      state.championsLabels.push(newChampionLabel);
+    },
+    addChampionLabel(state, championLabel) {
+      state.championsLabels.push(championLabel);
+    },
+
+    createRule(state, {newText, newColorBG, newColor}){
+      var rule = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.rules.push(rule);
+      console.log("rule created:", state.rules[state.rules.length - 1])
+    },
+
+  },
+  getters: {
+
+    getLabelsByChampId: (state, getters) => (keyChampion) => {
+      var labels = [];
+      for (let i = 0; i < state.championsLabels.length; i++) {
+        if (state.championsLabels[i].championKey == keyChampion) {
+          labels.push(getters.getLabelById(state.championsLabels[i].idLabel))
         }
-        return labels;
-      },
-    
-      getChampionById: (state) => (keyChampion) => {
-        for(let i = 0; i < state.champions.length ;i++){
-          console.log("looking for keyCHampion : "+ keyChampion +" in store")
-           if(state.champions[i].key == keyChampion) {
-             console.log(state.champions[i].id);
-             return state.champions[i];
-           }
-         };
-       },
+      }
+      return labels;
+    },
+
+    getChampionById: (state) => (keyChampion) => {
+      for (let i = 0; i < state.champions.length; i++) {
+        console.log("looking for keyCHampion : " + keyChampion + " in store")
+        if (state.champions[i].key == keyChampion) {
+          console.log(state.champions[i].id);
+          return state.champions[i];
+        }
+      };
+    },
     getLabels: state => {
-        return state.labels;
+      return state.labels;
     },
     getLabelById: (state) => (idLabel) => {
-     for(let i = 0; i < state.labels.length;i++){
-       console.log("looking for idLabel : "+ idLabel +" in store")
-        if(state.labels[i].id == idLabel) {
+      for (let i = 0; i < state.labels.length; i++) {
+        console.log("looking for idLabel : " + idLabel + " in store")
+        if (state.labels[i].id == idLabel) {
           console.log(state.labels[i].text);
           return state.labels[i];
         }
@@ -91,15 +98,23 @@ export default new Vuex.Store({
       var avalaible = state.labels.slice();
       var index = 0
       var championLabels = getters.getLabelsByChampId(championKey);
-      for(var i = 0; i < championLabels.length; ++i){
-        if( (index = avalaible.findIndex(label => label.id == championLabels[i].id) ) != undefined){
+      for (var i = 0; i < championLabels.length; ++i) {
+        if ((index = avalaible.findIndex(label => label.id == championLabels[i].id)) != undefined) {
           avalaible.splice(index, 1);
         }
       }
-        return avalaible;
-    }
-    
-    }
+      return avalaible;
+    },
+
+    getRules: state => {
+      let temp = "";
+      for (let i=0; i<state.rules.length; i++){
+        temp = temp + state.rules[i].text + "\n"
+      }
+      return temp;
+    },
+
+  }
 })
 
 

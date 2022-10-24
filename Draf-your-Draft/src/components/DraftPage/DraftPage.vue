@@ -42,7 +42,9 @@
         <div class="bluePick4 pick"></div>
         <div class="bluePick5 pick"></div>
       </div>
-      <div class="rules test">Rules</div>
+      <div class="rules test">
+        {{rulesList}}
+      </div>
       <div class="redSidePicks test">
         <div class="redPick1 pick"></div>
         <div class="redPick2 pick"></div>
@@ -60,6 +62,7 @@ export default {
   name: 'DraftPage',
   data() {
     return {
+      rulesList : this.$store.getters.getRules
     }
   },
   methods: {
@@ -71,10 +74,10 @@ export default {
 </script>
 
 <style scoped>
-
 .test {
   border: solid;
 }
+
 .bans {
   display: flex;
   flex-direction: row;
@@ -82,7 +85,8 @@ export default {
   padding: 1%;
 }
 
-.blueSideBans, .redSideBans{
+.blueSideBans,
+.redSideBans {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -90,12 +94,12 @@ export default {
 }
 
 .ban {
-  --pick-size: 50px;
+  --ban-size: 50px;
   border: solid;
-  width: var(--pick-size);
-  height: var(--pick-size);
+  width: var(--ban-size);
+  height: var(--ban-size);
   background-image: url(../../assets/square.png);
-  background-size: var(--pick-size) var(--pick-size);
+  background-size: var(--ban-size) var(--ban-size);
 }
 
 .picksAndRules {
@@ -104,7 +108,8 @@ export default {
   justify-content: space-around;
 }
 
-.blueSidePicks, .redSidePicks {
+.blueSidePicks,
+.redSidePicks {
   width: 25%;
   height: auto;
   display: flex;
@@ -114,7 +119,6 @@ export default {
 }
 
 .pick {
-  
   --pick-size: 50px;
   border: solid;
   display: flex;
@@ -129,5 +133,6 @@ export default {
 .rules {
   width: 50%;
   height: 300px;
+  white-space: pre-line;
 }
 </style>

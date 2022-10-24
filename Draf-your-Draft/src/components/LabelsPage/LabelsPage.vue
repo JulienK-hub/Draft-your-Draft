@@ -1,50 +1,50 @@
 <template>
   <div>
-  <h1> Label gestion </h1>
-  <button v-on:click="goToPage('/RulesPage')">
-    Rules gestion
-  </button>
-  <button v-on:click="goToPage('/DraftPage')">
-    Draft
-  </button>
-  <div>
-  <h2 class="title">Create a label</h2>
+    <h1> Label gestion </h1>
+    <button v-on:click="goToPage('/RulesPage')">
+      Rules gestion
+    </button>
+    <button v-on:click="goToPage('/DraftPage')">
+      Draft
+    </button>
+    <div>
+      <h2 class="title">Create a label</h2>
 
-  Name : <input id="inputText" v-model="labelName" type="text"/>
-  Color : <input v-model="labelBGColor" type="color" id="colorpicker" value="#0000ff"/>
-  Black : <input id="checkBox" type="checkbox" @change="changeTextLabelColor()"/>
+      Name : <input id="inputText" v-model="labelName" type="text" />
+      Color : <input v-model="labelBGColor" type="color" id="colorpicker" value="#0000ff" />
+      Black : <input id="checkBox" type="checkbox" @change="changeTextLabelColor()" />
 
-  <p :style="{'background-color':labelBGColor,'color':labelTextColor}">{{labelName}}</p>
-    <button v-on:click="createLabel()">Validate</button>
-</div>
-</div>
+      <p :style="{'background-color':labelBGColor,'color':labelTextColor}">{{labelName}}</p>
+      <button v-on:click="createLabel()">Validate</button>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'LabelsPage',
-  data () {
+  data() {
     return {
       labelBGColor: "#0000ff",
       labelName: "",
       labelTextColor: "white"
     }
   },
-  
+
   methods: {
-    changeTextLabelColor () {
-      if(this.labelTextColor == "white") {
+    changeTextLabelColor() {
+      if (this.labelTextColor == "white") {
         this.labelTextColor = "black";
       }
-      else{
+      else {
         this.labelTextColor = "white";
       }
     },
-    createLabel(){
-      this.$store.commit('createLabel',{a:this.labelName,b:this.labelBGColor,c:this.labelTextColor});
-      
+    createLabel() {
+      this.$store.commit('createLabel', { newText: this.labelName, newColorBG: this.labelBGColor, newColor: this.labelTextColor });
+
     },
-    goToPage(pageURL){
+    goToPage(pageURL) {
       this.$router.push(pageURL)
     }
   },
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-.title{
+.title {
   padding-right: 0%;
 }
 </style>
