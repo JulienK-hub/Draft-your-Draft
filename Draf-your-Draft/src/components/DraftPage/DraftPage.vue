@@ -18,13 +18,27 @@
     </div>
 
     <div class="bans test">
-      <h1>Champions bannis</h1>
+      <div class="blueSideBans">
+        <div class="blueBan1 ban"></div>
+        <div class="blueBan2 ban"></div>
+        <div class="blueBan3 ban"></div>
+        <div class="blueBan4 ban"></div>
+        <div class="blueBan5 ban"></div>
+      </div>
+      <div class="redSideBans">
+        <div class="redBan1 ban"></div>
+        <div class="redBan2 ban"></div>
+        <div class="redBan3 ban"></div>
+        <div class="redBan4 ban"></div>
+        <div class="redBan5 ban"></div>
+      </div>
+
     </div>
 
     <div class="picksAndRules test">
-      <div class="blueSidePicks test testt">Blue side</div>
-      <div class="rules test testt">Rules</div>
-      <div class="redSidePicks test testt">Red side</div>
+      <div class="blueSidePicks test">Blue side</div>
+      <div class="rules test">Rules</div>
+      <div class="redSidePicks test">Red side</div>
     </div>
 
   </div>
@@ -46,21 +60,42 @@ export default {
 </script>
 
 <style scoped>
-
 .picksAndRules {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 100%;
 }
+
 .test {
   border: solid;
 }
 
-.testt {
+.ban {
+  border: solid;
+  width: 50px;
+  height: 50px;
+}
+
+.bans {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.blueSideBans, .redSideBans{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.blueSidePicks, .redSidePicks {
   width: 33%;
   height: 300px;
 }
 
-
+.rules {
+  width: 33%;
+  height: 300px;
+}
 </style>
