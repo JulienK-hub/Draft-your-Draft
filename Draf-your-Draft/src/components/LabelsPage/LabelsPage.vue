@@ -10,44 +10,46 @@
     <div>
       <h2 class="title">Create a label</h2>
 
-      Name : <input id="inputText" v-model="labelName" type="text" />
-      Color : <input v-model="labelBGColor" type="color" id="colorpicker" value="#0000ff" />
-      Black : <input id="checkBox" type="checkbox" @change="changeTextLabelColor()" />
-
-      <p :style="{'background-color':labelBGColor,'color':labelTextColor}">{{labelName}}</p>
-      <button v-on:click="createLabel()">Validate</button>
-    </div>
-  </div>
+  Name : <input id="inputText" v-model="labelName" type="text"/>
+  Color : <input v-model="labelBGColor" type="color" id="colorpicker" value="#0000ff"/>
+  Black : <input id="checkBox" type="checkbox" @change="changeTextLabelColor()"/>
+  <br><br>
+  <Label v-bind:Text="labelName"
+  v-bind:BGColor="labelBGColor"
+  v-bind:TextColor="labelTextColor"/><br><br>
+    <button v-on:click="createLabel()">Validate</button>
+</div>
+</div>
 </template>
 
 <script>
+import Label from "./Label.vue";
 export default {
-  name: 'LabelsPage',
-  data() {
-    return {
-      labelBGColor: "#0000ff",
-      labelName: "",
-      labelTextColor: "white"
-    }
-  },
-
-  methods: {
-    changeTextLabelColor() {
-      if (this.labelTextColor == "white") {
-        this.labelTextColor = "black";
-      }
-      else {
-        this.labelTextColor = "white";
-      }
+    name: "LabelsPage",
+    data() {
+        return {
+            labelBGColor: "#0000ff",
+            labelName: "",
+            labelTextColor: "white"
+        };
     },
-    createLabel() {
-      this.$store.commit('createLabel', { newText: this.labelName, newColorBG: this.labelBGColor, newColor: this.labelTextColor });
-
+    methods: {
+        changeTextLabelColor() {
+            if (this.labelTextColor == "white") {
+                this.labelTextColor = "black";
+            }
+            else {
+                this.labelTextColor = "white";
+            }
+        },
+        createLabel() {
+            this.$store.commit("createLabel", { a: this.labelName, b: this.labelBGColor, c: this.labelTextColor });
+        },
+        goToPage(pageURL) {
+            this.$router.push(pageURL);
+        }
     },
-    goToPage(pageURL) {
-      this.$router.push(pageURL)
-    }
-  },
+    components: { Label }
 }
 </script>
 
