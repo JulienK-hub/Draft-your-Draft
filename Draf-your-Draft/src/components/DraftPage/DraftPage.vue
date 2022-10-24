@@ -32,7 +32,6 @@
         <div class="redBan4 ban"></div>
         <div class="redBan5 ban"></div>
       </div>
-
     </div>
 
     <div class="picksAndRules test">
@@ -76,17 +75,11 @@ export default {
 .test {
   border: solid;
 }
-
-.ban {
-  border: solid;
-  width: 50px;
-  height: 50px;
-}
-
 .bans {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  padding: 1%;
 }
 
 .blueSideBans, .redSideBans{
@@ -94,6 +87,15 @@ export default {
   flex-direction: row;
   justify-content: space-around;
   gap: 10px;
+}
+
+.ban {
+  --pick-size: 50px;
+  border: solid;
+  width: var(--pick-size);
+  height: var(--pick-size);
+  background-image: url(../../assets/square.png);
+  background-size: var(--pick-size) var(--pick-size);
 }
 
 .picksAndRules {
@@ -104,7 +106,7 @@ export default {
 
 .blueSidePicks, .redSidePicks {
   width: 25%;
-  height: 300px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -112,12 +114,16 @@ export default {
 }
 
 .pick {
+  
+  --pick-size: 50px;
   border: solid;
   display: flex;
-  width: 50px;
-  height: 50px;
+  width: var(--pick-size);
+  height: var(--pick-size);
   flex-direction: column;
   justify-content: space-around;
+  background-image: url(../../assets/square.png);
+  background-size: var(--pick-size) var(--pick-size);
 }
 
 .rules {
