@@ -82,6 +82,9 @@ export default new Vuex.Store({
     addChampionLabel(state, championLabel) {
       state.championsLabels.push(championLabel);
     },
+    addFilterLabel(state, label) {
+      state.filterLabels.push(label)
+    },
 
     createRule(state, {newText, newColorBG, newColor}){
       var rule = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
@@ -95,6 +98,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getFilterLabels: (state) => () => {
+      return state.filterLabels;
+    },
 
     getLabelsByChampId: (state, getters) => (keyChampion) => {
       var labels = [];
