@@ -7,8 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     labels: [
-      { id: 0, text: "prends un redbull", colorBG: "#0000ffff", color: "black" },
-      { id: 1, text: "prends une bite", colorBG: "#0000ffff", color: "black" },
+      { id: 0, text: "prends un redbull", colorBG: "#0000ffff", color: "white" },
+      { id: 1, text: "prends une bite", colorBG: "#0000ffff", color: "white" },
     ],
     championsLabels: [
       { championKey: 266, idLabel: 0 },
@@ -27,6 +27,22 @@ export default new Vuex.Store({
       var label = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
       state.labels.push(label);
       console.log("label created:", state.labels[state.labels.length - 1])
+    },
+    deleteLabel(state,id){
+      let index = state.labels.findIndex(element => element.id == id);
+      console.log("delete label: ",id,"from index",index)
+      state.labels.splice(index,1);
+      this.commit('deleteChampionLabelByLabelId', id);
+    },
+    deleteChampionLabelByLabelId(state, id) {
+      for(let i = 0; i < state.championsLabels.length; i++) {
+        const element = state.championsLabels[i];
+        if(element.idLabel == id){
+          console.log("delete champLabel: ",id,"from champID",element.championKey)
+          state.championsLabels.splice(i,1);
+          i--;
+        }
+      }
     },
     deleteChampionLabelById(state, championLabel) {
       for (let i = 0; i < state.championsLabels.length; ++i) {
