@@ -36,13 +36,11 @@ export default {
       var index = this.labelsFilters.findIndex(label => label.id == event.currentTarget.id)
       this.labelsFilters.splice(index, 1)
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsFilter(this.labelsFilters)
-      this.$store.dispatch('updateChampionsByLabelsFilter')
     },
     addFilter: function (event) {
       var label = this.$store.getters.getLabelById(event.currentTarget.id)
       this.addFilterLabel(label)
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsFilter(this.labelsFilters)
-      this.$store.dispatch('updateChampionsByLabelsFilter')
       this.isAddLabelHidden = !this.isAddLabelHidde;
     },
   },

@@ -17,6 +17,7 @@ export default new Vuex.Store({
       { championKey: 84, idLabel: 1 },
       { championKey: 84, idLabel: 0 }
     ],
+    filterLabels: [],
     rules: [
       { id: 0, text: "Règle numéro 1", color: "black" },
       { id: 1, text: "Règle numéro 2", color: "black" },
@@ -45,7 +46,18 @@ export default new Vuex.Store({
         }
       }
     },
-    deleteChampionLabelById(state, championLabel) {
+    createLabel(state, { newText, newColorBG, newColor }) {
+      var label = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.labels.push(label);
+      console.log("label created:", state.labels[state.labels.length - 1])
+    },
+    deleteLabel(state,id){
+      let index = state.labels.findIndex(element => element.id == id);
+      console.log("delete label: ",id,"from index",index)
+      state.labels.splice(index,1);
+      this.commit('deleteChampionLabelByLabelId', id);
+    },
+    deleteChampionLabelByLabelId(state, championLabel) {
       for (let i = 0; i < state.championsLabels.length; ++i) {
         if (state.championsLabels[i].championKey == championLabel.championKey &&
           state.championsLabels[i].idLabel == championLabel.idLabel) {
@@ -76,7 +88,11 @@ export default new Vuex.Store({
       state.rules.push(rule);
       console.log("rule created:", state.rules[state.rules.length - 1])
     },
-
+    createRule(state, {newText, newColorBG, newColor}){
+      var rule = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.rules.push(rule);
+      console.log("rule created:", state.rules[state.rules.length - 1])
+    }
   },
   getters: {
 
@@ -84,6 +100,7 @@ export default new Vuex.Store({
       var labels = [];
       for (let i = 0; i < state.championsLabels.length; i++) {
         if (state.championsLabels[i].championKey == keyChampion) {
+          console.log("Pour le champion : " + keyChampion + " On trouve le label : " + state.championsLabels[i].idLabel)
           labels.push(getters.getLabelById(state.championsLabels[i].idLabel))
         }
       }
@@ -122,6 +139,16 @@ export default new Vuex.Store({
       return avalaible;
     },
 
+    getAvailableLabelsFilter: (state, getters) => (usedLabels) => {
+      var avalaible = state.labels.slice();
+      var index = 0
+      for (var i = 0; i < usedLabels.length; ++i) {
+        if ((index = avalaible.findIndex(label => label.id == usedLabels[i].id)) != undefined) {
+          avalaible.splice(index, 1);
+        }
+      }
+      return avalaible;
+    },
     getRules: state => {
       let temp = "";
       for (let i=0; i<state.rules.length; i++){
@@ -129,7 +156,6 @@ export default new Vuex.Store({
       }
       return temp;
     },
-
   }
 })
 

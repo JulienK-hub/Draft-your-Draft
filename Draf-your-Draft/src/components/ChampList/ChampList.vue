@@ -1,7 +1,7 @@
 <template>
     <div class="champion-list">
       <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
-        <div v-for="champion in this.filteredChampions "> 
+        <div v-for="champion in champions"> 
             <LolChamp  v-bind:champ="champion">
             </LolChamp>
         </div>
@@ -19,7 +19,7 @@ import { observable } from 'vue';
     name: "ChampList",
     data() {
         return {
-            champions: [],
+          champions: championsJSON
         };
     },
     computed: {
@@ -27,10 +27,6 @@ import { observable } from 'vue';
       'filteredChampions'
     ])
   },
-    created (){
-      this.$store.dispatch('updateChampionsByLabelsFilter')
-      this.champions = this.$store.getters.getChampionsByLabels()
-    },
     components: { LolChamp }
 }
   </script>

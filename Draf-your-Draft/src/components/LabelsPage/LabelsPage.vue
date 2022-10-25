@@ -34,6 +34,7 @@
 </template>
 
 <script>
+
 import ChampList from '../ChampList/ChampList.vue';
 import FilterVue from '../Filter/Filter.vue'
 import Label from "./Label.vue";
@@ -45,7 +46,8 @@ export default {
             labelBGColor: "#0000ff",
             labelName: "",
             labelTextColor: "white",
-            allLabels: this.$store.state.labels
+            allLabels: this.$store.state.labels,
+            listReload: 0
         };
     },
     methods: {

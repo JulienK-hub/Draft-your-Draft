@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isFiltered()">
     <div v-on:click="isHidden = !isHidden">
       <img class="champ-icon" :src="champ.image.full" :alt="champ.id" />
 
@@ -39,29 +39,41 @@ export default {
   },
   computed: {
     ...mapState([
-      'labels'
+      'labels',
+      'filterLabels'
     ])
   },
 
   methods: {
     ...mapMutations([
-      'deleteChampionLabelById',
+      'deleteChampionLabelByLabelId',
       'addChampionLabel'
     ]),
     deleteLabel: function (event) {
       var championLabel = { "championKey": this.champ.key, "idLabel": event.currentTarget.id };
-      this.deleteChampionLabelById(championLabel);
+      this.deleteChampionLabelByLabelId(championLabel);
       this.champLabels = this.$store.getters.getLabelsByChampId(this.champ.key);
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsChamp(this.champ.key)
-      this.$store.dispatch('updateChampionsByLabelsFilter')
     },
     addLabel: function (event) {
       var championLabel = { "championKey": this.champ.key, "idLabel": event.currentTarget.id };
       this.addChampionLabel(championLabel);
       this.champLabels = this.$store.getters.getLabelsByChampId(this.champ.key);
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsChamp(this.champ.key)
-      this.$store.dispatch('updateChampionsByLabelsFilter')
       this.isAddLabelHidden = !this.isAddLabelHidde;
+    },
+    isFiltered: function () {
+      var isCorrespondingToLabels = true;
+      for (var j = 0; j < this.filterLabels.length; ++j) {
+        if (!this.champLabels.find(championLabel => championLabel.id == this.filterLabels[j].id)) {
+          isCorrespondingToLabels = false;
+          break;
+        }
+        else {
+          isCorrespondingToLabels = true;
+        }
+      }
+      return isCorrespondingToLabels;
     },
   }
 }
