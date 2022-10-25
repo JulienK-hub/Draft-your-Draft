@@ -18,7 +18,6 @@ export default new Vuex.Store({
       { championKey: 84, idLabel: 0 }
     ],
     filterLabels: [],
-    filteredChampions: [],
     rules: [
       { id: 0, text: "Règle numéro 1", color: "black" },
       { id: 1, text: "Règle numéro 2", color: "black" },
@@ -83,6 +82,7 @@ export default new Vuex.Store({
       var labels = [];
       for (let i = 0; i < state.championsLabels.length; i++) {
         if (state.championsLabels[i].championKey == keyChampion) {
+          console.log("Pour le champion : " + keyChampion + " On trouve le label : " + state.championsLabels[i].idLabel)
           labels.push(getters.getLabelById(state.championsLabels[i].idLabel))
         }
       }
@@ -130,24 +130,6 @@ export default new Vuex.Store({
       }
       return avalaible;
     },
-    getChampionsByLabels: (state, actions) => () => {
-      return state.filteredChampions;
-    },
-    getAllIndexesLabels: (state) => (array, key, index) => {
-      var indexes = [];
-      for (var i = index; i < array.length; ++i) {
-        if (array[i].championKey == key)
-          indexes.push(i)
-      }
-      return indexes;
-    },
-    getElementsFromArray: () => (array, indexes) => {
-      var newArray = []
-      for(var i = 0; i < indexes.length; ++i){
-        newArray.push(array[indexes[i]])
-      }
-      return newArray
-    },
     getRules: state => {
       let temp = "";
       for (let i=0; i<state.rules.length; i++){
@@ -155,57 +137,6 @@ export default new Vuex.Store({
       }
       return temp;
     }
-  },
-  actions: {
-    updateChampionsByLabelsFilter(context) {
-      if (context.state.filterLabels.length == 0) {
-        context.state.filteredChampions = champData;
-      }
-      else {
-        var champions = []
-        var checkedChampionKey = []
-        var isCorrespondingToLabels = true
-        
-        //On parcourt les associations champion-labels
-        for (var i = 0; i < context.state.championsLabels.length; ++i) {
-          //On regarde si le champion a déja été vérifier
-          if (checkedChampionKey.find(key => key == context.state.championsLabels[i].championKey)) {
-            break;
-          }
-          //S'il n'a pas été vérifier, on l'ajoute à la liste des chamipions vérifiés
-          checkedChampionKey.push(context.state.championsLabels[i].championKey)
-
-          //On récupère les indexes des association champion-labels du champion
-          var indexes = context.getters.getAllIndexesLabels(context.state.championsLabels, context.state.championsLabels[i].championKey, i)
-          
-          //LOGS///////////////
-          console.log("Pour le champion id : " + context.state.championsLabels[i].championKey)
-          for(var j = 0; j < indexes.length; ++j){
-            console.log(indexes[j] + "\n")
-          }
-          /////////////////////
-
-          //On isole les associations champion-labels du champion actuel dans un tableau
-          var currentChampionLabels = context.getters.getElementsFromArray(context.state.championsLabels, indexes)
-          
-          //Pour chaque labels du filtre, on regarde s'il est présent dans les labels du champion
-          for(var j = 0; j < context.state.filterLabels.length; ++j){
-            if(!currentChampionLabels.find(championLabel => championLabel.idLabel == context.state.filterLabels[j].id)){
-              isCorrespondingToLabels = false;
-              break;
-            }
-            else {
-              isCorrespondingToLabels = true;
-            }
-          }
-          if (isCorrespondingToLabels){
-            console.log("on ajoute le champion " + context.state.championsLabels[i].championKey)
-            champions.push(context.getters.getChampionById(context.state.championsLabels[i].championKey));
-          }
-        }
-        context.state.filteredChampions = champions;
-      }
-    },
   }
 })
 

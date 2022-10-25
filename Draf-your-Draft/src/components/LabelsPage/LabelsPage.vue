@@ -46,7 +46,8 @@ export default {
             labelBGColor: "#0000ff",
             labelName: "",
             labelTextColor: "white",
-            allLabels: this.$store.state.labels
+            allLabels: this.$store.state.labels,
+            listReload: 0
         };
     },
     methods: {
@@ -66,6 +67,9 @@ export default {
         },
         deleteLabel(id){
           this.$store.commit('deleteLabel',id);
+        },
+        captureUpdate(){
+          this.$root.$emit("updated", "updated")
         }
     },
     components: { 
