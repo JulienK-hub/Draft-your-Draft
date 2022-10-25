@@ -17,10 +17,17 @@
     <input id="black" type="checkbox" @change="changeTextLabelColor()"/>
 
   <p :style="{'background-color':labelBGColor,'color':labelTextColor}">{{labelName}}</p>
+  <div>
+    <FilterVue></FilterVue>
+    <ChampList></ChampList>
+  </div>
 </div>
 </template>
 
 <script>
+import ChampList from '../ChampList/ChampList.vue';
+import FilterVue from '../Filter/Filter.vue'
+
 export default {
   name: 'LabelsPage',
   data () {
@@ -44,6 +51,10 @@ export default {
       this.$router.push(pageURL)
     }
   },
+  components : {
+    ChampList,
+    FilterVue
+  }
 }
 </script>
 

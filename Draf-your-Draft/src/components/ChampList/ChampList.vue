@@ -1,7 +1,7 @@
 <template>
     <div class="champion-list">
       <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
-        <div v-for="champion in champions"> 
+        <div v-for="champion in this.filteredChampions "> 
             <LolChamp  v-bind:champ="champion">
             </LolChamp>
         </div>
@@ -11,13 +11,25 @@
   <script>
 import LolChamp from '../LolChamp/LolChamp.vue';
 import championsJSON from'../../assets/champion.json'
+import {mapMutations, mapState} from 'vuex';
+import { observable } from 'vue';
+
 
   export default {
     name: "ChampList",
     data() {
         return {
-            champions: championsJSON    
+            champions: [],
         };
+    },
+    computed: {
+      ...mapState([
+      'filteredChampions'
+    ])
+  },
+    created (){
+      this.$store.dispatch('updateChampionsByLabelsFilter')
+      this.champions = this.$store.getters.getChampionsByLabels()
     },
     components: { LolChamp }
 }
