@@ -8,8 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     labels: [
-      { id: 0, text: "prends un redbull" },
-      { id: 1, text: "prends une bite" },
+      { id: 0, text: "prends un redbull", colorBG: "#0000ffff", color: "white" },
+      { id: 1, text: "prends une bite", colorBG: "#0000ffff", color: "white" },
     ],
     championsLabels: [
       { championKey: 266, idLabel: 0 },
@@ -19,13 +19,28 @@ export default new Vuex.Store({
     ],
     filterLabels: [],
     filteredChampions: [],
-    count: 0
+    rules: [
+      { id: 0, text: "Règle numéro 1", color: "black" },
+      { id: 1, text: "Règle numéro 2", color: "black" },
+      { id: 2, text: "Règle numéro 3", color: "black" },
+    ],
   },
   mutations: {
     increment(state) {
       state.count++
     },
-    deleteChampionLabelById(state, championLabel) {
+    createLabel(state, { newText, newColorBG, newColor }) {
+      var label = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.labels.push(label);
+      console.log("label created:", state.labels[state.labels.length - 1])
+    },
+    deleteLabel(state,id){
+      let index = state.labels.findIndex(element => element.id == id);
+      console.log("delete label: ",id,"from index",index)
+      state.labels.splice(index,1);
+      this.commit('deleteChampionLabelByLabelId', id);
+    },
+    deleteChampionLabelByLabelId(state, championLabel) {
       for (let i = 0; i < state.championsLabels.length; ++i) {
         if (state.championsLabels[i].championKey == championLabel.championKey &&
           state.championsLabels[i].idLabel == championLabel.idLabel) {
@@ -53,30 +68,11 @@ export default new Vuex.Store({
     addFilterLabel(state, label) {
       state.filterLabels.push(label)
     },
-
-
-
-    // updateChampionsByLabels ({state, getters}) {
-    //   var champions = []
-    //   var championLabels;
-    //   var isCorrespondingToLabels = true
-    //   champData.forEach(champion => {
-    //     isCorrespondingToLabels = true
-    //     championLabels = getters.getLabelsByChampId(champion.key)
-    //     for(var i = 0; i < championLabels.length; ++i){
-    //       if( ! state.filterLabels.find(label => label.id == championLabels[i].id)){
-    //         isCorrespondingToLabels = false;
-    //         break;
-    //       }
-    //       else {
-    //         isCorrespondingToLabels = true;
-    //       }
-    //     }
-    //     if(isCorrespondingToLabels)
-    //       champions.push(champion);
-    //   }) 
-    //   state.filteredChampions = champions;
-    // }
+    createRule(state, {newText, newColorBG, newColor}){
+      var rule = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.rules.push(rule);
+      console.log("rule created:", state.rules[state.rules.length - 1])
+    }
   },
   getters: {
     getFilterLabels: (state) => () => {
@@ -151,40 +147,16 @@ export default new Vuex.Store({
         newArray.push(array[indexes[i]])
       }
       return newArray
+    },
+    getRules: state => {
+      let temp = "";
+      for (let i=0; i<state.rules.length; i++){
+        temp = temp + state.rules[i].text + "\n"
+      }
+      return temp;
     }
-
   },
   actions: {
-    // updateChampionsByLabelsFilter2(context) {
-    //   if (context.state.filterLabels.length == 0) {
-    //     context.state.filteredChampions = champData;
-    //   }
-    //   else {
-    //     var champions = []
-    //     var championLabels;
-    //     var isCorrespondingToLabels = true
-    //     champData.forEach(champion => {
-    //       isCorrespondingToLabels = true
-    //       championLabels = context.getters.getLabelsByChampId(champion.key)
-    //       if (championLabels.length == 0)
-    //         isCorrespondingToLabels = false
-    //       for (var i = 0; i < championLabels.length; ++i) {
-    //         if (!context.state.filterLabels.find(label => label.id == championLabels[i].id)) {
-    //           isCorrespondingToLabels = false;
-    //           break;
-    //         }
-    //         else {
-    //           isCorrespondingToLabels = true;
-    //         }
-    //       }
-    //       if (isCorrespondingToLabels)
-    //         champions.push(champion);
-    //     })
-    //     context.state.filteredChampions = champions;
-
-    //   }
-    //   return context.state.filteredChampions;
-    // },
     updateChampionsByLabelsFilter(context) {
       if (context.state.filterLabels.length == 0) {
         context.state.filteredChampions = champData;
@@ -193,16 +165,30 @@ export default new Vuex.Store({
         var champions = []
         var checkedChampionKey = []
         var isCorrespondingToLabels = true
+        
+        //On parcourt les associations champion-labels
         for (var i = 0; i < context.state.championsLabels.length; ++i) {
+          //On regarde si le champion a déja été vérifier
           if (checkedChampionKey.find(key => key == context.state.championsLabels[i].championKey)) {
             break;
           }
+          //S'il n'a pas été vérifier, on l'ajoute à la liste des chamipions vérifiés
           checkedChampionKey.push(context.state.championsLabels[i].championKey)
+
+          //On récupère les indexes des association champion-labels du champion
           var indexes = context.getters.getAllIndexesLabels(context.state.championsLabels, context.state.championsLabels[i].championKey, i)
+          
+          //LOGS///////////////
+          console.log("Pour le champion id : " + context.state.championsLabels[i].championKey)
           for(var j = 0; j < indexes.length; ++j){
             console.log(indexes[j] + "\n")
           }
+          /////////////////////
+
+          //On isole les associations champion-labels du champion actuel dans un tableau
           var currentChampionLabels = context.getters.getElementsFromArray(context.state.championsLabels, indexes)
+          
+          //Pour chaque labels du filtre, on regarde s'il est présent dans les labels du champion
           for(var j = 0; j < context.state.filterLabels.length; ++j){
             if(!currentChampionLabels.find(championLabel => championLabel.idLabel == context.state.filterLabels[j].id)){
               isCorrespondingToLabels = false;
@@ -218,7 +204,6 @@ export default new Vuex.Store({
           }
         }
         context.state.filteredChampions = champions;
-
       }
     },
   }

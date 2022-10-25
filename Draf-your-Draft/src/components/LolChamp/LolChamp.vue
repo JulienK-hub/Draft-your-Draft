@@ -45,12 +45,12 @@ export default {
 
   methods: {
     ...mapMutations([
-      'deleteChampionLabelById',
+      'deleteChampionLabelByLabelId',
       'addChampionLabel'
     ]),
     deleteLabel: function (event) {
       var championLabel = { "championKey": this.champ.key, "idLabel": event.currentTarget.id };
-      this.deleteChampionLabelById(championLabel);
+      this.deleteChampionLabelByLabelId(championLabel);
       this.champLabels = this.$store.getters.getLabelsByChampId(this.champ.key);
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsChamp(this.champ.key)
       this.$store.dispatch('updateChampionsByLabelsFilter')
