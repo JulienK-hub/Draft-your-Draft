@@ -6,6 +6,7 @@ Vue.use(Vuex)
 // Create a new store instance.
 export default new Vuex.Store({
   state: {
+    labelsCount:2,
     labels: [
       { id: 0, text: "prends un redbull", colorBG: "#0000ffff", color: "white" },
       { id: 1, text: "prends une bite", colorBG: "#0000ffff", color: "white" },
@@ -24,8 +25,9 @@ export default new Vuex.Store({
   },
   mutations: {
     createLabel(state, { newText, newColorBG, newColor }) {
-      var label = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      var label = { id: state.labelsCount, text: newText, colorBG: newColorBG, color: newColor }
       state.labels.push(label);
+      state.labelsCount++;
       console.log("label created:", state.labels[state.labels.length - 1])
     },
     deleteLabel(state,id){
