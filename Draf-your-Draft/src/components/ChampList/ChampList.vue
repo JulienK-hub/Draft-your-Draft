@@ -11,14 +11,22 @@
   <script>
 import LolChamp from '../LolChamp/LolChamp.vue';
 import championsJSON from'../../assets/champion.json'
+import {mapMutations, mapState} from 'vuex';
+import { observable } from 'vue';
+
 
   export default {
     name: "ChampList",
     data() {
         return {
-            champions: championsJSON    
+          champions: championsJSON
         };
     },
+    computed: {
+      ...mapState([
+      'filteredChampions'
+    ])
+  },
     components: { LolChamp }
 }
   </script>

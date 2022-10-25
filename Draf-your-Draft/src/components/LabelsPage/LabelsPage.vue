@@ -26,11 +26,19 @@
   v-bind:BGColor="label.colorBG"
   v-bind:TextColor="label.color"/>
 </div>
+<div>
+    <FilterVue></FilterVue>
+    <ChampList></ChampList>
+  </div>
 </div>
 </template>
 
 <script>
+
+import ChampList from '../ChampList/ChampList.vue';
+import FilterVue from '../Filter/Filter.vue'
 import Label from "./Label.vue";
+
 export default {
     name: "LabelsPage",
     data() {
@@ -38,7 +46,8 @@ export default {
             labelBGColor: "#0000ff",
             labelName: "",
             labelTextColor: "white",
-            allLabels: this.$store.state.labels
+            allLabels: this.$store.state.labels,
+            listReload: 0
         };
     },
     methods: {
@@ -60,7 +69,11 @@ export default {
           this.$store.commit('deleteLabel',id);
         }
     },
-    components: { Label }
+    components: { 
+      Label,
+      ChampList,
+      FilterVue 
+    }
 }
 </script>
 
