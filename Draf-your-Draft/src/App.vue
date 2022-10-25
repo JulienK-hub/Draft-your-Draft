@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -8,11 +8,11 @@
 export default {
   name: 'App',
   methods: {
-  increment() {
-    this.$store.commit('increment')
-    console.log(this.$store.state.count)
+    increment() {
+      this.$store.commit('increment')
+      console.log(this.$store.state.count)
+    }
   }
-}
 }
 </script>
 
@@ -23,6 +23,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: lightgray;
   margin-top: 60px;
 }
 </style>

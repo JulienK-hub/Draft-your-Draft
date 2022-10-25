@@ -32,7 +32,6 @@
         <div class="redBan4 ban"></div>
         <div class="redBan5 ban"></div>
       </div>
-
     </div>
 
     <div class="picksAndRules test">
@@ -43,7 +42,9 @@
         <div class="bluePick4 pick"></div>
         <div class="bluePick5 pick"></div>
       </div>
-      <div class="rules test">Rules</div>
+      <div class="rules test">
+        {{rulesList}}
+      </div>
       <div class="redSidePicks test">
         <div class="redPick1 pick"></div>
         <div class="redPick2 pick"></div>
@@ -61,6 +62,7 @@ export default {
   name: 'DraftPage',
   data() {
     return {
+      rulesList : this.$store.getters.getRules
     }
   },
   methods: {
@@ -72,28 +74,32 @@ export default {
 </script>
 
 <style scoped>
-
 .test {
   border: solid;
-}
-
-.ban {
-  border: solid;
-  width: 50px;
-  height: 50px;
 }
 
 .bans {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  padding: 1%;
 }
 
-.blueSideBans, .redSideBans{
+.blueSideBans,
+.redSideBans {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   gap: 10px;
+}
+
+.ban {
+  --ban-size: 50px;
+  border: solid;
+  width: var(--ban-size);
+  height: var(--ban-size);
+  background-image: url(../../assets/square.png);
+  background-size: var(--ban-size) var(--ban-size);
 }
 
 .picksAndRules {
@@ -102,9 +108,10 @@ export default {
   justify-content: space-around;
 }
 
-.blueSidePicks, .redSidePicks {
+.blueSidePicks,
+.redSidePicks {
   width: 25%;
-  height: 300px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -112,16 +119,20 @@ export default {
 }
 
 .pick {
+  --pick-size: 50px;
   border: solid;
   display: flex;
-  width: 50px;
-  height: 50px;
+  width: var(--pick-size);
+  height: var(--pick-size);
   flex-direction: column;
   justify-content: space-around;
+  background-image: url(../../assets/square.png);
+  background-size: var(--pick-size) var(--pick-size);
 }
 
 .rules {
   width: 50%;
   height: 300px;
+  white-space: pre-line;
 }
 </style>

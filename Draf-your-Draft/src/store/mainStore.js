@@ -8,8 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     labels: [
-      { id: 0, text: "prends un redbull" },
-      { id: 1, text: "prends une bite" },
+      { id: 0, text: "prends un redbull", colorBG: "#0000ffff", color: "white" },
+      { id: 1, text: "prends une bite", colorBG: "#0000ffff", color: "white" },
     ],
     championsLabels: [
       { championKey: 266, idLabel: 0 },
@@ -17,13 +17,33 @@ export default new Vuex.Store({
       { championKey: 84, idLabel: 1 },
       { championKey: 84, idLabel: 0 }
     ],
-    filterLabels: [],
-    filteredChampions: [],
-    count: 0
+    rules: [
+      { id: 0, text: "Règle numéro 1", color: "black" },
+      { id: 1, text: "Règle numéro 2", color: "black" },
+      { id: 2, text: "Règle numéro 3", color: "black" },
+    ]
   },
   mutations: {
-    increment(state) {
-      state.count++
+    createLabel(state, { newText, newColorBG, newColor }) {
+      var label = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.labels.push(label);
+      console.log("label created:", state.labels[state.labels.length - 1])
+    },
+    deleteLabel(state,id){
+      let index = state.labels.findIndex(element => element.id == id);
+      console.log("delete label: ",id,"from index",index)
+      state.labels.splice(index,1);
+      this.commit('deleteChampionLabelByLabelId', id);
+    },
+    deleteChampionLabelByLabelId(state, id) {
+      for(let i = 0; i < state.championsLabels.length; i++) {
+        const element = state.championsLabels[i];
+        if(element.idLabel == id){
+          console.log("delete champLabel: ",id,"from champID",element.championKey)
+          state.championsLabels.splice(i,1);
+          i--;
+        }
+      }
     },
     deleteChampionLabelById(state, championLabel) {
       for (let i = 0; i < state.championsLabels.length; ++i) {
@@ -50,38 +70,15 @@ export default new Vuex.Store({
     addChampionLabel(state, championLabel) {
       state.championsLabels.push(championLabel);
     },
-    addFilterLabel(state, label) {
-      state.filterLabels.push(label)
+
+    createRule(state, {newText, newColorBG, newColor}){
+      var rule = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
+      state.rules.push(rule);
+      console.log("rule created:", state.rules[state.rules.length - 1])
     },
 
-
-
-    // updateChampionsByLabels ({state, getters}) {
-    //   var champions = []
-    //   var championLabels;
-    //   var isCorrespondingToLabels = true
-    //   champData.forEach(champion => {
-    //     isCorrespondingToLabels = true
-    //     championLabels = getters.getLabelsByChampId(champion.key)
-    //     for(var i = 0; i < championLabels.length; ++i){
-    //       if( ! state.filterLabels.find(label => label.id == championLabels[i].id)){
-    //         isCorrespondingToLabels = false;
-    //         break;
-    //       }
-    //       else {
-    //         isCorrespondingToLabels = true;
-    //       }
-    //     }
-    //     if(isCorrespondingToLabels)
-    //       champions.push(champion);
-    //   }) 
-    //   state.filteredChampions = champions;
-    // }
   },
   getters: {
-    getFilterLabels: (state) => () => {
-      return state.filterLabels;
-    },
 
     getLabelsByChampId: (state, getters) => (keyChampion) => {
       var labels = [];
@@ -124,103 +121,15 @@ export default new Vuex.Store({
       }
       return avalaible;
     },
-    getAvailableLabelsFilter: (state, getters) => (usedLabels) => {
-      var avalaible = state.labels.slice();
-      var index = 0
-      for (var i = 0; i < usedLabels.length; ++i) {
-        if ((index = avalaible.findIndex(label => label.id == usedLabels[i].id)) != undefined) {
-          avalaible.splice(index, 1);
-        }
-      }
-      return avalaible;
-    },
-    getChampionsByLabels: (state, actions) => () => {
-      return state.filteredChampions;
-    },
-    getAllIndexesLabels: (state) => (array, key, index) => {
-      var indexes = [];
-      for (var i = index; i < array.length; ++i) {
-        if (array[i].championKey == key)
-          indexes.push(i)
-      }
-      return indexes;
-    },
-    getElementsFromArray: () => (array, indexes) => {
-      var newArray = []
-      for(var i = 0; i < indexes.length; ++i){
-        newArray.push(array[indexes[i]])
-      }
-      return newArray
-    }
 
-  },
-  actions: {
-    // updateChampionsByLabelsFilter2(context) {
-    //   if (context.state.filterLabels.length == 0) {
-    //     context.state.filteredChampions = champData;
-    //   }
-    //   else {
-    //     var champions = []
-    //     var championLabels;
-    //     var isCorrespondingToLabels = true
-    //     champData.forEach(champion => {
-    //       isCorrespondingToLabels = true
-    //       championLabels = context.getters.getLabelsByChampId(champion.key)
-    //       if (championLabels.length == 0)
-    //         isCorrespondingToLabels = false
-    //       for (var i = 0; i < championLabels.length; ++i) {
-    //         if (!context.state.filterLabels.find(label => label.id == championLabels[i].id)) {
-    //           isCorrespondingToLabels = false;
-    //           break;
-    //         }
-    //         else {
-    //           isCorrespondingToLabels = true;
-    //         }
-    //       }
-    //       if (isCorrespondingToLabels)
-    //         champions.push(champion);
-    //     })
-    //     context.state.filteredChampions = champions;
-
-    //   }
-    //   return context.state.filteredChampions;
-    // },
-    updateChampionsByLabelsFilter(context) {
-      if (context.state.filterLabels.length == 0) {
-        context.state.filteredChampions = champData;
+    getRules: state => {
+      let temp = "";
+      for (let i=0; i<state.rules.length; i++){
+        temp = temp + state.rules[i].text + "\n"
       }
-      else {
-        var champions = []
-        var checkedChampionKey = []
-        var isCorrespondingToLabels = true
-        for (var i = 0; i < context.state.championsLabels.length; ++i) {
-          if (checkedChampionKey.find(key => key == context.state.championsLabels[i].championKey)) {
-            break;
-          }
-          checkedChampionKey.push(context.state.championsLabels[i].championKey)
-          var indexes = context.getters.getAllIndexesLabels(context.state.championsLabels, context.state.championsLabels[i].championKey, i)
-          for(var j = 0; j < indexes.length; ++j){
-            console.log(indexes[j] + "\n")
-          }
-          var currentChampionLabels = context.getters.getElementsFromArray(context.state.championsLabels, indexes)
-          for(var j = 0; j < context.state.filterLabels.length; ++j){
-            if(!currentChampionLabels.find(championLabel => championLabel.idLabel == context.state.filterLabels[j].id)){
-              isCorrespondingToLabels = false;
-              break;
-            }
-            else {
-              isCorrespondingToLabels = true;
-            }
-          }
-          if (isCorrespondingToLabels){
-            console.log("on ajoute le champion " + context.state.championsLabels[i].championKey)
-            champions.push(context.getters.getChampionById(context.state.championsLabels[i].championKey));
-          }
-        }
-        context.state.filteredChampions = champions;
-
-      }
+      return temp;
     },
+
   }
 })
 
