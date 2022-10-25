@@ -2,99 +2,226 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import champData from '../assets/champion.json'
 
+
 Vue.use(Vuex)
 // Create a new store instance.
 export default new Vuex.Store({
-    state: {
-      labels : [
-        {id: 0, text: "prends un redbull"},
-        {id: 1, text: "prends une bite"},
-      ],
-      championsLabels : [
-        {championKey: 266, idLabel: 0},
-        {championKey: 103, idLabel: 1},
-        {championKey: 84, idLabel: 1},
-        {championKey: 84, idLabel: 0}
-      ],
-        count: 0
+  state: {
+    labels: [
+      { id: 0, text: "prends un redbull" },
+      { id: 1, text: "prends une bite" },
+    ],
+    championsLabels: [
+      { championKey: 266, idLabel: 0 },
+      { championKey: 103, idLabel: 1 },
+      { championKey: 84, idLabel: 1 },
+      { championKey: 84, idLabel: 0 }
+    ],
+    filterLabels: [],
+    filteredChampions: [],
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++
     },
-    mutations: {
-        increment (state) {
-            state.count++
-        },
-        deleteChampionLabelById (state, championLabel)  {
-          for(let i = 0; i < state.championsLabels.length; ++i){
-            if(state.championsLabels[i].championKey == championLabel.championKey &&
-              state.championsLabels[i].idLabel == championLabel.idLabel){
-                state.championsLabels.splice(i, 1);
-                return true;
-              }
-          }
-          return false;
-        },
-        getLastLabelId(){
-          return state.labels[labels.length];
-        },
-
-        addChampionLabelById (state, championLabel) {
-          var newLabelId = getLastLabelId()
-          var label = {"id" : newLabelId, "text": championLabel.text}; 
-          state.labels.push(label)
-
-          var newChampionLabel = {"championKey": championLabel.championKey, "idLabel": newLabelId}
-          state.championsLabels.push(newChampionLabel);
-        },
-        addChampionLabel (state, championLabel)  {
-          state.championsLabels.push(championLabel);
+    deleteChampionLabelById(state, championLabel) {
+      for (let i = 0; i < state.championsLabels.length; ++i) {
+        if (state.championsLabels[i].championKey == championLabel.championKey &&
+          state.championsLabels[i].idLabel == championLabel.idLabel) {
+          state.championsLabels.splice(i, 1);
+          return true;
         }
-
+      }
+      return false;
     },
-    getters:{
+    getLastLabelId() {
+      return state.labels[labels.length];
+    },
 
-      getLabelsByChampId: (state, getters) => (keyChampion) => {
-        var labels = [];
-        for(let i = 0; i< state.championsLabels.length; i++){
-          if(state.championsLabels[i].championKey == keyChampion){
-            labels.push(getters.getLabelById(state.championsLabels[i].idLabel))
-          }
+    addChampionLabelById(state, championLabel) {
+      var newLabelId = getLastLabelId()
+      var label = { "id": newLabelId, "text": championLabel.text };
+      state.labels.push(label)
+
+      var newChampionLabel = { "championKey": championLabel.championKey, "idLabel": newLabelId }
+      state.championsLabels.push(newChampionLabel);
+    },
+    addChampionLabel(state, championLabel) {
+      state.championsLabels.push(championLabel);
+    },
+    addFilterLabel(state, label) {
+      state.filterLabels.push(label)
+    },
+
+
+
+    // updateChampionsByLabels ({state, getters}) {
+    //   var champions = []
+    //   var championLabels;
+    //   var isCorrespondingToLabels = true
+    //   champData.forEach(champion => {
+    //     isCorrespondingToLabels = true
+    //     championLabels = getters.getLabelsByChampId(champion.key)
+    //     for(var i = 0; i < championLabels.length; ++i){
+    //       if( ! state.filterLabels.find(label => label.id == championLabels[i].id)){
+    //         isCorrespondingToLabels = false;
+    //         break;
+    //       }
+    //       else {
+    //         isCorrespondingToLabels = true;
+    //       }
+    //     }
+    //     if(isCorrespondingToLabels)
+    //       champions.push(champion);
+    //   }) 
+    //   state.filteredChampions = champions;
+    // }
+  },
+  getters: {
+    getFilterLabels: (state) => () => {
+      return state.filterLabels;
+    },
+
+    getLabelsByChampId: (state, getters) => (keyChampion) => {
+      var labels = [];
+      for (let i = 0; i < state.championsLabels.length; i++) {
+        if (state.championsLabels[i].championKey == keyChampion) {
+          labels.push(getters.getLabelById(state.championsLabels[i].idLabel))
         }
-        return labels;
-      },
-    
-      getChampionById: (state) => (keyChampion) => {
-        for(let i = 0; i < state.champions.length ;i++){
-          console.log("looking for keyCHampion : "+ keyChampion +" in store")
-           if(state.champions[i].key == keyChampion) {
-             console.log(state.champions[i].id);
-             return state.champions[i];
-           }
-         };
-       },
-    getLabels: state => {
-        return state.labels;
+      }
+      return labels;
+    },
+
+    getChampionById: (state) => (keyChampion) => {
+      for (let i = 0; i < champData.length; i++) {
+        console.log("looking for keyCHampion : " + keyChampion + " in store")
+        if (champData[i].key == keyChampion) {
+          return champData[i];
+        }
+      };
+    },
+    getLabels: (state) => () => {
+      return state.labels;
     },
     getLabelById: (state) => (idLabel) => {
-     for(let i = 0; i < state.labels.length;i++){
-       console.log("looking for idLabel : "+ idLabel +" in store")
-        if(state.labels[i].id == idLabel) {
+      for (let i = 0; i < state.labels.length; i++) {
+        console.log("looking for idLabel : " + idLabel + " in store")
+        if (state.labels[i].id == idLabel) {
           console.log(state.labels[i].text);
           return state.labels[i];
         }
       };
     },
-    getAvailableLabels: (state, getters) => (championKey) => {
+    getAvailableLabelsChamp: (state, getters) => (championKey) => {
       var avalaible = state.labels.slice();
       var index = 0
       var championLabels = getters.getLabelsByChampId(championKey);
-      for(var i = 0; i < championLabels.length; ++i){
-        if( (index = avalaible.findIndex(label => label.id == championLabels[i].id) ) != undefined){
+      for (var i = 0; i < championLabels.length; ++i) {
+        if ((index = avalaible.findIndex(label => label.id == championLabels[i].id)) != undefined) {
           avalaible.splice(index, 1);
         }
       }
-        return avalaible;
+      return avalaible;
+    },
+    getAvailableLabelsFilter: (state, getters) => (usedLabels) => {
+      var avalaible = state.labels.slice();
+      var index = 0
+      for (var i = 0; i < usedLabels.length; ++i) {
+        if ((index = avalaible.findIndex(label => label.id == usedLabels[i].id)) != undefined) {
+          avalaible.splice(index, 1);
+        }
+      }
+      return avalaible;
+    },
+    getChampionsByLabels: (state, actions) => () => {
+      return state.filteredChampions;
+    },
+    getAllIndexesLabels: (state) => (array, key, index) => {
+      var indexes = [];
+      for (var i = index; i < array.length; ++i) {
+        if (array[i].championKey == key)
+          indexes.push(i)
+      }
+      return indexes;
+    },
+    getElementsFromArray: () => (array, indexes) => {
+      var newArray = []
+      for(var i = 0; i < indexes.length; ++i){
+        newArray.push(array[indexes[i]])
+      }
+      return newArray
     }
-    
-    }
+
+  },
+  actions: {
+    // updateChampionsByLabelsFilter2(context) {
+    //   if (context.state.filterLabels.length == 0) {
+    //     context.state.filteredChampions = champData;
+    //   }
+    //   else {
+    //     var champions = []
+    //     var championLabels;
+    //     var isCorrespondingToLabels = true
+    //     champData.forEach(champion => {
+    //       isCorrespondingToLabels = true
+    //       championLabels = context.getters.getLabelsByChampId(champion.key)
+    //       if (championLabels.length == 0)
+    //         isCorrespondingToLabels = false
+    //       for (var i = 0; i < championLabels.length; ++i) {
+    //         if (!context.state.filterLabels.find(label => label.id == championLabels[i].id)) {
+    //           isCorrespondingToLabels = false;
+    //           break;
+    //         }
+    //         else {
+    //           isCorrespondingToLabels = true;
+    //         }
+    //       }
+    //       if (isCorrespondingToLabels)
+    //         champions.push(champion);
+    //     })
+    //     context.state.filteredChampions = champions;
+
+    //   }
+    //   return context.state.filteredChampions;
+    // },
+    updateChampionsByLabelsFilter(context) {
+      if (context.state.filterLabels.length == 0) {
+        context.state.filteredChampions = champData;
+      }
+      else {
+        var champions = []
+        var checkedChampionKey = []
+        var isCorrespondingToLabels = true
+        for (var i = 0; i < context.state.championsLabels.length; ++i) {
+          if (checkedChampionKey.find(key => key == context.state.championsLabels[i].championKey)) {
+            break;
+          }
+          checkedChampionKey.push(context.state.championsLabels[i].championKey)
+          var indexes = context.getters.getAllIndexesLabels(context.state.championsLabels, context.state.championsLabels[i].championKey, i)
+          for(var j = 0; j < indexes.length; ++j){
+            console.log(indexes[j] + "\n")
+          }
+          var currentChampionLabels = context.getters.getElementsFromArray(context.state.championsLabels, indexes)
+          for(var j = 0; j < context.state.filterLabels.length; ++j){
+            if(!currentChampionLabels.find(championLabel => championLabel.idLabel == context.state.filterLabels[j].id)){
+              isCorrespondingToLabels = false;
+              break;
+            }
+            else {
+              isCorrespondingToLabels = true;
+            }
+          }
+          if (isCorrespondingToLabels){
+            console.log("on ajoute le champion " + context.state.championsLabels[i].championKey)
+            champions.push(context.getters.getChampionById(context.state.championsLabels[i].championKey));
+          }
+        }
+        context.state.filteredChampions = champions;
+
+      }
+    },
+  }
 })
 
 
