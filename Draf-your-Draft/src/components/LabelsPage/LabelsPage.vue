@@ -29,6 +29,7 @@
 <div>
     <FilterVue></FilterVue>
     <ChampList></ChampList>
+    <SelectedChamp></SelectedChamp>
   </div>
 </div>
 </template>
@@ -38,6 +39,7 @@
 import ChampList from '../ChampList/ChampList.vue';
 import FilterVue from '../Filter/Filter.vue'
 import Label from "./Label.vue";
+import SelectedChamp from '../SelectedChamp/SelectedChamp.vue'
 
 export default {
     name: "LabelsPage",
@@ -72,7 +74,8 @@ export default {
     components: { 
       Label,
       ChampList,
-      FilterVue 
+      FilterVue,
+      SelectedChamp 
     }
 }
 </script>
