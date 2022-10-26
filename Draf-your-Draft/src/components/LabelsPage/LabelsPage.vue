@@ -49,7 +49,6 @@ export default {
             labelName: "",
             labelTextColor: "white",
             allLabels: this.$store.state.labels,
-            listReload: 0
         };
     },
     methods: {
