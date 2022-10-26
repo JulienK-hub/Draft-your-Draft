@@ -115,6 +115,7 @@ export default {
             })
         },
         unselectAll: function (){
+            this.underSelectedChamp.splice(0, this.underSelectedChamp.length)
             this.EmptySelectedChamps()
         }
     },
