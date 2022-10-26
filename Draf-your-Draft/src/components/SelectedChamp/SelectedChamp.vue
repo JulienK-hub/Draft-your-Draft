@@ -31,7 +31,8 @@
                 <button v-on:click="addActivesLabelsToChampions(selectedChampions)">Add label to all</button>
                 <button v-on:click="deleteActivesLabelsToChampions(selectedChampions)">Retrieve label from all</button>
 
-                <button v-on:click="unselectAll()">Unselect all</button>
+                <button v-on:click="unselectAllUnderSelection()">Unselect all</button>
+                <button v-on:click="unselectAll()">Empty</button>
             </div>
     </div>
 </template>
@@ -117,6 +118,9 @@ export default {
         unselectAll: function (){
             this.underSelectedChamp.splice(0, this.underSelectedChamp.length)
             this.EmptySelectedChamps()
+        },
+        unselectAllUnderSelection: function() {
+            this.underSelectedChamp.splice(0, this.underSelectedChamp.length)
         }
     },
     computed: {
