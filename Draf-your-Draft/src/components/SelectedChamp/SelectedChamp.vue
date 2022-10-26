@@ -30,6 +30,8 @@
 
                 <button v-on:click="addActivesLabelsToChampions(selectedChampions)">Add label to all</button>
                 <button v-on:click="deleteActivesLabelsToChampions(selectedChampions)">Retrieve label from all</button>
+
+                <button v-on:click="unselectAll()">Unselect all</button>
             </div>
     </div>
 </template>
@@ -54,7 +56,8 @@ export default {
             'addSelectedChamp',
             'deleteSelectedChamp',
             'addChampionLabel',
-            'deleteChampionLabelByLabelId'
+            'deleteChampionLabelByLabelId',
+            'EmptySelectedChamps'
         ]),
         unselectChampion: function (champion) {
             console.log("add " + champion.id + " unselected")
@@ -110,9 +113,10 @@ export default {
                     }
                 })
             })
+        },
+        unselectAll: function (){
+            this.EmptySelectedChamps()
         }
-
-
     },
     computed: {
         ...mapState({

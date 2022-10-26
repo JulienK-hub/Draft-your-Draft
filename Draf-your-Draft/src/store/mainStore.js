@@ -109,6 +109,11 @@ export default new Vuex.Store({
     deleteSelectedChamp(state, championKey){
       let index = state.selectedChamps.findIndex(champ => champ.key == championKey)
       state.selectedChamps.splice(index, 1)
+    },
+    EmptySelectedChamps(state){
+      var length = state.selectedChamps.length
+      state.selectedChamps.splice(0, length)
+      console.log("All champions unselected")
     }
   },
   getters: {
