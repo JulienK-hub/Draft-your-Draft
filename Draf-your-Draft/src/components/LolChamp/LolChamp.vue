@@ -6,12 +6,18 @@
     <div v-if="!isHidden">
       <div class="label" v-for="label in champLabels">
         <button :id="label.id" v-on:click="deleteLabel($event)">supprimer</button>
-        <p>{{label.text}}</p>
+        <Label v-bind:Text="label.text"
+              v-bind:BGColor="label.colorBG"
+              v-bind:TextColor="label.color">
+        </Label>
       </div>
       <button v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
       <div v-if="!isAddLabelHidden">
         <div class="label" v-for="label in avalaibleLabels">
-          <p>{{label.text}}</p>
+          <Label v-bind:Text="label.text"
+                v-bind:BGColor="label.colorBG"
+                v-bind:TextColor="label.color">
+          </Label>
           <button :id="label.id" v-on:click="addLabel($event)">+</button>
         </div>
 
@@ -22,6 +28,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import Label from '../LabelsPage/Label.vue'
 
 export default {
   name: 'LolChamp',
@@ -40,7 +47,7 @@ export default {
       'filterLabels'
     ]),
     avalaibleLabels(){
-      return this.$store.getters.getAvailableLabelsChamp(this.champ.key)
+        return this.$store.getters.getAvailableLabelsChamp(this.champ.key)
     },
     champLabels(){
       return this.$store.getters.getLabelsByChampId(this.champ.key)
@@ -79,6 +86,9 @@ export default {
       }
       return isCorrespondingToLabels;
     },
+  },
+  components: {
+    Label
   }
 }
 </script>

@@ -3,13 +3,20 @@
     <div>
       <div class="active-label" v-for="label in this.labelsFilters">
         <button :id="label.id" v-on:click="deleteLabel($event)">supprimer</button>
-        <p>{{label.text}}</p>
+        <Label v-bind:Text="label.text"
+               v-bind:BGColor="label.colorBG"
+               v-bind:TextColor="label.color">
+
+        </Label>
       </div>
     </div>
     <button v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
     <div v-if="!isAddLabelHidden">
       <div class="label" v-for="label in this.avalaibleLabels">
-        <p>{{label.text}}</p>
+        <Label v-bind:Text="label.text"
+               v-bind:BGColor="label.colorBG"
+               v-bind:TextColor="label.color">
+        </Label>
         <button :id="label.id" v-on:click="addFilter($event)">+</button>
       </div>
     </div>
@@ -18,6 +25,7 @@
   
 <script>
 import { mapMutations, mapState } from 'vuex'
+import Label from '../LabelsPage/Label.vue'
 
 export default {
   name: "FilterVue",
@@ -44,6 +52,9 @@ export default {
       this.isAddLabelHidden = !this.isAddLabelHidde;
     },
   },
+  components: {
+    Label
+  }
 }
 </script>
   
