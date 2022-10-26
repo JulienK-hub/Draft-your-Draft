@@ -63,7 +63,7 @@ export default {
         unselectChampion: function (champion) {
             console.log("add " + champion.id + " unselected")
             this.removeUnderSelectedChamp(champion.key)
-            this.deleteSelectedChamp(champion)
+            this.deleteSelectedChamp(champion.key)
         },
         addOrRemoveUnderSelectedChamp: function (champion) {
             if (!this.removeUnderSelectedChamp(champion.key)) {
