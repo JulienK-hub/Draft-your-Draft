@@ -103,7 +103,7 @@ export default new Vuex.Store({
       }
       else{
         state.selectedChamps.push(champion)
-        console.log("add " + champion.id + "to selected champs")
+        console.log("add " + champion.id + " to selected champs")
       }
     },
     deleteSelectedChamp(state, championKey){
