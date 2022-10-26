@@ -2,17 +2,22 @@
   <div v-if="isFiltered()">
     <div v-on:click="isHidden = !isHidden">
       <img class="champ-icon" :src="champ.image.full" :alt="champ.id" />
-
     </div>
     <div v-if="!isHidden">
       <div class="label" v-for="label in champLabels">
         <button :id="label.id" v-on:click="deleteLabel($event)">supprimer</button>
-        <p>{{label.text}}</p>
+        <Label v-bind:Text="label.text"
+              v-bind:BGColor="label.colorBG"
+              v-bind:TextColor="label.color">
+        </Label>
       </div>
       <button v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
       <div v-if="!isAddLabelHidden">
-        <div class="label" v-for="label in this.avalaibleLabels">
-          <p>{{label.text}}</p>
+        <div class="label" v-for="label in avalaibleLabels">
+          <Label v-bind:Text="label.text"
+                v-bind:BGColor="label.colorBG"
+                v-bind:TextColor="label.color">
+          </Label>
           <button :id="label.id" v-on:click="addLabel($event)">+</button>
         </div>
 
@@ -23,6 +28,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import Label from '../LabelsPage/Label.vue'
 
 export default {
   name: 'LolChamp',
@@ -33,21 +39,26 @@ export default {
     return {
       isHidden: true,
       isAddLabelHidden: true,
-      champLabels: this.$store.getters.getLabelsByChampId(this.champ.key),
-      avalaibleLabels: this.$store.getters.getAvailableLabelsChamp(this.champ.key)
     }
   },
   computed: {
     ...mapState([
       'labels',
       'filterLabels'
-    ])
+    ]),
+    avalaibleLabels(){
+        return this.$store.getters.getAvailableLabelsChamp(this.champ.key)
+    },
+    champLabels(){
+      return this.$store.getters.getLabelsByChampId(this.champ.key)
+    }
+
   },
 
   methods: {
     ...mapMutations([
       'deleteChampionLabelByLabelId',
-      'addChampionLabel'
+      'addChampionLabel',
     ]),
     deleteLabel: function (event) {
       var championLabel = { "championKey": this.champ.key, "idLabel": event.currentTarget.id };
@@ -75,6 +86,9 @@ export default {
       }
       return isCorrespondingToLabels;
     },
+  },
+  components: {
+    Label
   }
 }
 </script>

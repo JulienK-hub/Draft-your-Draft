@@ -19,6 +19,7 @@ export default new Vuex.Store({
       { championKey: 84, idLabel: 0 }
     ],
     filterLabels: [],
+    selectedChamps: [],
     rules: [
       { id: 0, text: "Règle numéro 1", color: "black" },
       { id: 1, text: "Règle numéro 2", color: "black" },
@@ -97,9 +98,31 @@ export default new Vuex.Store({
       var rule = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
       state.rules.push(rule);
       console.log("rule created:", state.rules[state.rules.length - 1])
+    },
+    addSelectedChamp(state, champion){
+      if(state.selectedChamps.find(champ => champ.key == champion.key)){
+        console.log("Champion " + champion.id + " already selected")
+      }
+      else{
+        state.selectedChamps.push(champion)
+        console.log("add " + champion.id + "to selected champs")
+      }
+    },
+    deleteSelectedChamp(state, championKey){
+      let index = state.selectedChamps.findIndex(champ => champ.key == championKey)
+      state.selectedChamps.splice(index, 1)
+    },
+    EmptySelectedChamps(state){
+      var length = state.selectedChamps.length
+      state.selectedChamps.splice(0, length)
+      console.log("All champions unselected")
     }
   },
   getters: {
+    getSelectedChamps: (state) => () => {
+      return state.selectedChamps;
+    },
+
     getFilterLabels: (state) => () => {
       return state.filterLabels;
     },
