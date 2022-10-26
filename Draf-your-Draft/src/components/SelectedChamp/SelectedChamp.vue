@@ -1,7 +1,7 @@
 <template lang="">
     <div>
-    <div v-on:click.ctrl="unselectChampion(champion)" v-for="champion in selectedChampions">
-      <LolChamp   v-bind:champ="champion">
+    <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" v-for="champion in selectedChampions">
+      <LolChamp v-bind:champ="champion">
       </LolChamp>
     </div>
   </div>
@@ -14,7 +14,7 @@ export default {
     name: 'SelectedChamp',
     data() {
         return {
-            //selectedChampions : this.$store.getters.getSelectedChamps()
+            underSelectedChamp: []
         }
     },
     methods: {
@@ -25,7 +25,24 @@ export default {
       'deleteSelectedChamp'
     ]),
         unselectChampion: function(champion){
+            console.log("add " + champion.id + " unselected")
+            this.removeUnderSelectedChamp(champion.key)
             this.deleteSelectedChamp(champion)
+        },
+        addOrRemoveUnderSelectedChamp: function(champion){
+            if(!this.removeUnderSelectedChamp(champion.key)){
+                console.log("add " + champion.id + " to under selected champions")
+                this.underSelectedChamp.push(champion)
+            }
+        },
+        removeUnderSelectedChamp: function(championKey){
+            var index = 0
+            if( (index = this.underSelectedChamp.findIndex(champ => champ.key == championKey)) != -1){
+                console.log("Champion " + championKey + " under unselected")
+                this.underSelectedChamp.splice(index, 1)
+                return true
+            }
+            return false
         }
     },
     computed: mapState({

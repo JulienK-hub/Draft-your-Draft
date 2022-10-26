@@ -98,8 +98,13 @@ export default new Vuex.Store({
       console.log("rule created:", state.rules[state.rules.length - 1])
     },
     addSelectedChamp(state, champion){
-      state.selectedChamps.push(champion)
-      console.log("add " + champion.id + "to selected champs")
+      if(state.selectedChamps.find(champ => champ.key == champion.key)){
+        console.log("Champion " + champion.id + " already selected")
+      }
+      else{
+        state.selectedChamps.push(champion)
+        console.log("add " + champion.id + "to selected champs")
+      }
     },
     deleteSelectedChamp(state, championKey){
       let index = state.selectedChamps.findIndex(champ => champ.key == championKey)

@@ -3,7 +3,7 @@
     <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
     <input type="text" v-model="searchValue">
     <div v-on:click.ctrl="selectChampion(champion)" v-for="champion in filteredChampions">
-      <LolChamp  v-bind:champ="champion">
+      <LolChamp v-bind:champ="champion">
       </LolChamp>
     </div>
   </div>
@@ -27,7 +27,6 @@ export default {
       'addSelectedChamp'
     ]),
     selectChampion: function (champion) {
-      console.log("ouii")
       this.addSelectedChamp(champion)
     }
   },
