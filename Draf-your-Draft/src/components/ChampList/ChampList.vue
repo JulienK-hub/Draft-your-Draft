@@ -2,8 +2,8 @@
   <div class="champion-list">
     <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
     <input type="text" v-model="searchValue">
-    <div v-for="champion in filteredChampions">
-      <LolChamp v-bind:champ="champion">
+    <div v-on:click.ctrl="selectChampion(champion)" v-for="champion in filteredChampions">
+      <LolChamp  v-bind:champ="champion">
       </LolChamp>
     </div>
   </div>
@@ -12,6 +12,7 @@
 <script>
 import LolChamp from '../LolChamp/LolChamp.vue';
 import championsJSON from '../../assets/champion.json'
+import { mapMutations } from 'vuex'
 
 export default {
   name: "ChampList",
@@ -20,6 +21,15 @@ export default {
       champions: championsJSON,
       searchValue: '',
     };
+  },
+  methods: {
+    ...mapMutations([
+      'addSelectedChamp'
+    ]),
+    selectChampion: function (champion) {
+      console.log("ouii")
+      this.addSelectedChamp(champion)
+    }
   },
   computed: {
     filteredChampions() {
