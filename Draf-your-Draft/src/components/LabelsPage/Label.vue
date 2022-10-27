@@ -1,14 +1,24 @@
 <template>
-    <div class="label" 
+    <div id="text" class="label" 
     :style="{'background-color':BGColor, color: TextColor}">
         {{Text}}
   </div>
-  </template>
+</template>
   
   <script>
   export default {
-  props: ['Text','BGColor','TextColor'],
     name: 'Label',
+    props: {Text : String,  
+        BGColor: String,
+        TextColor: String},
+    
+    data: function () {
+    return {
+        counter: this.Text
+    }
+    },
+    methods:{
+    }
   }
   </script>
   
@@ -27,6 +37,8 @@
     white-space: nowrap;
     vertical-align: baseline;
     position: relative;
+    height: 1rem;
+    
      }
   </style>
   

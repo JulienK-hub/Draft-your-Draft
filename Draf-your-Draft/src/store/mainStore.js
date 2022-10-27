@@ -49,18 +49,7 @@ export default new Vuex.Store({
         }
       }
     },
-    createLabel(state, { newText, newColorBG, newColor }) {
-      var label = { id: state.labels.length, text: newText, colorBG: newColorBG, color: newColor }
-      state.labels.push(label);
-      console.log("label created:", state.labels[state.labels.length - 1])
-    },
-    deleteLabel(state,id){
-      let index = state.labels.findIndex(element => element.id == id);
-      console.log("delete label: ",id,"from index",index)
-      state.labels.splice(index,1);
-      this.commit('deleteChampionLabelByLabelId', id);
-    },
-    deleteChampionLabelByLabelId(state, championLabel) {
+    deleteChampionLabel(state, championLabel) {
       for (let i = 0; i < state.championsLabels.length; ++i) {
         if (state.championsLabels[i].championKey == championLabel.championKey &&
           state.championsLabels[i].idLabel == championLabel.idLabel) {

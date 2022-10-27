@@ -1,17 +1,17 @@
 <template>
-  <div v-if="isFiltered()">
+  <div v-if="isFiltered()" class="central">
     <div v-on:click="onClickIcon($event)">
       <img class="champ-icon" :src="champ.image.full" :alt="champ.id" />
     </div>
-    <div v-if="!isHidden">
+    <div class="scrollBarDiv" v-if="!isHidden">
       <div class="label" v-for="label in champLabels">
-        <button :id="label.id" v-on:click="deleteLabel($event)">supprimer</button>
+        <button  class="deleteBtn" :id="label.id" v-on:click="deleteLabel($event)">-</button>
         <Label v-bind:Text="label.text"
               v-bind:BGColor="label.colorBG"
               v-bind:TextColor="label.color">
         </Label>
       </div>
-      <button v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
+      <button v-on:click="isAddLabelHidden = !isAddLabelHidden">+</button>
       <div v-if="!isAddLabelHidden">
         <div class="label" v-for="label in avalaibleLabels">
           <Label v-bind:Text="label.text"
@@ -57,12 +57,13 @@ export default {
 
   methods: {
     ...mapMutations([
-      'deleteChampionLabelByLabelId',
+      'deleteChampionLabel',
       'addChampionLabel',
     ]),
     deleteLabel: function (event) {
+      console.log("abc")
       var championLabel = { "championKey": this.champ.key, "idLabel": event.currentTarget.id };
-      this.deleteChampionLabelByLabelId(championLabel);
+      this.deleteChampionLabel(championLabel);
       this.champLabels = this.$store.getters.getLabelsByChampId(this.champ.key);
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsChamp(this.champ.key)
     },
@@ -101,6 +102,25 @@ export default {
 </script>
   
 <style scoped>
-
+.champ-icon{
+  height: 100px;
+  width: 100px;
+}
+.scrollBarDiv {
+  margin:5px;
+  padding:5px;
+  background-color: transparent;
+  width: 80px;
+  height: auto;
+  overflow: auto;
+  text-align:justify;
+}
+.deleteBtn{
+  color: black;
+  border-radius: 50%;
+}
+.label{
+  font-size: 10px;
+}
 </style>
   

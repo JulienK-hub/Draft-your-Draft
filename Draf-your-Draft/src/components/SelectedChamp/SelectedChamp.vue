@@ -52,12 +52,12 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'deleteChampionLabelByLabelId',
+            'deleteChampionLabel',
             'addChampionLabel',
             'addSelectedChamp',
             'deleteSelectedChamp',
             'addChampionLabel',
-            'deleteChampionLabelByLabelId',
+            'deleteChampionLabel',
             'EmptySelectedChamps'
         ]),
         unselectChampion: function (champion) {
@@ -110,7 +110,7 @@ export default {
                 this.activeLabels.forEach(label => {
                     if( (championLabels.find(l => l.id == label.id)) ){
                         console.log("On lève le label \"" + label.text + "\" au champion " + champion.id)
-                        this.deleteChampionLabelByLabelId({ "championKey": champion.key, "idLabel": label.id})
+                        this.deleteChampionLabel({ "championKey": champion.key, "idLabel": label.id})
                     }
                 })
             })

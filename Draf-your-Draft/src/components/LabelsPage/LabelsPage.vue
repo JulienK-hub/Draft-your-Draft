@@ -8,6 +8,13 @@
       Draft
     </button>
     <div>
+      <FilterVue></FilterVue>
+      <div class="containerChampsList">
+        <ChampList class="champList1"></ChampList>
+        <SelectedChamp class="champList1"></SelectedChamp>
+      </div>
+    </div>
+    <div>
       <h2 class="title">Create a label</h2>
 
   Name : <input id="inputText" v-model="labelName" type="text"/>
@@ -26,11 +33,7 @@
   v-bind:BGColor="label.colorBG"
   v-bind:TextColor="label.color"/>
 </div>
-<div>
-    <FilterVue></FilterVue>
-    <ChampList></ChampList>
-    <SelectedChamp></SelectedChamp>
-  </div>
+
 </div>
 </template>
 
@@ -91,4 +94,12 @@ export default {
   background-color: red; /* Green */
   color: black;
 }
+.containerChampsList{
+  display: flex;
+  flex-direction: row;
+}
+.champList1{
+  width: 50%;
+}
+
 </style>

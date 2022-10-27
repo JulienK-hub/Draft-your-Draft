@@ -1,12 +1,15 @@
 <template>
-  <div class="champion-list">
-    <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
+  <div>
     <input type="text" v-model="searchValue">
+  <div class="champion-list scrollBarDiv">
+    <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
+    
     <div v-on:click.ctrl="selectChampion(champion)" v-for="champion in filteredChampions">
       <LolChamp v-bind:champ="champion">
       </LolChamp>
     </div>
   </div>
+</div>
 </template>
   
 <script>
@@ -52,10 +55,17 @@ export default {
 <style scoped>
 .champion-list {
   margin: auto;
-  width: 75%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
+  background-color: aqua;
+}
+.scrollBarDiv {
+  margin:5px;
+  padding:5px;
+  height: 500px;
+  overflow: auto;
+  text-align:justify;
 }
 </style>
   
