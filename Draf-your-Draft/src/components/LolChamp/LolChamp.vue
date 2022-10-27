@@ -1,6 +1,6 @@
 <template>
   <div v-if="isFiltered()">
-    <div v-on:click="isHidden = !isHidden">
+    <div v-on:click="onClickIcon($event)">
       <img class="champ-icon" :src="champ.image.full" :alt="champ.id" />
     </div>
     <div v-if="!isHidden">
@@ -86,6 +86,13 @@ export default {
       }
       return isCorrespondingToLabels;
     },
+    onClickIcon: function(event){
+      if(!event.ctrlKey){
+        this.isHidden = !this.isHidden
+      }
+        
+
+    }
   },
   components: {
     Label
