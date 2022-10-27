@@ -2,7 +2,7 @@
     <div>
         <div class="selected-champion-list">
             <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" v-for="champion in selectedChampions">
-                <LolChamp v-bind:champ="champion">
+                <LolChamp v-bind:champ="champion" v-bind:isInSelectedList="true">
                 </LolChamp>
             </div>
         </div>

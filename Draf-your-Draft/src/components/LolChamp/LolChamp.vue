@@ -34,6 +34,7 @@ export default {
   name: 'LolChamp',
   props: {
     champ: Object,
+    isInSelectedList: Boolean
   },
   data() {
     return {
@@ -75,6 +76,9 @@ export default {
       this.isAddLabelHidden = !this.isAddLabelHidde;
     },
     isFiltered: function () {
+      if(this.isInSelectedList)
+        return true;
+
       var isCorrespondingToLabels = true;
       for (var j = 0; j < this.filterLabels.length; ++j) {
         if (!this.champLabels.find(championLabel => championLabel.id == this.filterLabels[j].id)) {

@@ -5,7 +5,7 @@
     <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
     
     <div v-on:click.ctrl="selectChampion(champion)" v-for="champion in filteredChampions">
-      <LolChamp v-bind:champ="champion">
+      <LolChamp v-bind:champ="champion" v-bind:isInSelectedList="false">
       </LolChamp>
     </div>
   </div>
