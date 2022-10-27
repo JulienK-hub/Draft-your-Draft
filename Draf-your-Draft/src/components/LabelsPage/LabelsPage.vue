@@ -89,6 +89,7 @@ export default {
 .listLabels{
   display: inline-block;
   margin-left: 50px;
+  margin-bottom: 15px;
   flex-wrap: wrap;
 }
 .delete-button {
