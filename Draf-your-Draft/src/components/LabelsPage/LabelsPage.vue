@@ -27,7 +27,7 @@
     <button v-on:click="createLabel()">Validate</button>
 </div>
 <h2 class="title">List of labels</h2>
-<div v-for ="label in allLabels">
+<div class="listLabels" v-for ="label in allLabels">
 <button v-on:click="deleteLabel(label.id)" class="delete-button">x</button>
   <Label v-bind:Text="label.text"
   v-bind:BGColor="label.colorBG"
@@ -85,6 +85,11 @@ export default {
 <style scoped>
 .title {
   padding-right: 0%;
+}
+.listLabels{
+  display: inline-block;
+  margin-left: 50px;
+  flex-wrap: wrap;
 }
 .delete-button {
   color: black;
