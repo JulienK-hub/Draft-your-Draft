@@ -125,7 +125,12 @@ export default {
             this.EmptySelectedChamps()
         },
         unselectAllUnderSelection: function() {
+            this.underSelectedChamp.forEach(champ => {
+                document.getElementById(champ.key).removeAttribute('class')
+
+            })
             this.underSelectedChamp.splice(0, this.underSelectedChamp.length)
+            
         }
     },
     computed: {
