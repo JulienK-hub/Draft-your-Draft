@@ -3,6 +3,7 @@
     
     <FilterVue></FilterVue>
     <input type="text" v-model="searchValue">
+    <button v-on:click="selectAll()">Select all</button>
   <div class="champion-list scrollBarDiv">
     <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
     
@@ -34,6 +35,16 @@ export default {
     ]),
     selectChampion: function (champion) {
       this.addSelectedChamp(champion)
+    },
+    fusionChampionsArrays: function(array1, array2){
+      let array3 = array1.concat(array2);
+      array3 = [...new Set([...array1,...array2])]
+      return array3
+    },
+    selectAll: function (){
+      var filteredLabelsChampions = this.$store.getters.getFilteredChampions()
+      const intersection = filteredLabelsChampions.filter(element => this.filteredChampions.includes(element));
+      this.$store.commit('selectChampions', intersection);
     }
   },
   computed: {

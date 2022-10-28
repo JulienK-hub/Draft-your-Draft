@@ -92,7 +92,7 @@ export default {
       return isCorrespondingToLabels;
     },
     onClickIcon: function(event){
-      if(!event.ctrlKey){
+      if(!event.ctrlKey && !event.shiftKey){
         this.isHidden = !this.isHidden
       }
         

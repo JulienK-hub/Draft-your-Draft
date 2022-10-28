@@ -8,7 +8,6 @@
       Draft
     </button>
     <div>
-      <button v-on:click="selectAll()">Select all</button>
       <div class="containerChampsList">
         <ChampList class="champList1"></ChampList>
         <SelectedChamp class="champList1"></SelectedChamp>
@@ -70,10 +69,6 @@ export default {
         },
         deleteLabel(id){
           this.$store.commit('deleteLabel',id);
-        },
-        selectAll(){
-          var filteredChampions = this.$store.getters.getFilteredChampions()
-          this.$store.commit('selectChampions', filteredChampions);
         }
     },
     components: { 
