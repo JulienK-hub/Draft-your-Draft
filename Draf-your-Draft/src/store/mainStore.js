@@ -2,6 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import champData from '../assets/champion.json'
 
+function isFiltered (champLabels, filterLabels)  {
+  var isCorrespondingToLabels = true;
+  for (var j = 0; j < filterLabels.length; ++j) {
+    if (!champLabels.find(championLabel => championLabel.id == filterLabels[j].id)) {
+      isCorrespondingToLabels = false;
+      break;
+    }
+    else {
+      isCorrespondingToLabels = true;
+    }
+  }
+  return isCorrespondingToLabels;
+}
 
 Vue.use(Vuex)
 // Create a new store instance.
@@ -105,9 +118,23 @@ export default new Vuex.Store({
       var length = state.selectedChamps.length
       state.selectedChamps.splice(0, length)
       console.log("All champions unselected")
-    }
+    },
+    selectChampions(state, champions){
+      state.selectedChamps = champions.slice();
+    },
   },
   getters: {
+    getFilteredChampions: (state, getters) => () =>{ 
+      var filteredChampions = []
+      state.selectedChamps = champData.slice();
+      champData.forEach(champion => {
+        var labels = getters.getLabelsByChampId(champion.key)
+        if(isFiltered(labels, state.filterLabels)){
+          filteredChampions.push(champion)
+        }
+      })
+      return filteredChampions;
+    },
     getSelectedChamps: (state) => () => {
       return state.selectedChamps;
     },
