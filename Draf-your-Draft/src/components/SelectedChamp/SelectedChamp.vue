@@ -1,8 +1,9 @@
 <template lang="">
-    <div>
-        <div class="selected-champion-list">
-            <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" v-for="champion in selectedChampions">
-                <LolChamp v-bind:champ="champion" v-bind:isInSelectedList="true">
+    <div >
+        <div class="champList">
+            <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" 
+            v-for="champion in selectedChampions">
+                <LolChamp :id="champion.key" v-bind:champ="champion" v-bind:isInSelectedList="true">
                 </LolChamp>
             </div>
         </div>
@@ -69,6 +70,10 @@ export default {
             if (!this.removeUnderSelectedChamp(champion.key)) {
                 console.log("add " + champion.id + " to under selected champions")
                 this.underSelectedChamp.push(champion)
+                document.getElementById(champion.key).setAttribute('class','selectedChamps')
+            }
+            else{
+                document.getElementById(champion.key).removeAttribute('class')
             }
         },
         removeUnderSelectedChamp: function (championKey) {
@@ -138,6 +143,19 @@ export default {
 
 }
 </script>
-<style lang="">
-    
+<style scoped>
+.champList{
+    display: flex;
+    flex-wrap: wrap;
+    border: 4mm ridge rgb(112, 117, 121);
+    background: radial-gradient(rgb(255, 0, 0,0.7), rgb(81, 153, 221)80%);
+    margin:5px;
+    padding:5px;
+    height: 400px;
+    overflow: auto;
+    text-align:justify;
+} 
+.selectedChamps{
+    border: 4px solid rgb(56, 216, 44)
+} 
 </style>

@@ -8,7 +8,6 @@
       Draft
     </button>
     <div>
-      <FilterVue></FilterVue>
       <div class="containerChampsList">
         <ChampList class="champList1"></ChampList>
         <SelectedChamp class="champList1"></SelectedChamp>
@@ -40,7 +39,6 @@
 <script>
 
 import ChampList from '../ChampList/ChampList.vue';
-import FilterVue from '../Filter/Filter.vue'
 import Label from "./Label.vue";
 import SelectedChamp from '../SelectedChamp/SelectedChamp.vue'
 
@@ -76,7 +74,6 @@ export default {
     components: { 
       Label,
       ChampList,
-      FilterVue,
       SelectedChamp 
     }
 }

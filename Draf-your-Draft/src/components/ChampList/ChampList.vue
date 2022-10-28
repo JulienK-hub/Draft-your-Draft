@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="championListBackGround">
+    
+    <FilterVue></FilterVue>
     <input type="text" v-model="searchValue">
   <div class="champion-list scrollBarDiv">
     <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
@@ -14,6 +16,7 @@
   
 <script>
 import LolChamp from '../LolChamp/LolChamp.vue';
+import FilterVue from '../Filter/Filter.vue'
 import championsJSON from '../../assets/champion.json'
 import { mapMutations } from 'vuex'
 
@@ -48,17 +51,19 @@ export default {
       return tempChampions
     }
   },
-  components: { LolChamp }
+  components: { LolChamp,FilterVue, }
 }
 </script>
   
 <style scoped>
+.championListBackGround{
+  background: linear-gradient(Green, brown 100%);
+}
 .champion-list {
   margin: auto;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  background-color: aqua;
 }
 .scrollBarDiv {
   margin:5px;
