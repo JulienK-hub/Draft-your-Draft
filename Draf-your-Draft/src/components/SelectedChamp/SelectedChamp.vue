@@ -1,5 +1,6 @@
 <template lang="">
     <div >
+        <button class="button actions" v-on:click="unselectAll()">Unselect all</button>
         <div class="champList">
             <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" 
             v-for="champion in selectedChampions">
@@ -8,16 +9,20 @@
             </div>
         </div>
             <div class="config-selected">
-                <div class="active-label" v-for="label in activeLabels">
-                    <button :id="label.id" v-on:click="deleteActiveLabel(label)">supprimer</button>
-                    <Label v-bind:Text="label.text"
-                            v-bind:BGColor="label.colorBG"
-                            v-bind:TextColor="label.color">
-                    </Label>
+                <div class="tg">                    
+                    <button class="button actions"  v-on:click="isAddLabelHidden = !isAddLabelHidden">
+                        Ajouter label
+                        </button>
+                    <div class="active-label" v-for="label in activeLabels">                        
+                        <Label v-bind:Text="label.text"
+                                v-bind:BGColor="label.colorBG"
+                                v-bind:TextColor="label.color">
+                        </Label>
+                        <button :id="label.id" v-on:click="deleteActiveLabel(label)">-</button>
+                    </div>
                 </div>
-          
-                <button v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
-                <div v-if="!isAddLabelHidden">
+
+                <div class="addLabels" v-if="!isAddLabelHidden">
                     <div class="label" v-for="label in availableLabels">
                         <Label v-bind:Text="label.text"
                                 v-bind:BGColor="label.colorBG"
@@ -26,14 +31,20 @@
                         <button :id="label.id" v-on:click="addActiveLabel(label)">+</button>
                     </div>
                 </div>
-                <button v-on:click="addActivesLabelsToChampions(underSelectedChamp)">Add label to selection</button>
-                <button v-on:click="deleteActivesLabelsToChampions(underSelectedChamp)">Retrieve label from selection</button>
+                <div class="columnButtons">
+                    <div class="rowButtons">
+                    <button class="button selection" v-on:click="addActivesLabelsToChampions(underSelectedChamp)">Add label to selection</button>
+                    <button class="button selection" v-on:click="deleteActivesLabelsToChampions(underSelectedChamp)">Remove label from selection</button>
+                    </div>
+                     <div class="rowButtons">
+                    <button class="button all" v-on:click="addActivesLabelsToChampions(selectedChampions)">Add label to all</button>
+                    <button class="button all" v-on:click="deleteActivesLabelsToChampions(selectedChampions)">Remove label from all</button>
+                    </div>
+                </div>
+                
 
-                <button v-on:click="addActivesLabelsToChampions(selectedChampions)">Add label to all</button>
-                <button v-on:click="deleteActivesLabelsToChampions(selectedChampions)">Retrieve label from all</button>
-
-                <button v-on:click="unselectAllUnderSelection()">Unselect all</button>
-                <button v-on:click="unselectAll()">Empty</button>
+                <!--<button v-on:click="unselectAllUnderSelection()">Unselect all</button> pour déselectionner la sous-selection -->
+                
             </div>
     </div>
 </template>
@@ -70,9 +81,9 @@ export default {
             if (!this.removeUnderSelectedChamp(champion.key)) {
                 console.log("add " + champion.id + " to under selected champions")
                 this.underSelectedChamp.push(champion)
-                document.getElementById(champion.key).setAttribute('class','selectedChamps')
+                document.getElementById(champion.key).setAttribute('class', 'selectedChamps')
             }
-            else{
+            else {
                 document.getElementById(champion.key).removeAttribute('class')
             }
         },
@@ -98,39 +109,39 @@ export default {
                 console.log("Delete label \"" + label.text + "\" to active labels")
             }
         },
-        addActivesLabelsToChampions: function (champions){
-            champions.forEach(champion => {
-                var championLabels = this.$store.getters.getLabelsByChampId(champion.key)
-                this.activeLabels.forEach(label =>{
-                    if( !championLabels.find(l => l.id == label.id)){
-                        console.log("On ajoute le label \"" + label.text + "\" au champion " + champion.id)
-                        this.addChampionLabel({ "championKey": champion.key, "idLabel": label.id})
-                    }
-                })
-            })
-        },
-        deleteActivesLabelsToChampions: function (champions){
+        addActivesLabelsToChampions: function (champions) {
             champions.forEach(champion => {
                 var championLabels = this.$store.getters.getLabelsByChampId(champion.key)
                 this.activeLabels.forEach(label => {
-                    if( (championLabels.find(l => l.id == label.id)) ){
-                        console.log("On lève le label \"" + label.text + "\" au champion " + champion.id)
-                        this.deleteChampionLabel({ "championKey": champion.key, "idLabel": label.id})
+                    if (!championLabels.find(l => l.id == label.id)) {
+                        console.log("On ajoute le label \"" + label.text + "\" au champion " + champion.id)
+                        this.addChampionLabel({ "championKey": champion.key, "idLabel": label.id })
                     }
                 })
             })
         },
-        unselectAll: function (){
+        deleteActivesLabelsToChampions: function (champions) {
+            champions.forEach(champion => {
+                var championLabels = this.$store.getters.getLabelsByChampId(champion.key)
+                this.activeLabels.forEach(label => {
+                    if ((championLabels.find(l => l.id == label.id))) {
+                        console.log("On lève le label \"" + label.text + "\" au champion " + champion.id)
+                        this.deleteChampionLabel({ "championKey": champion.key, "idLabel": label.id })
+                    }
+                })
+            })
+        },
+        unselectAll: function () {
             this.underSelectedChamp.splice(0, this.underSelectedChamp.length)
             this.EmptySelectedChamps()
         },
-        unselectAllUnderSelection: function() {
+        unselectAllUnderSelection: function () {
             this.underSelectedChamp.forEach(champ => {
                 document.getElementById(champ.key).removeAttribute('class')
 
             })
             this.underSelectedChamp.splice(0, this.underSelectedChamp.length)
-            
+
         }
     },
     computed: {
@@ -148,19 +159,106 @@ export default {
 
 }
 </script>
+
 <style scoped>
-.champList{
+.addLabels {
+    border: solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 2%;
+}
+
+.tg {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.active-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.columnButtons {
+    display: flex;
+    flex-direction: row;
+}
+
+.champList {
     display: flex;
     flex-wrap: wrap;
-    border: 4mm ridge rgb(112, 117, 121);
-    background: radial-gradient(rgb(255, 0, 0,0.7), rgb(81, 153, 221)80%);
-    margin:5px;
-    padding:5px;
+    border: 4mm ridge #C8AA6E;
+    margin: 5px;
+    padding: 5px;
     height: 400px;
     overflow: auto;
-    text-align:justify;
-} 
-.selectedChamps{
-    border: 4px solid rgb(56, 216, 44)
-} 
+    text-align: justify;
+}
+
+.selectedChamps {
+    border: 7px ridge #0397AB
+}
+
+/* https://github.com/doceazedo/hextech-css/blob/master/LICENSE */
+.button {
+    font-family: 'Beaufort';
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #242731;
+    padding: .45rem 2rem;
+    margin-bottom: 5px;
+}
+
+/* ACTION TO SELECTION
+   ====================== */
+
+.button.selection {
+    border: 3px solid;
+    border-radius: 0;
+    background: linear-gradient(#0AC8B9, #0397AB);
+    border-image: #242731;
+    transition: all ease .25s;
+}
+
+.button.selection:not([disabled]):hover {
+    box-shadow: 0 0 5px 2px rgba(192, 252, 253, .4), inset 0 0 5px 2px rgba(192, 252, 253, .3);
+    border: 3px solid #CDFAFA;
+    color: #CDFAFA;
+    cursor: pointer;
+}
+
+/* ACTION TO ALL
+   ================*/
+.button.all {
+    border: 3px solid;
+    border-radius: 0;
+    background: linear-gradient(#f6c97f, #ca9d4b);
+    border-image: #242731;
+    transition: all ease .25s;
+}
+
+.button.all:not([disabled]):hover {
+    box-shadow: 0 0 5px 2px rgba(192, 252, 253, .4), inset 0 0 5px 2px rgba(192, 252, 253, .3);
+    border: 3px solid #eee2cc;
+    color: #eee2cc;
+    cursor: pointer;
+}
+
+/* ACTIONS
+   ========== */
+.button.actions {
+    border: 3px solid;
+    border-radius: 0;
+    background: #f3f3f3;
+    transition: all ease .25s;
+}
+
+.button.actions:hover {
+    border: 3px solid grey;
+    color: white;
+    background: black;
+    cursor: pointer;
+}
 </style>

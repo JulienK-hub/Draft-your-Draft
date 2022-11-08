@@ -125,6 +125,7 @@ export default {
 }
 .label{
   font-size: 10px;
+  display: flex;
 }
 </style>
   
