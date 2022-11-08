@@ -1,5 +1,6 @@
 <template lang="">
     <div >
+        <button class="button actions" v-on:click="unselectAll()">Unselect all</button>
         <div class="champList">
             <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" 
             v-for="champion in selectedChampions">
@@ -15,8 +16,10 @@
                             v-bind:TextColor="label.color">
                     </Label>
                 </div>
-          
-                <button v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
+                    <button class="button actions"  v-on:click="isAddLabelHidden = !isAddLabelHidden">
+                      Ajouter label
+                    </button>
+                
                 <div v-if="!isAddLabelHidden">
                     <div class="label" v-for="label in availableLabels">
                         <Label v-bind:Text="label.text"
@@ -26,14 +29,20 @@
                         <button :id="label.id" v-on:click="addActiveLabel(label)">+</button>
                     </div>
                 </div>
-                <button v-on:click="addActivesLabelsToChampions(underSelectedChamp)">Add label to selection</button>
-                <button v-on:click="deleteActivesLabelsToChampions(underSelectedChamp)">Retrieve label from selection</button>
+                <div class="columnButtons">
+                    <div class="rowButtons">
+                    <button class="button selection" v-on:click="addActivesLabelsToChampions(underSelectedChamp)">Add label to selection</button>
+                    <button class="button selection" v-on:click="deleteActivesLabelsToChampions(underSelectedChamp)">Remove label from selection</button>
+                    </div>
+                     <div class="rowButtons">
+                    <button class="button all" v-on:click="addActivesLabelsToChampions(selectedChampions)">Add label to all</button>
+                    <button class="button all" v-on:click="deleteActivesLabelsToChampions(selectedChampions)">Remove label from all</button>
+                    </div>
+                </div>
+                
 
-                <button v-on:click="addActivesLabelsToChampions(selectedChampions)">Add label to all</button>
-                <button v-on:click="deleteActivesLabelsToChampions(selectedChampions)">Retrieve label from all</button>
-
-                <button v-on:click="unselectAllUnderSelection()">Unselect all</button>
-                <button v-on:click="unselectAll()">Empty</button>
+                <!--<button v-on:click="unselectAllUnderSelection()">Unselect all</button> pour déselectionner la sous-selection -->
+                
             </div>
     </div>
 </template>
@@ -148,12 +157,16 @@ export default {
 
 }
 </script>
+
 <style scoped>
+.columnButtons{
+    display: flex;
+    flex-direction: row;
+}
 .champList{
     display: flex;
     flex-wrap: wrap;
-    border: 4mm ridge rgb(112, 117, 121);
-    background: radial-gradient(rgb(255, 0, 0,0.7), rgb(81, 153, 221)80%);
+    border: 4mm ridge #C8AA6E;
     margin:5px;
     padding:5px;
     height: 400px;
@@ -161,6 +174,66 @@ export default {
     text-align:justify;
 } 
 .selectedChamps{
-    border: 4px solid rgb(56, 216, 44)
+    border: 7px ridge #0397AB
 } 
+
+  /* https://github.com/doceazedo/hextech-css/blob/master/LICENSE */
+  .button {
+    font-family: 'Beaufort';
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #242731;
+    padding: .45rem 2rem;
+    margin-bottom: 5px;
+  }
+  /* ACTION TO SELECTION
+   ====================== */
+
+.button.selection {
+    border: 3px solid;
+    border-radius: 0;
+    background: linear-gradient(#0AC8B9, #0397AB) ;
+    border-image: #242731;
+    transition: all ease .25s;
+  }
+  
+  .button.selection:not([disabled]):hover {
+    box-shadow: 0 0 5px 2px rgba(192,252,253,.4), inset 0 0 5px 2px rgba(192,252,253,.3);
+    border: 3px solid #CDFAFA;
+    color:#CDFAFA ;
+    cursor: pointer;
+  }
+
+  /* ACTION TO ALL
+   ================*/
+  .button.all {
+    border: 3px solid;
+    border-radius: 0;
+    background: linear-gradient(#f6c97f, #ca9d4b) ;
+    border-image: #242731;
+    transition: all ease .25s;
+  }
+  
+  .button.all:not([disabled]):hover {
+    box-shadow: 0 0 5px 2px rgba(192,252,253,.4), inset 0 0 5px 2px rgba(192,252,253,.3);
+    border: 3px solid #eee2cc;
+    color:#eee2cc ;
+    cursor: pointer;
+  }
+  /* ACTIONS
+   ========== */
+  .button.actions {
+    border: 3px solid;
+    border-radius: 0;
+    background: #f3f3f3 ;
+    border-image: #242731;
+    transition: all ease .25s;
+  }
+  
+  .button.actions:not([disabled]):hover {
+    box-shadow: 0 0 5px 2px rgba(192,252,253,.4), inset 0 0 5px 2px rgba(192,252,253,.3);
+    border: 3px solid #A09B8C;
+    color:#a3a3a3 ;
+    cursor: pointer;
+  }
 </style>

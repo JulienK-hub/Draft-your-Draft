@@ -25,7 +25,6 @@
   <style scoped>
   .label {
     box-sizing: border-box;
-    white-space: nowrap;
     border-radius: 0.4em;
     padding: 0.12em 0.4em 0.14em;
     margin: 0 0.42em;
