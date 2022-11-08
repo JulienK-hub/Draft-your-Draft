@@ -4,13 +4,15 @@
 
     <h1>Page de Draft</h1>
 
-    <div class="labelsRulesButton test">
-      <button v-on:click="goToPage('/LabelsPage')">Labels gestion</button>
-      <button v-on:click="goToPage('/RulesPage')">Rules gestion</button>
+    <div class="labelsRulesButtons test">
+      <button class="button" v-on:click="goToPage('/LabelsPage')">Labels</button>
+      <button class="button" v-on:click="goToPage('/RulesPage')">Rules</button>
     </div>
 
     <div class="side test">
-      <h1>Choix du side</h1>
+      <p>You are</p>
+      <button class="button buttonBlue">Blue</button>
+      <button class="button buttonRed">Red</button>
     </div>
 
     <div class="selectChampion test">
@@ -62,7 +64,7 @@ export default {
   name: 'DraftPage',
   data() {
     return {
-      rulesList : this.$store.getters.getRules
+      rulesList: this.$store.getters.getRules
     }
   },
   methods: {
@@ -74,6 +76,53 @@ export default {
 </script>
 
 <style scoped>
+.button {
+  background-image: linear-gradient(to right, lightgrey 0%, white 51%, lightgrey 100%);
+  padding: 5px 20px;
+  margin: 10px;
+  text-align: center;
+  font-size: medium;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: black;
+  display: online-block;
+}
+
+.button:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: black;
+  text-decoration: none;
+}
+
+.side {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;  
+  font-size: medium;
+}
+
+.buttonBlue {
+  background-image: linear-gradient(to right, blue 0%, white 50%, blue 100%);
+}
+.buttonBlue:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: black;
+  text-decoration: none;
+}
+
+.buttonRed {
+  background-image: linear-gradient(to left, white 0%, red 50%, white 100%);
+}
+.buttonRed:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: black;
+  text-decoration: none;
+}
+
+
 .test {
   border: solid;
 }
@@ -85,8 +134,7 @@ export default {
   padding: 1%;
 }
 
-.blueSideBans,
-.redSideBans {
+.blueSideBans, .redSideBans {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
