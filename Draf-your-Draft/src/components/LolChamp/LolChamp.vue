@@ -109,10 +109,8 @@ export default {
   width: 100px;
 }
 .scrollBarDiv {
-  margin:5px;
-  padding:5px;
   background-color: transparent;
-  width: 80px;
+  width: 95px;
   height: auto;
   overflow: auto;
 }
@@ -132,7 +130,7 @@ export default {
   background-image: url(../../assets/minus.png);
 }
 .showLabel{
-  position: center;
+  margin-left: 25px;
   margin-bottom: 5px;
 }
 

@@ -111,5 +111,24 @@ export default {
     background: black;
     cursor: pointer;
 }
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient( rgb(207, 207, 207),  #5B5A56 ); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3C3C41; 
+}
 </style>
   
