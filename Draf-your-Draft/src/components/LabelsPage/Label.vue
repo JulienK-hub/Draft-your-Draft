@@ -24,18 +24,14 @@
   
   <style scoped>
   .label {
-    box-sizing: border-box;
     border-radius: 0.4em;
     padding: 0.12em 0.4em 0.14em;
-    margin: 0 0.42em;
+    margin-bottom: 5%;
     text-align: center;
     font-size: 0.80em;
     font-weight: 700;
-    line-height: 1;
     display: inline;
     white-space: nowrap;
-    vertical-align: baseline;
-    position: relative;
     height: 1rem;
     
      }

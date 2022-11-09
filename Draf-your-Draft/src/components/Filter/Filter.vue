@@ -10,7 +10,7 @@
         </Label>
       </div>
     </div>
-    <button v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
+    <button class="button actions" v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
     <div v-if="!isAddLabelHidden">
       <div class="label" v-for="label in this.avalaibleLabels">
         <Label v-bind:Text="label.text"
@@ -59,6 +59,29 @@ export default {
 </script>
   
 <style scoped>
+/* ACTIONS
+   ========== */
+   .button {
+    font-family: 'Beaufort';
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #242731;
+    padding: .45rem 2rem;
+    margin-bottom: 5px;
+}
 
+.button.actions {
+    border: 3px solid;
+    border-radius: 0;
+    background: #f3f3f3;
+    transition: all ease .25s;
+}
+
+.button.actions:hover {
+    border: 3px solid grey;
+    color: white;
+    background: black;
+    cursor: pointer;
+}
 </style>
   

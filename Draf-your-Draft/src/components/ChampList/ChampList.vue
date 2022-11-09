@@ -3,7 +3,7 @@
     
     <FilterVue></FilterVue>
     <input type="text" v-model="searchValue">
-    <button v-on:click="selectAll()">Select all</button>
+    <button class="button actions" v-on:click="selectAll()">Select all</button>
   <div class="champion-list scrollBarDiv">
     <!-- Faut rajouter un truc pour prendre que les infos qui nous intéressent pour opti-->
     
@@ -68,7 +68,9 @@ export default {
   
 <style scoped>
 .championListBackGround{
-  background: linear-gradient(Green, brown 100%);
+  background: url(../../assets/champ.png);
+  background-position: center;
+  background-size: 10%;
 }
 .champion-list {
   margin: auto;
@@ -82,6 +84,32 @@ export default {
   height: 500px;
   overflow: auto;
   text-align:justify;
+}
+
+
+/* ACTIONS
+   ========== */
+   .button {
+    font-family: 'Beaufort';
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #242731;
+    padding: .45rem 2rem;
+    margin-bottom: 5px;
+}
+
+.button.actions {
+    border: 3px solid;
+    border-radius: 0;
+    background: #f3f3f3;
+    transition: all ease .25s;
+}
+
+.button.actions:hover {
+    border: 3px solid grey;
+    color: white;
+    background: black;
+    cursor: pointer;
 }
 </style>
   

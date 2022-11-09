@@ -195,6 +195,10 @@ export default {
     height: 400px;
     overflow: auto;
     text-align: justify;
+    background: url(../../assets/assassinIcon.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60%;
 }
 
 .selectedChamps {

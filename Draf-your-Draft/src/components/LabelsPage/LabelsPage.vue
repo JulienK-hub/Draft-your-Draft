@@ -26,7 +26,7 @@
     <button v-on:click="createLabel()">Validate</button>
 </div>
 <h2 class="title">List of labels</h2>
-<div class="listLabels" v-for ="label in allLabels">
+<div class="listLabels" v-for="label in allLabels">
 <button v-on:click="deleteLabel(label.id)" class="delete-button">x</button>
   <Label v-bind:Text="label.text"
   v-bind:BGColor="label.colorBG"
@@ -99,10 +99,11 @@ export default {
 }
 .containerChampsList{
   display: flex;
-  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 2%;
 }
 .champList1{
-  width: 50%;
+  width: 45%;
 }
 
 </style>

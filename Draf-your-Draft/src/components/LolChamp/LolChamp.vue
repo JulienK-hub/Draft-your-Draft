@@ -5,22 +5,20 @@
     </div>
     <div class="scrollBarDiv" v-if="!isHidden">
       <div class="label" v-for="label in champLabels">
-        <button  class="deleteBtn" :id="label.id" v-on:click="deleteLabel($event)">-</button>
+        <div  class="minus" :id="label.id" v-on:click="deleteLabel($event)"></div>
         <Label v-bind:Text="label.text"
               v-bind:BGColor="label.colorBG"
               v-bind:TextColor="label.color">
         </Label>
       </div>
-      <button v-on:click="isAddLabelHidden = !isAddLabelHidden">+</button>
+      <button class="showLabel" v-on:click="isAddLabelHidden = !isAddLabelHidden">labels</button>  
       <div v-if="!isAddLabelHidden">
-        <div class="label" v-for="label in avalaibleLabels">
+        <div class="label" :id="label.id" v-on:click="addLabel($event)" v-for="label in avalaibleLabels">
           <Label v-bind:Text="label.text"
                 v-bind:BGColor="label.colorBG"
                 v-bind:TextColor="label.color">
           </Label>
-          <button :id="label.id" v-on:click="addLabel($event)">+</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -117,15 +115,25 @@ export default {
   width: 80px;
   height: auto;
   overflow: auto;
-  text-align:justify;
 }
 .deleteBtn{
   color: black;
   border-radius: 50%;
 }
 .label{
-  font-size: 10px;
   display: flex;
 }
+.minus { 
+  min-width: 20px;
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(../../assets/minus.png);
+}
+.showLabel{
+  position: center;
+  margin-bottom: 5px;
+}
+
 </style>
   
