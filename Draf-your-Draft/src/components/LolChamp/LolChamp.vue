@@ -127,6 +127,7 @@ export default {
   min-width: 20px;
   background-size: 70%;
   background-position: center;
+  margin-bottom: 5px;
   background-repeat: no-repeat;
   background-image: url(../../assets/minus.png);
 }
