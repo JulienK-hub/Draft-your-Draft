@@ -187,6 +187,7 @@ export default {
 }
 
 .champList {
+    justify-content: center;
     display: flex;
     flex-wrap: wrap;
     border: 4mm ridge #C8AA6E;
@@ -232,25 +233,6 @@ export default {
     color: #CDFAFA;
     cursor: pointer;
 }
-/* CUSTOM SCROLLBAR */
-::-webkit-scrollbar {
-  width: 20px;
-}
-
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient( rgb(207, 207, 207),  #5B5A56 ); 
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3C3C41; 
-}
-
 /* ACTION TO ALL
    ================*/
 .button.all {
@@ -268,19 +250,4 @@ export default {
     cursor: pointer;
 }
 
-/* ACTIONS
-   ========== */
-.button.actions {
-    border: 3px solid;
-    border-radius: 0;
-    background: #f3f3f3;
-    transition: all ease .25s;
-}
-
-.button.actions:hover {
-    border: 3px solid grey;
-    color: white;
-    background: black;
-    cursor: pointer;
-}
 </style>

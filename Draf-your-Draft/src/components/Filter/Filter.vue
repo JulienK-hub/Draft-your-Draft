@@ -70,18 +70,5 @@ export default {
     margin-bottom: 5px;
 }
 
-.button.actions {
-    border: 3px solid;
-    border-radius: 0;
-    background: #f3f3f3;
-    transition: all ease .25s;
-}
-
-.button.actions:hover {
-    border: 3px solid grey;
-    color: white;
-    background: black;
-    cursor: pointer;
-}
 </style>
   

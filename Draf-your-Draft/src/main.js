@@ -7,7 +7,7 @@ import store from './store/mainStore'
 import Vuex from 'vuex'
 Vue.config.productionTip = false
 /* eslint-disable no-new */
-
+import './assets/css/global.css';
 new Vue({
   el: '#app',
   router,
