@@ -28,11 +28,11 @@
     padding: 0.12em 0.4em 0.14em;
     margin-bottom: 5%;
     text-align: center;
-    font-size: 0.80em;
     font-weight: 700;
     display: inline;
     white-space: nowrap;
     height: 1rem;
+    font-family: 'spiegel';
     
      }
   </style>

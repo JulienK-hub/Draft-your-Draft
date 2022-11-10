@@ -197,6 +197,8 @@ export default {
     overflow: auto;
     text-align: justify;
     background: url(../../assets/assassinIcon.png);
+    background-blend-mode: lighten;
+    background-color: rgb(255, 255, 255,0.1);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 60%;

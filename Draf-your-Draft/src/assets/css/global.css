@@ -3,6 +3,23 @@
     padding-bottom: 10px;
   }
 
+
+h2{
+    margin-top: 0;
+    padding-top: 50px;
+    font-size: 45px;
+    font-style: italic;
+}
+
+input[type="color"] {
+	border: none;
+	width: 25px;
+	height: 25px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
 /* CUSTOM SCROLLBAR */
 ::-webkit-scrollbar {
     width: 20px;

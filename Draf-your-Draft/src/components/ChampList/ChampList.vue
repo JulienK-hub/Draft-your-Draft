@@ -1,5 +1,5 @@
 <template>
-  <div class="championListBackGround">
+  <div>
     
     <FilterVue></FilterVue>
     <input type="text" v-model="searchValue">
@@ -67,11 +67,7 @@ export default {
 </script>
   
 <style scoped>
-.championListBackGround{
-  background: url(../../assets/champ.png);
-  background-position: center;
-  background-size: 10%;
-}
+
 .champion-list {
   margin: auto;
   display: flex;

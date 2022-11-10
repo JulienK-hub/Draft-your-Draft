@@ -25,4 +25,14 @@ export default {
   color: black;
   margin-top: 60px;
 }
+@font-face {
+  font-family: "spiegel";
+  src: local("spiegel"),
+   url(./fonts/spiegel.ttf) format("truetype");
+}
+@font-face {
+  font-family: "spiegel-bold";
+  src: local("spiegel-bold"),
+   url(./fonts/spiegel-bold.ttf) format("truetype");
+}
 </style>

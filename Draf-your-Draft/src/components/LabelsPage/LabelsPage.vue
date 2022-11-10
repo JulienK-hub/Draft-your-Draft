@@ -1,35 +1,37 @@
 <template>
-  <div>
+  <div class="background">
     <div class="menu">
       <h1>Label gestion</h1>
       <button v-on:click="goToPage('/RulesPage')">Rules gestion</button>
       <button v-on:click="goToPage('/DraftPage')">Draft</button>
     </div>
-    <div class="containerChampsList">
+    <div class="containerChampsLists">
       <ChampList class="champList1"></ChampList>
       <SelectedChamp class="champList1"></SelectedChamp>
     </div>
     
     <div class="createLabel">
-      <h2 class="title">Create a label</h2>
-      Name : <input id="inputText" v-model="labelName" type="text" /> Color :
+      <h2 class="title">CREATE A LABEL</h2>
+      <div class="labelParameters">
+      <a>Name :</a> <input id="inputText" v-model="labelName" type="text" /> 
+      <a class="marginLeft">Color :</a>
       <input
         v-model="labelBGColor"
         type="color"
         id="colorpicker"
         value="#0000ff"
       />
-      Black :
-      <input id="checkBox" type="checkbox" @change="changeTextLabelColor()" />
+      <a class="marginLeft">Black :</a> <input id="checkBox" type="checkbox" @change="changeTextLabelColor()" />
       <br /><br />
       <Label
         v-bind:Text="labelName"
         v-bind:BGColor="labelBGColor"
         v-bind:TextColor="labelTextColor"
-      /><br /><br />
+      />
+      </div>
       <button class="button actions" v-on:click="createLabel()">Validate</button>
 
-      <h2 class="title">List of labels</h2>
+      <h2>LIST OF LABELS</h2>
       <div class="listLabels" v-for="label in allLabels">
         <button v-on:click="deleteLabel(label.id)" class="delete-button">
           x
@@ -90,21 +92,21 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  padding-right: 0%;
-}
 .listLabels {
   display: inline-block;
   margin-left: 50px;
-  margin-bottom: 15px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
+}
+.labelParameters{
+  font-family: "spiegel-bold";
+  font-size: 1.5em;
 }
 .createLabel{
   position: left;
   background: url(../../assets/motifCubesV3.jpg);
   background-size: 10%;
-  background-color: rgb(255, 255, 255,0.2);
-  
+  margin-bottom: 80px;
 }
 .createLabel:hover{
   background-color: rgb(255, 255, 255,0.5);
@@ -118,12 +120,36 @@ export default {
   background-color: gray; /* Green */
   color: black;
 }
-.containerChampsList {
+.containerChampsLists {
   display: flex;
   justify-content: space-around;
-  margin-top: 2%;
+  margin-top: 5%;
+  margin-bottom: 15%;
+
+}
+.marginLeft{
+  margin-left: 70px;
 }
 .champList1 {
   width: 45%;
+}
+.background{
+  
+  background: url(../../assets/champ.png);
+  background-position-x: 15%;
+  background-position-y: 20%;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+/* ACTIONS
+   ========== */
+   .button {
+    font-family: 'Beaufort';
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #242731;
+    padding: .45rem 2rem;
+    margin-bottom: 5px;
+    margin-top: 30px;
 }
 </style>
