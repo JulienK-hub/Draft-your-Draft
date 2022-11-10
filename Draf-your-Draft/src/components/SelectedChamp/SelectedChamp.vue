@@ -4,7 +4,7 @@
         <div class="champList">
             <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" 
             v-for="champion in selectedChampions">
-                <LolChamp :id="champion.key" v-bind:champ="champion" v-bind:isInSelectedList="true">
+                <LolChamp :id="champion.key" v-bind:champ="champion" v-bind:isInSelectedList="true" v-bind:isUnderSelected="isUnderSelected(champion.key)" >
                 </LolChamp>
             </div>
         </div>
@@ -81,10 +81,6 @@ export default {
             if (!this.removeUnderSelectedChamp(champion.key)) {
                 console.log("add " + champion.id + " to under selected champions")
                 this.underSelectedChamp.push(champion)
-                document.getElementById(champion.key).setAttribute('class', 'selectedChamps')
-            }
-            else {
-                document.getElementById(champion.key).removeAttribute('class')
             }
         },
         removeUnderSelectedChamp: function (championKey) {
@@ -142,6 +138,9 @@ export default {
             })
             this.underSelectedChamp.splice(0, this.underSelectedChamp.length)
 
+        },
+        isUnderSelected: function (championKey){
+            return this.underSelectedChamp.some(champion => champion.key == championKey)
         }
     },
     computed: {
@@ -150,7 +149,8 @@ export default {
         }),
         availableLabels() {
             return this.$store.getters.getAvailableLabelsFilter(this.activeLabels)
-        }
+        },
+        
     },
     components: {
         LolChamp,

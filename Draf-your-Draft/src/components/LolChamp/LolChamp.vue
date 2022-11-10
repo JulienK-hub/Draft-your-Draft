@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isFiltered()" class="central">
+  <div v-if="isFiltered()" class="central" :class="isUnderSelected ? 'selectedChamps' : ''">
     <div v-on:click="onClickIcon($event)">
       <img class="champ-icon" :src="champ.image.full" :alt="champ.id" />
     </div>
@@ -32,7 +32,8 @@ export default {
   name: 'LolChamp',
   props: {
     champ: Object,
-    isInSelectedList: Boolean
+    isInSelectedList: Boolean,
+    isUnderSelected: Boolean
   },
   data() {
     return {
