@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store/mainStore'
 import Vuex from 'vuex'
+import 'vue-select/dist/vue-select.css';
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 import './assets/css/global.css';

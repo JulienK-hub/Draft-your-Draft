@@ -8,6 +8,20 @@
                 </LolChamp>
             </div>
         </div>
+        <v-select class="style-chooser" @option:deselecting="deleteActiveLabel" @option:selecting="addActiveLabel" multiple :options="availableLabels" label="text" >
+            <template v-slot:option="option">
+            <Label v-bind:Text="option.text"
+                                v-bind:BGColor="option.colorBG"
+                                v-bind:TextColor="option.color">
+                        </Label>
+            </template>
+            <template v-slot:selected-option="option">
+            <Label v-bind:Text="option.text"
+                                v-bind:BGColor="option.colorBG"
+                                v-bind:TextColor="option.color">
+                        </Label>
+            </template>
+        </v-select>
             <div class="config-selected">
                 <div class="tg">                    
                     <button class="button actions"  v-on:click="isAddLabelHidden = !isAddLabelHidden">
@@ -251,5 +265,4 @@ export default {
     color: #eee2cc;
     cursor: pointer;
 }
-
 </style>

@@ -6,7 +6,7 @@
     <div class="scrollBarDiv" v-if="!isHidden">
       <div class="label" v-for="label in champLabels">
         <div  class="minus" :id="label.id" v-on:click="deleteLabel($event)"></div>
-        <Label v-bind:Text="label.text"
+        <Label class="labelMargin" v-bind:Text="label.text"
               v-bind:BGColor="label.colorBG"
               v-bind:TextColor="label.color">
         </Label>
@@ -14,7 +14,7 @@
       <button class="showLabel" v-on:click="isAddLabelHidden = !isAddLabelHidden">labels</button>  
       <div v-if="!isAddLabelHidden">
         <div class="label" :id="label.id" v-on:click="addLabel($event)" v-for="label in avalaibleLabels">
-          <Label v-bind:Text="label.text"
+          <Label class="labelMargin" v-bind:Text="label.text"
                 v-bind:BGColor="label.colorBG"
                 v-bind:TextColor="label.color">
           </Label>
