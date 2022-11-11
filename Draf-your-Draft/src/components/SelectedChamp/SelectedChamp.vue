@@ -8,8 +8,14 @@
                 </LolChamp>
             </div>
         </div>
-        <v-select @option:deselecting="deleteActiveLabel" @option:selecting="addActiveLabel" multiple :options="availableLabels" label="text" >
+        <v-select class="style-chooser" @option:deselecting="deleteActiveLabel" @option:selecting="addActiveLabel" multiple :options="availableLabels" label="text" >
             <template v-slot:option="option">
+            <Label v-bind:Text="option.text"
+                                v-bind:BGColor="option.colorBG"
+                                v-bind:TextColor="option.color">
+                        </Label>
+            </template>
+            <template v-slot:selected-option="option">
             <Label v-bind:Text="option.text"
                                 v-bind:BGColor="option.colorBG"
                                 v-bind:TextColor="option.color">
@@ -264,5 +270,4 @@ export default {
     color: #eee2cc;
     cursor: pointer;
 }
-
 </style>

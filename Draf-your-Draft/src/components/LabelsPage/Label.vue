@@ -25,15 +25,12 @@
   <style scoped>
   .label {
     border-radius: 0.4em;
-    padding: 0.12em 0.4em 0.14em;
-    margin-bottom: 5%;
     text-align: center;
     font-weight: 700;
     display: inline;
-    white-space: nowrap;
-    height: 1rem;
+    white-space: nowrap;  
     font-family: 'spiegel';
-    
+    padding: 0.12em 0.4em 0.14em;
      }
   </style>
   

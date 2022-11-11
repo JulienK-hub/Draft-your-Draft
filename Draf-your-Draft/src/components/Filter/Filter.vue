@@ -1,25 +1,19 @@
 <template>
   <div>
-    <div>
-      <div class="active-label" v-for="label in this.labelsFilters">
-        <button :id="label.id" v-on:click="deleteLabel($event)">supprimer</button>
-        <Label v-bind:Text="label.text"
-               v-bind:BGColor="label.colorBG"
-               v-bind:TextColor="label.color">
-
-        </Label>
-      </div>
-    </div>
-    <button class="button actions" v-on:click="isAddLabelHidden = !isAddLabelHidden">Ajouter label</button>
-    <div v-if="!isAddLabelHidden">
-      <div class="label" v-for="label in this.avalaibleLabels">
-        <Label v-bind:Text="label.text"
-               v-bind:BGColor="label.colorBG"
-               v-bind:TextColor="label.color">
-        </Label>
-        <button :id="label.id" v-on:click="addFilter($event)">+</button>
-      </div>
-    </div>
+    <v-select class="style-chooser" @option:deselecting="deleteLabel" @option:selecting="addFilter" multiple :options="avalaibleLabels" label="text" >
+            <template v-slot:option="option">
+            <Label v-bind:Text="option.text"
+                                v-bind:BGColor="option.colorBG"
+                                v-bind:TextColor="option.color">
+                        </Label>
+            </template>
+            <template v-slot:selected-option="option">
+            <Label v-bind:Text="option.text"
+                                v-bind:BGColor="option.colorBG"
+                                v-bind:TextColor="option.color">
+                        </Label>
+            </template>
+        </v-select>
   </div>
 </template>
   
@@ -40,13 +34,12 @@ export default {
     ...mapMutations([
       'addFilterLabel'
     ]),
-    deleteLabel: function (event) {
-      var index = this.labelsFilters.findIndex(label => label.id == event.currentTarget.id)
+    deleteLabel: function (label1) {
+      var index = this.labelsFilters.findIndex(label => label.id == label1.id)
       this.labelsFilters.splice(index, 1)
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsFilter(this.labelsFilters)
     },
-    addFilter: function (event) {
-      var label = this.$store.getters.getLabelById(event.currentTarget.id)
+    addFilter: function (label) {
       this.addFilterLabel(label)
       this.avalaibleLabels = this.$store.getters.getAvailableLabelsFilter(this.labelsFilters)
       this.isAddLabelHidden = !this.isAddLabelHidde;
@@ -58,17 +51,7 @@ export default {
 }
 </script>
   
-<style scoped>
-/* ACTIONS
-   ========== */
-   .button {
-    font-family: 'Beaufort';
-    text-transform: uppercase;
-    font-size: 18px;
-    color: #242731;
-    padding: .45rem 2rem;
-    margin-bottom: 5px;
-}
+<style scoped>  
 
 </style>
   

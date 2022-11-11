@@ -3,7 +3,6 @@
     padding-bottom: 10px;
   }
 
-
 h2{
     margin-top: 0;
     padding-top: 50px;
@@ -38,8 +37,8 @@ input[type="color"]::-webkit-color-swatch-wrapper {
   }
 
   
-/* ACTIONS
-   ========== */
+/* ACTIONS BUTTON
+   =============== */
 .button.actions {
     border: 3px solid;
     border-radius: 0;
@@ -53,3 +52,21 @@ input[type="color"]::-webkit-color-swatch-wrapper {
     background: black;
     cursor: pointer;
 }
+
+.labelMargin{
+  margin-bottom: 5%;
+}
+
+/* LABEL SELECTOR
+   =============== */
+ 
+.style-chooser .vs__search::placeholder,
+.style-chooser .vs__dropdown-menu {
+  border: solid black;
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
+.style-chooser .vs__selected{
+  background: transparent;
+  border: transparent;
+} 

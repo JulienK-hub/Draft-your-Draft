@@ -23,7 +23,7 @@
       />
       <a class="marginLeft">Black :</a> <input id="checkBox" type="checkbox" @change="changeTextLabelColor()" />
       <br /><br />
-      <Label
+      <Label class="labelMargin"
         v-bind:Text="labelName"
         v-bind:BGColor="labelBGColor"
         v-bind:TextColor="labelTextColor"
@@ -36,7 +36,7 @@
         <button v-on:click="deleteLabel(label.id)" class="delete-button">
           x
         </button>
-        <Label
+        <Label class="labelMargin"
           v-bind:Text="label.text"
           v-bind:BGColor="label.colorBG"
           v-bind:TextColor="label.color"
