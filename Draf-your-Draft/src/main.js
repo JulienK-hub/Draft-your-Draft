@@ -4,10 +4,13 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/mainStore'
-import Vuex from 'vuex'
-Vue.config.productionTip = false
-/* eslint-disable no-new */
+import vSelect from 'vue-select'
 import './assets/css/global.css';
+import 'vue-select/dist/vue-select.css';
+
+Vue.config.productionTip = false
+Vue.component('v-select', vSelect)
+/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
