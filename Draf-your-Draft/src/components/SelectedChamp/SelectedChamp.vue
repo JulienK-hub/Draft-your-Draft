@@ -8,21 +8,11 @@
                 </LolChamp>
             </div>
         </div>
-        <v-select @option:deselecting="deleteActiveLabel" @option:selecting="addActiveLabel" multiple :options="availableLabels" label="text" >
-            <template v-slot:option="option">
-            <Label v-bind:Text="option.text"
-                                v-bind:BGColor="option.colorBG"
-                                v-bind:TextColor="option.color">
-                        </Label>
-            </template>
-        </v-select>
             <div class="config-selected">
                 <div class="tg">                    
                     <button class="button actions"  v-on:click="isAddLabelHidden = !isAddLabelHidden">
                         Choisir label
                         </button>
-                        
-
                     <div class="active-label" v-for="label in activeLabels">                        
                         <Label v-bind:Text="label.text"
                                 v-bind:BGColor="label.colorBG"
@@ -73,9 +63,6 @@ export default {
         }
     },
     methods: {
-        test(val){
-            console.log(val);
-        },
         ...mapMutations([
             'deleteChampionLabel',
             'addChampionLabel',
