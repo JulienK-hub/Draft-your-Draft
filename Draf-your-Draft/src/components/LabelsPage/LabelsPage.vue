@@ -155,8 +155,8 @@ export default {
 
 .linearTransition{
   height: 200px;
-  background: url(../../assets/epee.png);
-  background-size: 15%;
+  background: url(../../assets/epee2.png);
+  background-size: 20%;
   position: top;
   background-repeat: repeat-x;
   
