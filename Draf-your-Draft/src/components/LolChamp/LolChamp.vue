@@ -13,7 +13,7 @@
       </div>
       <button class="showLabel" v-on:click="isAddLabelHidden = !isAddLabelHidden">labels</button>  
       <div v-if="!isAddLabelHidden">
-        <div class="label" :id="label.id" v-on:click="addLabel($event)" v-for="label in avalaibleLabels">
+        <div class="labelSelectable" :id="label.id" v-on:click="addLabel($event)" v-for="label in avalaibleLabels">
           <Label class="labelMargin" v-bind:Text="label.text"
                 v-bind:BGColor="label.colorBG"
                 v-bind:TextColor="label.color">
@@ -121,6 +121,11 @@ export default {
 }
 .label{
   display: flex;
+  
+}
+.labelSelectable{
+  display: flex;
+  cursor: pointer;
 }
 .minus { 
   min-width: 20px;

@@ -9,7 +9,7 @@
       <ChampList class="champList1"></ChampList>
       <SelectedChamp class="champList1"></SelectedChamp>
     </div>
-    
+    <div class="linearTransition"/>
     <div class="createLabel">
       <h2 class="title">CREATE A LABEL</h2>
       <div class="labelParameters">
@@ -124,7 +124,7 @@ export default {
   display: flex;
   justify-content: space-around;
   margin-top: 5%;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
 
 }
 .marginLeft{
@@ -151,5 +151,14 @@ export default {
     padding: .45rem 2rem;
     margin-bottom: 5px;
     margin-top: 30px;
+}
+
+.linearTransition{
+  height: 200px;
+  background: url(../../assets/epee.png);
+  background-size: 15%;
+  position: top;
+  background-repeat: repeat-x;
+  
 }
 </style>

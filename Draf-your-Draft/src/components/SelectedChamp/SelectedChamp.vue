@@ -23,6 +23,7 @@
             </template>
         </v-select>
             <div class="config-selected">
+                <!-- 
                 <div class="tg">                    
                     <button class="button actions"  v-on:click="isAddLabelHidden = !isAddLabelHidden">
                         Choisir label
@@ -44,7 +45,7 @@
                         </Label>
                         <button :id="label.id" v-on:click="addActiveLabel(label)">+</button>
                     </div>
-                </div>
+                </div> -->
                 <div class="columnButtons">
                     <div class="rowButtons">
                     <button class="button selection" v-on:click="addActivesLabelsToChampions(underSelectedChamp)">Add label to selection</button>
