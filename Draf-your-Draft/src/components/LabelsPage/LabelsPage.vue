@@ -32,7 +32,7 @@
       <button class="button actions" v-on:click="createLabel()">Validate</button>
 
       <h2>LIST OF LABELS</h2>
-      <div class="listLabels" v-for="label in allLabels">
+      <div class="listLabels" v-for="label in allLabels" :key="label.id">
         <button v-on:click="deleteLabel(label.id)" class="delete-button">
           x
         </button>
@@ -47,9 +47,9 @@
 </template>
 
 <script>
-import ChampList from "../ChampList/ChampList.vue";
+import ChampList from "./ChampList.vue";
 import Label from "./Label.vue";
-import SelectedChamp from "../SelectedChamp/SelectedChamp.vue";
+import SelectedChamp from "./SelectedChamp.vue";
 
 export default {
   name: "LabelsPage",
@@ -104,8 +104,8 @@ export default {
 }
 .createLabel{
   position: left;
-  background: url(../../assets/motifCubesV3.jpg);
-  background-size: 10%;
+  background: url(../../assets/motifCubesV1.png);
+  background-size: 100%;
   margin-bottom: 80px;
 }
 .createLabel:hover{
@@ -136,7 +136,7 @@ export default {
 .background{
   
   background: url(../../assets/champ.png);
-  background-position-x: 15%;
+  background-position-x: 13.5%;
   background-position-y: 20%;
   background-repeat: no-repeat;
   background-size: 30%;
@@ -154,9 +154,9 @@ export default {
 }
 
 .linearTransition{
-  height: 200px;
+  height: 100px;
   background: url(../../assets/epee2.png);
-  background-size: 20%;
+  background-size: 50%;
   position: top;
   background-repeat: repeat-x;
   

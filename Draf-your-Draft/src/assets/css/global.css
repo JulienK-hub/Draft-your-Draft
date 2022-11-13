@@ -59,7 +59,9 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 /* LABEL SELECTOR
    =============== */
- 
+   .style-chooser{
+    margin-bottom: 10px;
+   }
 .style-chooser .vs__search::placeholder,
 .style-chooser .vs__dropdown-menu {
   border: solid black;
