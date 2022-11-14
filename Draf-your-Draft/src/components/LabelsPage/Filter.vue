@@ -27,7 +27,6 @@ export default {
     return {
       isAddLabelHidden: true,
       labelsFilters: this.$store.getters.getFilterLabels(),
-      avalaibleLabels: this.$store.getters.getLabels()
     }
   },
   methods: {
@@ -37,16 +36,19 @@ export default {
     deleteLabel: function (label1) {
       var index = this.labelsFilters.findIndex(label => label.id == label1.id)
       this.labelsFilters.splice(index, 1)
-      this.avalaibleLabels = this.$store.getters.getAvailableLabelsFilter(this.labelsFilters)
     },
     addFilter: function (label) {
       this.addFilterLabel(label)
-      this.avalaibleLabels = this.$store.getters.getAvailableLabelsFilter(this.labelsFilters)
       this.isAddLabelHidden = !this.isAddLabelHidde;
     },
   },
   components: {
     Label
+  },
+  computed:{
+    avalaibleLabels() {
+      return this.$store.getters.getAvailableLabelsFilter(this.labelsFilters)
+    }
   }
 }
 </script>
