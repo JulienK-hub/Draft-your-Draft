@@ -4,7 +4,7 @@
     <button v-on:click="goToPage('/LabelsPage')">Labels gestion</button>
     <button v-on:click="goToPage('/DraftPage')">Draft</button>
 
-    <div class="corner">
+    <div class="cornerB">
       <div>
         <div
         id="Moi"
@@ -37,7 +37,7 @@
         @dragstart="drag($event)"
         class="box"
       >
-        <v-select  @option:selecting="setSelected($event, 'labelSelector')" :options="availableLabels" label="text" >
+        <v-select @option:selecting="setSelected($event, 'labelSelector')" :options="availableLabels" label="text" >
             <template v-slot:option="option">
             <Label v-bind:Text="option.text"
                                 v-bind:BGColor="option.colorBG"
@@ -111,16 +111,23 @@
         id="alorsAfficher"
         draggable="true"
         @dragstart="drag($event)"
-        class="box">alors afficher</div>
+        class="box">Alors afficher</div>
+        <input
+        id="input"
+        type="text"
+        draggable="true"
+        @dragstart="drag($event)"
+        class="box"></input>
     </div>
     
     <div
       id=""
-      class="corner"
+      :class="compiled ? 'cornerG' : 'cornerR'"
       @drop="drop($event)"
       @dragover.prevent
       @dragenter.prevent
-    > SI
+    > 
+    <div class="word">SI</div>
       <div v-for="(word,index) in rule" :key="index">
         <div class="word">{{ word.text }}</div>
         <div class="moveWords">
@@ -129,12 +136,15 @@
           <div class="rightArrow" @click="moveRight(index)"></div>
         </div>
       </div>
+      
     </div>
+    <button @click="compile()">validate</button>
   </div>
 </template>
 
 <script>
 import Label from '../LabelsPage/Label.vue'
+import dll from '../DLL.js'
 export default {
   name: "RulesPage",
   render: function (createElement) {},
@@ -142,6 +152,7 @@ export default {
     return {
       labelSelected: "",
       rule: [],
+      compiled: false,
     };
   },
   methods: {
@@ -150,32 +161,44 @@ export default {
     },
 
     drag(event) {
-      event.dataTransfer.setData("itemID", event.target.id);
+      if(event.target.id === "input"){
+        event.dataTransfer.setData("itemID", event.target.id);
+        event.dataTransfer.setData("itemValue", event.target.value);
+      }
+      else{
+        event.dataTransfer.setData("itemID", event.target.id);
+        event.dataTransfer.setData("itemValue", event.target.textContent);
+      }
     },
 
     drop(event) {
-      var data = event.dataTransfer.getData("itemID");
-      switch (data) {
-        case "Moi":
-          this.rule.push({type: 1, text: data});
-          break;
+      var id = event.dataTransfer.getData("itemID");
+      var value = event.dataTransfer.getData("itemValue");
+      console.log("adding", id, "to rule (not empty text input)");
+      switch (id) {
         case "Ennemi":
-          this.rule.push({type: 1, text: data});
-          break;
-        case "Pick":
-          this.rule.push({type: 2, text: data});
+        case "Moi":
+          this.rule.push({type: 1, text: value});
           break;
         case "Ban":
-          this.rule.push({type: 2, text: data});
+        case "Pick":
+          this.rule.push({type: 2, text: value});
           break;
         case "labelSelector":
-          this.rule.push({type: 3, text: this.labelSelected});
+          if(this.labelSelected !== ""){
+            this.rule.push({type: 3, text: this.labelSelected});
+          }
           break;
         case "alorsAfficher":
-          this.rule.push({type: 3, text: data});
+          this.rule.push({type: 5, text: value});
+          break;
+        case "input":
+          if( value !== ""){
+            this.rule.push({type: 3, text: value});
+          }
           break;
         default:
-          this.rule.push({type: 4,text: "en position " + data});
+          this.rule.push({type: 4,text: "en position " + value});
           break;
       }
     },
@@ -205,11 +228,13 @@ export default {
         this.rule.splice(index,2,item2,item)
         console.log("moving element to left")
       }
+    },
+    compile(){
+        this.compiled = dll.compiler(this.rule)
     }
   },
   computed: {
         availableLabels() {
-          console.log(this.$store.state.labels)
             return this.$store.state.labels
         },
         
@@ -221,8 +246,18 @@ export default {
 </script>
 
 <style scoped>
-.corner {
-  border: solid 5px blue;
+.cornerB {
+  border: solid 5px rgb(146, 172, 255);
+  display: flex;
+  height: 250px;
+}
+.cornerG {
+  border: solid 5px rgb(146, 255, 146);
+  display: flex;
+  height: 250px;
+}
+.cornerR {
+  border: solid 5px rgb(255, 132, 132);
   display: flex;
   height: 250px;
 }

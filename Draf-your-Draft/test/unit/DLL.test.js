@@ -1,0 +1,1 @@
+expect(getAboutUsLink("cs-CZ")).toBe("/o-nas");//
