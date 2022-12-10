@@ -107,17 +107,44 @@
         @dragstart="drag($event)"
         class="box">B5</div></div>
       </div>
+
       <div
         id="alorsAfficher"
         draggable="true"
         @dragstart="drag($event)"
         class="box">Alors afficher</div>
+      <div>
+        <div
+        id="Et"
+        draggable="true"
+        @dragstart="drag($event)"
+        class="box">Et</div>
+<div
+        id="Ou"
+        draggable="true"
+        @dragstart="drag($event)"
+        class="box">Ou</div>
+
+      </div>
+      <div>
+        <div
+        id="ParentheseO"
+        draggable="true"
+        @dragstart="drag($event)"
+        class="box">(</div>
+      <div
+        id="ParentheseF"
+        draggable="true"
+        @dragstart="drag($event)"
+        class="box">)</div>
+
+      </div>
         <input
         id="input"
         type="text"
         draggable="true"
         @dragstart="drag($event)"
-        class="box"></input>
+        class="box"/>
     </div>
     
     <div
@@ -197,6 +224,14 @@ export default {
             this.rule.push({type: 3, text: value});
           }
           break;
+        case "Et":
+        case "Ou":
+          this.rule.push({type: 6, text: value});
+          break;
+        case "ParentheseO":
+        case "ParentheseF":
+          this.rule.push({type: 7, text: value});
+          break;
         default:
           this.rule.push({type: 4,text: "en position " + value});
           break;
@@ -263,7 +298,7 @@ export default {
 }
 .box {
   margin: 10px 10px 0 0;
-  width: 200px;
+  width: 100px;
   height: 30px;
   border: solid 2px;
 }

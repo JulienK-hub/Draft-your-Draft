@@ -24,6 +24,71 @@ describe("compareTabsTest", () => {
       expect(dll.CompareTabs(tab5,tab4)).toEqual(false); 
     });
   });
+/*
+  *  type 1 = "Moi" "Ennemi"
+  *  type 2 = Label Champ et position "All" "B1" "B2" "B3" "B4" "B5" "P1" "P2" "P3" "P4" "P5" "Pick" "Ban"
+  *  type 3 = "Alors Afficher"
+  *  type 4 = "Ou" "Et"
+  *  type 5 = "(" ")"
+  */
+  describe("getChampsAndParenthesesTabTest", () => {
+
+    let tab1 = [{text: "Moi" ,type: 1 },{pos: "P1",champ: "Aatrox" ,type: 2 }];
+    let tab2 = [{text: "Ennemi" ,type: 1 },{pos: "Pick",champ: "Nautilus" ,type: 2 }];
+    let tab3 = [{text: "Moi" ,type: 1 },{pos: "Ban",champ: "Teemo" ,type: 2 }];
+    let tab4 = [{text: "Ennemi" ,type: 1 },{pos: "All",champ: "Kai'sa" ,type: 2 }];
+    let tab5 = [{text: "Moi" ,type: 1 },{pos: "P2",champ: "Aatrox" ,type: 2 },{text: "ou" ,type: 4 },{pos: "B1",champ: "Aatrox" ,type: 2},{text: "et" ,type: 4 },{text: "(" ,type: 5 },{pos: "P3",champ: "Nautilus" ,type: 2 },{text: "ou" ,type: 4 },{text: "(" ,type: 5 },{pos: "B2",champ: "Akali" ,type: 2 },{text: ")" ,type: 5 },{text: ")" ,type: 5 }];
+
+    let tabRes1 = [];
+    let tabRes2 = [];
+    let tabRes3 = [];
+    let res = [];
+      test("1. One champ in pos P1", () => {
+        res = dll.getChampsAndParenthesesTab(tab1);
+        tabRes1 = res[0];
+        tabRes2 = res[1];
+        tabRes3 = res[2];
+        expect(tabRes1).toEqual([{pos: "P1",champ: "Aatrox"}]); 
+        expect(tabRes2).toEqual([0]);
+        expect(tabRes3).toEqual([]);
+      });
+      test("2. One champ in pos 'Pick'", () => {
+        res = dll.getChampsAndParenthesesTab(tab2);
+        tabRes1 = res[0];
+        tabRes2 = res[1];
+        tabRes3 = res[2];
+        expect(tabRes1).toEqual([{pos: "P1",champ: "Nautilus"},{pos: "P2",champ: "Nautilus"},{pos: "P3",champ: "Nautilus"},{pos: "P4",champ: "Nautilus"},{pos: "P5",champ: "Nautilus"}]); 
+        expect(tabRes2).toEqual([0,0,0,0,0]);
+        expect(tabRes3).toEqual(["Ou","Ou","Ou","Ou"]);
+      });
+      test("3. One champ in pos 'Ban'", () => {
+        res = dll.getChampsAndParenthesesTab(tab3);
+        tabRes1 = res[0];
+        tabRes2 = res[1];
+        tabRes3 = res[2];
+        expect(tabRes1).toEqual([{pos: "B1",champ: "Teemo"},{pos: "B2",champ: "Teemo"},{pos: "B3",champ: "Teemo"},{pos: "B4",champ: "Teemo"},{pos: "B5",champ: "Teemo"}]); 
+        expect(tabRes2).toEqual([0,0,0,0,0]);
+        expect(tabRes3).toEqual(["Ou","Ou","Ou","Ou"]);
+      });
+      test("4. One champ in pos 'All'", () => {
+        let res = dll.getChampsAndParenthesesTab(tab4);
+        tabRes1 = res[0];
+        tabRes2 = res[1];
+        tabRes3 = res[2];
+        expect(tabRes1).toEqual([{pos: "B1",champ: "Kai'sa"},{pos: "B2",champ: "Kai'sa"},{pos: "B3",champ: "Kai'sa"},{pos: "B4",champ: "Kai'sa"},{pos: "B5",champ: "Kai'sa"},{pos: "P1",champ: "Kai'sa"},{pos: "P2",champ: "Kai'sa"},{pos: "P3",champ: "Kai'sa"},{pos: "P4",champ: "Kai'sa"},{pos: "P5",champ: "Kai'sa"}]); 
+        expect(tabRes2).toEqual([0,0,0,0,0,0,0,0,0,0]);
+        expect(tabRes3).toEqual(["Ou","Ou","Ou","Ou","Ou","Ou","Ou","Ou","Ou"]);
+      });
+      test("5. multi champ multi parentheses", () => {
+        let res = dll.getChampsAndParenthesesTab(tab5);
+        tabRes1 = res[0];
+        tabRes2 = res[1];
+        tabRes3 = res[2];
+        expect(tabRes1).toEqual([{pos: "P2",champ: "Aatrox"},{pos: "B1",champ: "Aatrox"},{pos: "P3",champ: "Nautilus"},{pos: "B2",champ: "Akali"}]); 
+        expect(tabRes2).toEqual([0,0,1,0,2,0,2,1]);
+        expect(tabRes3).toEqual(["ou","et","ou"]);
+      });
+    });
 
   describe("executorTest", () => {
       /**
