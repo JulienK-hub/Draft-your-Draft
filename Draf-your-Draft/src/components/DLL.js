@@ -75,35 +75,26 @@ var dll = {
      *  type 4 = "Ou" "Et"
      *  type 5 = "(" ")"
      */
-    ComputeRule(ruleTab){
-        var res = {};
-        var indexType4 = 0;
-        var displayTab = [];
-        var champsTab = [];
-        var parenthesesTab = [];
-        var operatorsTab = [];
-        
-       /* const ruleSide = ruleTab[0].text;
-        const ruleTarget = ruleTab[1].text; quand les boutons de choix de side seront foncitonnels*/
-
-        const ruleSide = "Blue";
+    ComputeRule(ruleTab,ruleSide){
+        var index = 0;
+        var displaysTab;
         const ruleTarget = ruleTab[0].text;
 
         ruleTab.every(item =>{ // using .every() is equivalent to .forEach() but we can stop iterating with "return false;"
             
             if(item.type === 3){
-                displayTab = ruleTab.slice(index);
+                displaysTab = ruleTab.slice(index+1);
+                conditionsTab = ruleTab.slice(0,index);
                 return false;
             }
-            indexType4++;
+            index++;
             return true
         })
-        var temp = dll.getChampsAndParenthesesTab(ruleTab);
-        champsTab = temp[0];
-        parenthesesTab = temp[1];
-        operatorsTab = temp[2];
-        // {ruleSide: ,ruleTarget: ,[],[]}
-        return {ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab,parenthesesTab,operatorsTab};
+        var temp = dll.getChampsAndParenthesesTab(conditionsTab);
+        const champsTab = temp[0];
+        const parenthesesTab = temp[1];
+        const operatorsTab = temp[2];
+        return {ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,parenthesesTab: parenthesesTab,operatorsTab: operatorsTab,displaysTab: displaysTab};
     },
 
     getChampsAndParenthesesTab(ruleTab){
@@ -126,34 +117,17 @@ var dll = {
             }
             else if( element.type === 2){
                 if (element.pos === "Ban"){
-                    champsTab.push({pos: "B1", champ: element.champ});
-                    champsTab.push({pos: "B2", champ: element.champ});
-                    champsTab.push({pos: "B3", champ: element.champ});
-                    champsTab.push({pos: "B4", champ: element.champ});
-                    champsTab.push({pos: "B5", champ: element.champ});
+                    champsTab.push({pos: "B1", champ: element.champ},{pos: "B2", champ: element.champ},{pos: "B3", champ: element.champ},{pos: "B4", champ: element.champ},{pos: "B5", champ: element.champ});
                     parenthesesTab.push(0,0,0,0,0);
                     operatorsTab.push("Ou","Ou","Ou","Ou");
                 }
                 else if (element.pos === "Pick"){
-                    champsTab.push({pos: "P1", champ: element.champ});
-                    champsTab.push({pos: "P2", champ: element.champ});
-                    champsTab.push({pos: "P3", champ: element.champ});
-                    champsTab.push({pos: "P4", champ: element.champ});
-                    champsTab.push({pos: "P5", champ: element.champ});
+                    champsTab.push({pos: "P1", champ: element.champ},{pos: "P2", champ: element.champ},{pos: "P3", champ: element.champ},{pos: "P4", champ: element.champ},{pos: "P5", champ: element.champ});
                     parenthesesTab.push(0,0,0,0,0);
                     operatorsTab.push("Ou","Ou","Ou","Ou");
                 }
                 else if (element.pos === "All"){ 
-                    champsTab.push({pos: "B1", champ: element.champ});
-                    champsTab.push({pos: "B2", champ: element.champ});
-                    champsTab.push({pos: "B3", champ: element.champ});
-                    champsTab.push({pos: "B4", champ: element.champ});
-                    champsTab.push({pos: "B5", champ: element.champ});
-                    champsTab.push({pos: "P1", champ: element.champ});
-                    champsTab.push({pos: "P2", champ: element.champ});
-                    champsTab.push({pos: "P3", champ: element.champ});
-                    champsTab.push({pos: "P4", champ: element.champ});
-                    champsTab.push({pos: "P5", champ: element.champ});
+                    champsTab.push({pos: "B1", champ: element.champ},{pos: "B2", champ: element.champ},{pos: "B3", champ: element.champ},{pos: "B4", champ: element.champ},{pos: "B5", champ: element.champ},{pos: "P1", champ: element.champ},{pos: "P2", champ: element.champ},{pos: "P3", champ: element.champ},{pos: "P4", champ: element.champ},{pos: "P5", champ: element.champ});
                     parenthesesTab.push(0,0,0,0,0,0,0,0,0,0);
                     operatorsTab.push("Ou","Ou","Ou","Ou","Ou","Ou","Ou","Ou","Ou");
                 }
