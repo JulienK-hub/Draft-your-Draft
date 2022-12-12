@@ -9,8 +9,13 @@ var dll = {
         return true;
     },
 
+    checkRule(ruleSide , ruleTarget, champsTab, parenthesesTab, operatorsTab, displaysTab,draftBTab,draftRTab,draftSide){
+        checkCondition(condition,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide);
+        return Boolean;
+    },
+
     /**
-     * @param {any[]} ruleTab = [{pos: "P3",champ:"adc"},{pos: "P1",champ:"Teemo"},{pos: "All",champ:"aatrox"},{pos: "P3",champ:"supp"},]
+     * @param {any[]} condition = {pos: "P3",champ:"adc"}
      * @param {String} ruleTarget = "Moi" ou "Ennemi" ou "Both" 
      * @param {String} ruleSide = "Blue" ou "Red" => side duquel la règle doit s'afficher  ~si "Both" l'executeur exécute avec "Blue" et "Red"~
      * @param {any[]} draftBTab = [{pos: "B1",champ: "Aatrox"},{pos: "B1",champ: "Top"},{pos: "B2",champ: "Annie"},...,{pos: "P1",champ: "Top"}] => draft blue
@@ -18,51 +23,58 @@ var dll = {
      * @param {String} draftSide = "Blue" ou "Red" ou "Both" => side choisi par l'utilisateur
      * @returns {boolean} True ou False selon si la règle est appliquée
      */
-    executor(ruleTab,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide){
+    checkCondition(condition,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide){
         if(ruleSide !== draftSide && draftSide !== "Both"){ // traitement du side
             return false;
         }
         if(ruleTarget === "Both"){ // la règle s'applique aux 2 sides donc on ne regarde pas ruleSide ("Moi ou Ennemi" / Ennemi ou Moi")
-            return dll.CompareTabs(ruleTab,draftBTab) || dll.CompareTabs(ruleTab,draftRTab)
+            return dll.compareTabs(condition,draftBTab) || dll.compareTabs(condition,draftRTab)
         }
         else if(ruleSide === "Blue"){
             if(ruleTarget === "Moi"){
-                return dll.CompareTabs(ruleTab,draftBTab);
+                return dll.compareTabs(condition,draftBTab);
             }
             else{
-                return dll.CompareTabs(ruleTab,draftRTab);
+                return dll.compareTabs(condition,draftRTab);
             }
         }
         else if (ruleSide === "Red"){
             if(ruleTarget === "Moi"){
-                return dll.CompareTabs(ruleTab,draftRTab);
+                return dll.compareTabs(condition,draftRTab);
             }
             else{
-                return dll.CompareTabs(ruleTab,draftBTab);
+                return dll.compareTabs(condition,draftBTab);
             }
         }
         return true;
     },
     /**
-     * returns true if rule can be applied
+     * returns true if one condition from ruleTard
      */
-    CompareTabs(ruleTab,draftTab){
+    compareTabs(condition,draftTab){
         var res = false;
         draftTab.forEach(pickedChamp => {
-            ruleTab.forEach(rule =>{
-                if(pickedChamp.champ === rule.champ ){
-                    if(rule.pos === "All"){
+            if(pickedChamp.champ === condition.champ ){
+                
+                if(condition.pos === "All"){
+                    res = true;
+                }
+                else if (condition.pos === "Pick"){
+                    if(pickedChamp.pos === "P1" || pickedChamp.pos === "P2" || pickedChamp.pos === "P3" || pickedChamp.pos === "P4" || pickedChamp.pos === "P5"){
                         res = true;
                     }
-                    else{
-                        
-                        if(pickedChamp.pos === rule.pos){
-                            res = true;
-                        }
+                }
+                else if (condition.pos === "Ban"){
+                    if(pickedChamp.pos === "B1" || pickedChamp.pos === "B2" || pickedChamp.pos === "B3" || pickedChamp.pos === "B4" || pickedChamp.pos === "B5"){
+                        res = true;
                     }
                 }
-            })
-            this.com
+                else{
+                    if(pickedChamp.pos === condition.pos){
+                        res = true;
+                    }
+                }
+            }
         });
         return res;
     },
@@ -75,7 +87,7 @@ var dll = {
      *  type 4 = "Ou" "Et"
      *  type 5 = "(" ")"
      */
-    ComputeRule(ruleTab,ruleSide){
+    computeRule(ruleTab,ruleSide){
         var index = 0;
         var displaysTab;
         const ruleTarget = ruleTab[0].text;
@@ -116,24 +128,19 @@ var dll = {
                 
             }
             else if( element.type === 2){
+                parenthesesTab.push(0);
                 if (element.pos === "Ban"){
-                    champsTab.push({pos: "B1", champ: element.champ},{pos: "B2", champ: element.champ},{pos: "B3", champ: element.champ},{pos: "B4", champ: element.champ},{pos: "B5", champ: element.champ});
-                    parenthesesTab.push(0,0,0,0,0);
-                    operatorsTab.push("Ou","Ou","Ou","Ou");
+                    champsTab.push({pos: "Ban", champ: element.champ});
                 }
                 else if (element.pos === "Pick"){
-                    champsTab.push({pos: "P1", champ: element.champ},{pos: "P2", champ: element.champ},{pos: "P3", champ: element.champ},{pos: "P4", champ: element.champ},{pos: "P5", champ: element.champ});
-                    parenthesesTab.push(0,0,0,0,0);
-                    operatorsTab.push("Ou","Ou","Ou","Ou");
+                    champsTab.push({pos: "Pick", champ: element.champ});
                 }
                 else if (element.pos === "All"){ 
-                    champsTab.push({pos: "B1", champ: element.champ},{pos: "B2", champ: element.champ},{pos: "B3", champ: element.champ},{pos: "B4", champ: element.champ},{pos: "B5", champ: element.champ},{pos: "P1", champ: element.champ},{pos: "P2", champ: element.champ},{pos: "P3", champ: element.champ},{pos: "P4", champ: element.champ},{pos: "P5", champ: element.champ});
-                    parenthesesTab.push(0,0,0,0,0,0,0,0,0,0);
-                    operatorsTab.push("Ou","Ou","Ou","Ou","Ou","Ou","Ou","Ou","Ou");
+                    champsTab.push({pos: "All", champ: element.champ});
                 }
                 else{
                     champsTab.push({pos: element.pos, champ: element.champ});
-                    parenthesesTab.push(0);
+                    
                 }
             }
             else if (element.type === 4){
@@ -142,32 +149,6 @@ var dll = {
         });
         return [champsTab,parenthesesTab,operatorsTab];
     },
-
-    /**
-     * [0,0,1,0,2,0,2,1] besoin de sauver l'opérateur
-     * @param {*} ruleTab 
-     */
-    /*
-    getParenthesesTab(ruleTab){
-        res = [];
-        parentheseIndex = 0;
-        numberItemsBeetwenParentheses = 0;
-        i;
-        while(parentheseMaxIndex >= 0){
-            champsTab.forEach(item => {
-                if (item.text === "("){
-                    parentheseIndex++;
-                }
-                else if (item.text === ")"){
-                    parentheseIndex--;
-                }
-                if(parentheseIndex >= parentheseMaxIndex){
-                    numberItemsBeetwenParentheses++;
-                }
-            });
-            parentheseMaxIndex--;
-        }
-    }**/
   }
 
 
