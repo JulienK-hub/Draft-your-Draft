@@ -80,7 +80,7 @@ var dll = {
     },
     /**
      * @param {any[]} ruleTab la règle de la RulePage validée par le compilateur
-     * @returns {any[]} le/les tableaux de règles sous le format lisible par l'exécuteur
+     * @returns {object} toutes les information sur la règle, triées et lisibles par l'exécuteur
      *  type 1 = "Moi" "Ennemi"
      *  type 2 = Label Champ et position "All" "B1" "B2" "B3" "B4" "B5" "P1" "P2" "P3" "P4" "P5" "Pick" "Ban"
      *  type 3 = "Alors Afficher"

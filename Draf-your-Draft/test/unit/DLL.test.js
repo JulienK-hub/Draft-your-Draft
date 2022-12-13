@@ -198,5 +198,59 @@ describe("compareTabsTest", () => {
         expect(dll.checkCondition(ruleCondition1,"Ennemi","Blue",draftTab2,draftTab3,"Blue")).toEqual(false); 
       });
     });
+
+
+    /* type 1 = "Moi" "Ennemi"
+    *  type 2 = Label Champ et position "All" "B1" "B2" "B3" "B4" "B5" "P1" "P2" "P3" "P4" "P5" "Pick" "Ban"
+    *  type 3 = "Alors Afficher"
+    *  type 4 = "Ou" "Et"
+    *  type 5 = "(" ")"
+    */
     describe("computeRuleTest", () => {
+      ruleSide1 = "Blue"; // object isn't touched in the code so it's value isn't pertinente 
+
+      ruleTab1 = [{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      ruleTab2 = [{type: 1,text: "Moi"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      ruleTab3 = [{type: 1,text: "Moi"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      ruleTab4 = [{type: 1,text: "Moi"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      
+      
+      let res;
+      let ruleSide = "";
+      let ruleTarget = "";
+      let champsTab = [];
+      let parenthesesTab = [];
+      let operatorsTab = [];
+      let displaysTab = [];
+      test("1. target is Moi", () => {
+        res = dll.computeRule(ruleTab1,ruleSide1);
+        ruleSide = res.ruleSide;
+        ruleTarget = res.ruleTarget;
+        champsTab = res.champsTab;
+        parenthesesTab = res.parenthesesTab;
+        operatorsTab = res.operatorsTab;
+        displaysTab = res.displaysTab;
+
+        expect(ruleSide).toEqual("Blue"); 
+        expect(ruleTarget).toEqual("Moi");
+        expect(champsTab).toEqual([{pos:"B2", champ: "adc"}]);
+        expect(parenthesesTab).toEqual([]);
+        expect(operatorsTab).toEqual([]);
+        expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]);
+      });
+      /*test("2. no target (equivalent to Both)", () => {
+
+      });
+      test("3. target is Moi Or Ennemi without parentheses", () => { 
+        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
+      });
+      test("4. target is Moi Or Ennemi with parentheses", () => { 
+        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
+      });
+      test("5. target is Both", () => { 
+        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
+      });
+      test("6. check all tables", () => { 
+        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
+      });*/
     })
