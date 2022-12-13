@@ -89,8 +89,16 @@ var dll = {
      */
     computeRule(ruleTab,ruleSide){
         var index = 0;
-        var displaysTab;
-        const ruleTarget = ruleTab[0].text;
+        var displaysTab = [];
+        var conditionsTab = [];
+        var ruleTarget = "";
+        
+        if(ruleTab[0].type !== 1){ // if target not mentionned
+            ruleTarget = "Both";
+        }
+        else{ //   if target is "Moi" or "Ennemi" or "Both"
+            ruleTarget =  ruleTab[0].text;
+        }
 
         ruleTab.every(item =>{ // using .every() is equivalent to .forEach() but we can stop iterating with "return false;"
             

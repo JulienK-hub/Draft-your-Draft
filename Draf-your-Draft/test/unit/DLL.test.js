@@ -207,12 +207,12 @@ describe("compareTabsTest", () => {
     *  type 5 = "(" ")"
     */
     describe("computeRuleTest", () => {
-      ruleSide1 = "Blue"; // object isn't touched in the code so it's value isn't pertinente 
+      let ruleSide1 = "Blue"; // object isn't touched in the code so it's value isn't pertinente 
 
-      ruleTab1 = [{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
-      ruleTab2 = [{type: 1,text: "Moi"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
-      ruleTab3 = [{type: 1,text: "Moi"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
-      ruleTab4 = [{type: 1,text: "Moi"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      let ruleTab1 = [{type: 1,text: "Moi"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      let ruleTab2 = [{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      let ruleTab3 = [{type: 1,text: "Both"},{type: 2, pos: "B2",champ: "adc"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
+      let ruleTab4 = [{type: 1,text: "Moi"},{type: 5, text: "("},{type: 2, pos: "B2",champ: "adc"},{type: 4, text: "Ou"},{type: 2, pos: "All",champ: "Nautilus"},{type: 5, text: ")"},{type: 4, text: "Et"},{type: 2, pos: "Pick",champ: "Taric"},{type: 3, text: "ALors Afficher"},{type: 6,champ: "Faire attention aux HyperCarry"}];
       
       
       let res;
@@ -224,6 +224,7 @@ describe("compareTabsTest", () => {
       let displaysTab = [];
       test("1. target is Moi", () => {
         res = dll.computeRule(ruleTab1,ruleSide1);
+
         ruleSide = res.ruleSide;
         ruleTarget = res.ruleTarget;
         champsTab = res.champsTab;
@@ -234,23 +235,59 @@ describe("compareTabsTest", () => {
         expect(ruleSide).toEqual("Blue"); 
         expect(ruleTarget).toEqual("Moi");
         expect(champsTab).toEqual([{pos:"B2", champ: "adc"}]);
-        expect(parenthesesTab).toEqual([]);
+        expect(parenthesesTab).toEqual([0]);
         expect(operatorsTab).toEqual([]);
         expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]);
       });
-      /*test("2. no target (equivalent to Both)", () => {
+      test("2. no target (equivalent to Both)", () => {
+        res = dll.computeRule(ruleTab2,ruleSide1);
 
+        ruleSide = res.ruleSide;
+        ruleTarget = res.ruleTarget;
+        champsTab = res.champsTab;
+        parenthesesTab = res.parenthesesTab;
+        operatorsTab = res.operatorsTab;
+        displaysTab = res.displaysTab;
+
+        expect(ruleSide).toEqual("Blue"); 
+        expect(ruleTarget).toEqual("Both");
+        expect(champsTab).toEqual([{pos:"B2", champ: "adc"}]);
+        expect(parenthesesTab).toEqual([0]);
+        expect(operatorsTab).toEqual([]);
+        expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]);
       });
-      test("3. target is Moi Or Ennemi without parentheses", () => { 
-        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
+      test("3. target is Both", () => { 
+        res = dll.computeRule(ruleTab3,ruleSide1);
+
+        ruleSide = res.ruleSide;
+        ruleTarget = res.ruleTarget;
+        champsTab = res.champsTab;
+        parenthesesTab = res.parenthesesTab;
+        operatorsTab = res.operatorsTab;
+        displaysTab = res.displaysTab;
+
+        expect(ruleSide).toEqual("Blue"); 
+        expect(ruleTarget).toEqual("Both");
+        expect(champsTab).toEqual([{pos:"B2", champ: "adc"}]);
+        expect(parenthesesTab).toEqual([0]);
+        expect(operatorsTab).toEqual([]);
+        expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]); 
       });
-      test("4. target is Moi Or Ennemi with parentheses", () => { 
-        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
+      test("4. integration test", () => { 
+        res = dll.computeRule(ruleTab4,ruleSide1);
+
+        ruleSide = res.ruleSide;
+        ruleTarget = res.ruleTarget;
+        champsTab = res.champsTab;
+        parenthesesTab = res.parenthesesTab;
+        operatorsTab = res.operatorsTab;
+        displaysTab = res.displaysTab;
+
+        expect(ruleSide).toEqual("Blue"); 
+        expect(ruleTarget).toEqual("Moi");
+        expect(champsTab).toEqual([{pos:"B2", champ: "adc"},{pos:"All", champ: "Nautilus"},{pos:"Pick", champ: "Taric"}]);
+        expect(parenthesesTab).toEqual([1,0,0,1,0]);
+        expect(operatorsTab).toEqual(["Ou","Et"]);
+        expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]);
       });
-      test("5. target is Both", () => { 
-        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
-      });
-      test("6. check all tables", () => { 
-        expect(dll.checkCondition(ruleCondition1,"Moi","Blue",draftTab3,draftTab2,"Blue")).toEqual(false); 
-      });*/
     })
