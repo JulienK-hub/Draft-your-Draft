@@ -10,8 +10,8 @@ var dll = {
     },
 
     checkRule(ruleSide , ruleTarget, champsTab, parenthesesTab, operatorsTab, displaysTab,draftBTab,draftRTab,draftSide){
-        checkCondition(condition,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide);
-        return Boolean;
+        dll.checkCondition(condition,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide);
+        return true;
     },
 
     /**
