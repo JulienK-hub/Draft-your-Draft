@@ -1,16 +1,35 @@
 import { resolveDirective } from "vue";
 
+class tree {
+    operator;
+    left_op;
+    right_op;
+    
+
+    constructor(operator,left_op,right_op){
+        this.operator = operator;
+        this.left_op = left_op;
+        if ((operator == "Ou") || (operator == "Et")) this.right_op = right_op;
+    }
+    
+    resolve(ruleTarget,ruleSide,draftBTab,draftRTab,draftSide){
+        switch (this.operator){
+            case "Ou":
+                return this.left_op.resolve(ruleTarget,ruleSide,draftBTab,draftRTab,draftSide) || this.right_op.resolve(ruleTarget,ruleSide,draftBTab,draftRTab,draftSide)
+            case "Et":
+                return this.left_op.resolve(ruleTarget,ruleSide,draftBTab,draftRTab,draftSide) && this.right_op.resolve(ruleTarget,ruleSide,draftBTab,draftRTab,draftSide)
+            case "Element":
+                return dll.checkCondition(this.left_op,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide);
+        }
+
+    }
+}
 //Méthodes du langage dédié
 var dll = {
 
     //ruleTab = [{text: "Moi" ,type: 1 },{text: "Pick" ,type: 2 },{text: "adc" ,type: 3 },{text: "en position P2" ,type: 4 },{text: "Alors afficher" ,type: 5 },{text: "pas mal" ,type: 3 },]
     compiler (ruleTab) { 
         console.log(ruleTab);
-        return true;
-    },
-
-    checkRule(ruleSide , ruleTarget, champsTab, parenthesesTab, operatorsTab, displaysTab,draftBTab,draftRTab,draftSide){
-        dll.checkCondition(condition,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide);
         return true;
     },
 
@@ -157,6 +176,80 @@ var dll = {
         });
         return [champsTab,parenthesesTab,operatorsTab];
     },
+
+    buildTree(ruleTab){
+        console.log(ruleTab);
+        if (ruleTab.length ===1){ // If element alone, just resolve
+            if (ruleTab[0].type === 2){
+                console.log("Case 1 \n\r");
+                return new tree("Element",ruleTab[0].value,null)
+            }else{
+                console.log("Error : Invalid equation 1 \n\r");
+                return 0
+            }
+        }
+        else if ((ruleTab[0].type === 5)&&(ruleTab[0].value==="(")&&(ruleTab[ruleTab.length-1].type === 5)&&(ruleTab[ruleTab.length-1].value===")")){ //If parenthesis around ,resolve equation inside
+            console.log("Case 2 \n\r");
+            return this.buildTree(ruleTab.slice(1,-1));
+        }else{
+            console.log("Case 3 \n\r");
+            var parentheseIndex = 0;
+            for (let i =0;i <ruleTab.length;i++){
+                if(ruleTab[i].type === 5){ 
+                    if(ruleTab[i].value === "("){
+                        parentheseIndex++;
+                    }
+                    else{
+                        parentheseIndex--;
+                    }
+                } 
+                if((ruleTab[i].type === 4)&&(parentheseIndex===0)){
+                    var left_tree = this.buildTree(ruleTab.slice(0,i));
+                    var right_tree = this.buildTree(ruleTab.slice(i+1));
+                    var top_tree = new tree(ruleTab[i].value,left_tree,right_tree);
+                    return top_tree;
+                }
+            };
+            console.log("Error : Invalid equation 2 \n\r");
+            return null;
+        }
+
+            
+
+    },
+
+    checkRule(ruleSide,ruleTarget,ruleTab,displaysTab,draftBTab,draftRTab,draftSide){
+        console.log("Check Rule");
+        var rule_tree = this.buildTree(ruleTab);
+        console.log(rule_tree);
+        return rule_tree.resolve(ruleTarget,ruleSide,draftBTab,draftRTab,draftSide);
+    }, 
+
+    /**
+     * [0,0,1,0,2,0,2,1] besoin de sauver l'opérateur
+     * @param {*} ruleTab 
+     */
+    /*
+    getParenthesesTab(ruleTab){
+        res = [];
+        parentheseIndex = 0;
+        numberItemsBeetwenParentheses = 0;
+        i;
+        while(parentheseMaxIndex >= 0){
+            champsTab.forEach(item => {
+                if (item.text === "("){
+                    parentheseIndex++;
+                }
+                else if (item.text === ")"){
+                    parentheseIndex--;
+                }
+                if(parentheseIndex >= parentheseMaxIndex){
+                    numberItemsBeetwenParentheses++;
+                }
+            });
+            parentheseMaxIndex--;
+        }
+    }**/
   }
 
 

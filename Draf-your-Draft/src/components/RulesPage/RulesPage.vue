@@ -266,7 +266,7 @@ export default {
     },
     compile(){
         this.compiled = dll.compiler(this.rule)
-    }
+    },
   },
   computed: {
         availableLabels() {

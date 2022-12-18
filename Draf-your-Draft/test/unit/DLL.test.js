@@ -294,27 +294,21 @@ describe("compareTabsTest", () => {
 
     describe("checkRuleTest", () => {
       let ruleSide1 = "Blue"; 
-      let ruleTarget1 = "Ennemi";
-      let champsTab1 = [{pos: "B1",champ: "Nautilus"}];
-      let champsTab2 = [{pos: "B5",champ: "Supp"}];
-      let champsTab3 = [{pos: "B1",champ: "Nautilus"}, {pos: "B1",champ: "Teemo"}];
-      let champsTab4 = [{pos: "B1",champ: "Teemo"},{pos: "B1",champ: "Nautilus"}];
-      let champsTab5 = [{pos: "B1",champ: "Teemo"},{pos: "P5",champ: "Aatrox"},{pos: "B1",champ: "Nautilus"}];
-      let champsTab6 = [{pos: "B1",champ: "Nautilus"},{pos: "B1",champ: "Teemo"},{pos: "P2",champ: "Aatrox"}];
-      let champsTab7 = [{pos: "P3",champ: "Ashe"},{pos: "B1",champ: "Nautilus"}, {pos: "B1",champ: "Teemo"}];
-      
-      let parenthesesTab1 = [0];
-      let parenthesesTab2 = [0,0];
-      let parenthesesTab3 = [0,0,0];
-      let parenthesesTab4 = [0,1,0,0,1];
-      let operatorsTab1 = [];
+      let ruleTarget1 = "Moi";
 
-      let operatorsTab2 = ["Or"];
-      let operatorsTab3 = ["And"];
-      let operatorsTab4 = ["Or","Or"];
-      let operatorsTab5 = ["And","And"];
-      let operatorsTab6 = ["Or","And"];
-      let operatorsTab7 = ["And","Or"];
+      let ruleTab1 = [{type: 2,value:{pos: "B1",champ: "Nautilus"}}];
+      let ruleTab2 = [{type: 2,value:{pos: "B5",champ: "Supp"}}];
+      let ruleTab3 = [{type: 2,value:{pos: "B1",champ: "Nautilus"}},{type: 4,value:"Ou"},{type: 2,value:{pos: "B1",champ: "Teemo"}}];
+      let ruleTab4 = [{type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 4,value:"Ou"},{type: 2,value:{pos: "B1",champ: "Nautilus"}}];
+      let ruleTab5 = [{type: 2,value:{pos: "B1",champ: "Nautilus"}},{type: 4,value:"Et"},{type: 2,value:{pos: "B1",champ: "Teemo"}}];
+      let ruleTab6 = [{type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 4,value:"Et"},{type: 2,value:{pos: "B1",champ: "Nautilus"}}];
+      let ruleTab7 = [{type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 4,value:"Ou"},{type: 2,value:{pos: "P5",champ: "Aatrox"}},{type: 4,value:"Ou"},{type: 2,value:{pos: "B1",champ: "Nautilus"}}];
+      let ruleTab8 = [{type: 2,value:{pos: "B1",champ: "Nautilus"}},{type: 4,value:"Et"},{type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 4,value:"Et"},{type: 2,value:{pos: "P2",champ: "Aatrox"}}];
+      let ruleTab9 = [{type: 2,value:{pos: "P3",champ: "Ashe"}},{type: 4,value:"Ou"},{type: 5,value:"("},{type: 2,value:{pos: "B1",champ: "Nautilus"}},{type: 4,value:"Et"}, {type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 5,value:")"}];
+      let ruleTab10 = [{type: 2,value:{pos: "B1",champ: "Nautilus"}},{type: 4,value:"Ou"},{type: 5,value:"("},{type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 4,value:"Et"}, {type: 2,value:{pos: "P2",champ: "Aatrox"}},{type: 5,value:")"}];
+      let ruleTab11 = [{type: 2,value:{pos: "P3",champ: "Ashe"}},{type: 4,value:"Et"},{type: 5,value:"("},{type: 2,value:{pos: "B1",champ: "Nautilus"}},{type: 4,value:"Ou"}, {type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 5,value:")"}];
+      let ruleTab12 = [{type: 2,value:{pos: "B1",champ: "Nautilus"}},{type: 4,value:"Et"},{type: 5,value:"("},{type: 2,value:{pos: "B1",champ: "Teemo"}},{type: 4,value:"Ou"}, {type: 2,value:{pos: "P2",champ: "Aatrox"}},{type: 5,value:")"}];
+      
 
       let displaysTab1 = []; // à retirer
       let draftBTab1 = [{pos: "B1",champ: "Nautilus"}];
@@ -328,60 +322,59 @@ describe("compareTabsTest", () => {
       
         // Tests without parentheses 
         test("1. no operator (only one condition) => should return true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab1,parenthesesTab1,operatorsTab1,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab1,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
         });
         test("2. no operator (only one condition) => should return false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab2,parenthesesTab1,operatorsTab1,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab2,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(false); 
         });
         test("3. one Or: true || false => should return true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab3,parenthesesTab2,operatorsTab2,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab3,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
         });
         test("4. one Or: false || true => should return true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab4,parenthesesTab2,operatorsTab2,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab4,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
         });
         test("5. one Or: true || true => should return true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab3,parenthesesTab2,operatorsTab2,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab3,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(true); 
         });
         test("6. one Or: false || false => should return false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab3,parenthesesTab2,operatorsTab2,displaysTab1,draftBTab3,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab3,displaysTab1,draftBTab3,draftRTab1,draftSide1)).toEqual(false); 
         }); 
         test("7. one And: true && false => should return false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab3,parenthesesTab2,operatorsTab3,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab5,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(false); 
         });
         test("8. one And: false && true => should return false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab4,parenthesesTab2,operatorsTab3,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab6,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(false); 
         });
         test("9. one And: true && true => should return true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab3,parenthesesTab2,operatorsTab3,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab5,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(true); 
         });
         test("10. one And: false && false => should return false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab3,parenthesesTab2,operatorsTab3,displaysTab1,draftBTab3,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab5,displaysTab1,draftBTab3,draftRTab1,draftSide1)).toEqual(false); 
         });
         test("11. many Or: false || false || true => should return true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab5,parenthesesTab3,operatorsTab4,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab7,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
         });
         test("12. many Or: false || false || false => should return false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab5,parenthesesTab3,operatorsTab4,displaysTab1,draftBTab3,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab7,displaysTab1,draftBTab3,draftRTab1,draftSide1)).toEqual(false); 
         });
         test("13. many And: true && true && false => should return false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab6,parenthesesTab3,operatorsTab5,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab8,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(false); 
         });
         test("14. many And: true && true && true => should return true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab6,parenthesesTab3,operatorsTab5,displaysTab1,draftBTab4,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab8,displaysTab1,draftBTab4,draftRTab1,draftSide1)).toEqual(true); 
         });
-
         // Tests with parentheses 
         test("15. simple case parentheses: false || (true && true) => true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab7,parenthesesTab4,operatorsTab6,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab9,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(true); 
         });
-        test("16. simple case parentheses: true || (false && false) => false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab6,parenthesesTab4,operatorsTab6,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(false); 
+        test("16. simple case parentheses: true || (false && false) => true", () => { 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab10,displaysTab1,draftBTab1,draftRTab1,draftSide1)).toEqual(true); 
         });
         test("17. simple case parentheses: false && (true || true) => false", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab7,parenthesesTab4,operatorsTab7,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(false); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab11,displaysTab1,draftBTab2,draftRTab1,draftSide1)).toEqual(false); 
         });
         test("18. simple case parentheses: true && (true || true) => true", () => { 
-          expect(dll.checkRule(ruleSide1,ruleTarget1,champsTab6,parenthesesTab4,operatorsTab7,displaysTab1,draftBTab5,draftRTab1,draftSide1)).toEqual(true); 
+          expect(dll.checkRule(ruleSide1,ruleTarget1,ruleTab12,displaysTab1,draftBTab5,draftRTab1,draftSide1)).toEqual(true); 
         });/*
         test("8. complexe case parentheses", () => { 
           expect(dll.checkRule(condition4,draftTab3)).toEqual(true); 
