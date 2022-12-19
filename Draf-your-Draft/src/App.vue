@@ -12,7 +12,8 @@ export default {
       this.$store.commit('increment')
       console.log(this.$store.state.count)
     }
-  }
+  },  
+
 }
 </script>
 

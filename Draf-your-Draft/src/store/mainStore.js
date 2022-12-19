@@ -16,6 +16,14 @@ function isFiltered (champLabels, filterLabels)  {
   return isCorrespondingToLabels;
 }
 
+function getChampsNameAndImg(){
+  var res = []
+  champData.forEach(champion => {
+    res.push({Name: champion.name, Img: champion.image.full}) 
+  })
+  return res;
+}
+
 Vue.use(Vuex)
 // Create a new store instance.
 export default new Vuex.Store({
@@ -29,7 +37,8 @@ export default new Vuex.Store({
       { id: 0, text: "Règle numéro 1", color: "black" },
       { id: 1, text: "Règle numéro 2", color: "black" },
       { id: 2, text: "Règle numéro 3", color: "black" },
-    ]
+    ],
+    champsNameAndImg: getChampsNameAndImg(),
   },
   mutations: {
     createLabel(state, { newText, newColorBG, newColor }) {

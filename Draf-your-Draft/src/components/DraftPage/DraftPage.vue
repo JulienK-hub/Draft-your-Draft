@@ -21,38 +21,72 @@
 
     <div class="bans test">
       <div class="blueSideBans">
-        <div class="blueBan1 ban"></div>
-        <div class="blueBan2 ban"></div>
-        <div class="blueBan3 ban"></div>
-        <div class="blueBan4 ban"></div>
-        <div class="blueBan5 ban"></div>
+        <div v-for="index in 5" :key="index">
+        <div :id="'blueBan' + index" class="ban" @click="showChamps('blueBanSelector' + index)"></div>
+        <div  hidden :id="'blueBanSelector' + index" class="selectChamp">
+          <v-select class="style-chooser" @option:selecting="setChamp($event, 'blueBanSelector' + index)" @option:deselecting="setIconToDefault('blueBan' + index)" :options="champList" label="Name" >
+          <template v-slot:selected-option="option">
+          <img class="iconChamp" v-bind:src="option.Img"/>
+          <span>{{option.Name}}</span> 
+          </template>
+          <template v-slot:option="option">
+          <img class="iconChamp" v-bind:src="option.Img"/>
+          <span >{{option.Name}} </span>
+          </template>
+      </v-select></div></div>
+
+        
       </div>
       <div class="redSideBans">
-        <div class="redBan1 ban"></div>
-        <div class="redBan2 ban"></div>
-        <div class="redBan3 ban"></div>
-        <div class="redBan4 ban"></div>
-        <div class="redBan5 ban"></div>
+        <div v-for="index in 5" :key="index">
+          <div :id="'redBan' + index" class="ban" @click="showChamps('redBanSelector' + index)"></div>
+          <div  hidden :id="'redBanSelector'+index" class="selectChamp">
+            <v-select class="style-chooser" @option:selecting="setChamp($event, 'redBanSelector' + index)" @option:deselecting="setIconToDefault('redBan' + index)" :options="champList" label="Name" >
+            <template v-slot:selected-option="option">
+            <img class="iconChamp" v-bind:src="option.Img"/>
+            <span>{{option.Name}}</span> 
+            </template>
+            <template v-slot:option="option">
+            <img class="iconChamp" v-bind:src="option.Img"/>
+            <span >{{option.Name}} </span>
+            </template>
+        </v-select></div></div>
       </div>
     </div>
 
     <div class="picksAndRules test">
       <div class="blueSidePicks test">
-        <div class="bluePick1 pick"></div>
-        <div class="bluePick2 pick"></div>
-        <div class="bluePick3 pick"></div>
-        <div class="bluePick4 pick"></div>
-        <div class="bluePick5 pick"></div>
+        <div v-for="index in 5" :key="index">
+          <div :id="'bluePick' + index" class="pick" @click="showChamps('bluePickSelector' + index)"></div>
+          <div  hidden :id="'bluePickSelector' + index" class="selectChamp">
+            <v-select class="style-chooser" @option:selecting="setChamp($event, 'bluePickSelector' + index)" @option:deselecting="setIconToDefault('bluePick' + index)" :options="champList" label="Name" >
+            <template v-slot:selected-option="option">
+            <img class="iconChamp" v-bind:src="option.Img"/>
+            <span>{{option.Name}}</span> 
+            </template>
+            <template v-slot:option="option">
+            <img class="iconChamp" v-bind:src="option.Img"/>
+            <span >{{option.Name}} </span>
+            </template>
+        </v-select></div></div>
       </div>
       <div class="rules test">
         {{rulesList}}
       </div>
       <div class="redSidePicks test">
-        <div class="redPick1 pick"></div>
-        <div class="redPick2 pick"></div>
-        <div class="redPick3 pick"></div>
-        <div class="redPick4 pick"></div>
-        <div class="redPick5 pick"></div>
+        <div v-for="index in 5" :key="index">
+          <div :id="'redPick' + index" class="pick" @click="showChamps('redPickSelector' + index)"></div>
+          <div  hidden :id="'redPickSelector'+index" class="selectChamp">
+            <v-select class="style-chooser" @option:selecting="setChamp($event, 'redPickSelector' + index)" @option:deselecting="setIconToDefault('redPick' + index)" :options="champList" label="Name" >
+            <template v-slot:selected-option="option">
+            <img class="iconChamp" v-bind:src="option.Img"/>
+            <span>{{option.Name}}</span> 
+            </template>
+            <template v-slot:option="option">
+            <img class="iconChamp" v-bind:src="option.Img"/>
+            <span >{{option.Name}} </span>
+            </template>
+        </v-select></div></div>
       </div>
     </div>
 
@@ -64,12 +98,56 @@ export default {
   name: 'DraftPage',
   data() {
     return {
-      rulesList: this.$store.getters.getRules
+      rulesList: this.$store.getters.getRules,
+      champList: this.$store.state.champsNameAndImg,
+      draftSide: "Both", // à changer
+      draftBTab: [],
+      draftRTab: []
     }
   },
   methods: {
     goToPage(pageURL) {
+      console.log(this.champList)
       this.$router.push(pageURL)
+    },
+    setChamp(champ,selectorId){
+      document.getElementById(selectorId).setAttribute("hidden",true);
+      let iconId = selectorId.substr(0,selectorId.length - 9) + selectorId[selectorId.length-1];
+      document.getElementById(iconId).style.backgroundImage = "url("+ champ.Img + ")";
+      if(selectorId[0] === "r"){
+        if(selectorId[3]=== "P"){
+          this.draftRTab.push({pos: "P" + selectorId.slice(-1), champ: champ.Name});
+        }
+        else{
+          
+          this.draftRTab.push({pos: "B" + selectorId.slice(-1), champ: champ.Name});
+        }
+      }
+      else{
+        if(selectorId[4]=== "P"){
+          this.draftBTab.push({pos: "P" + selectorId.slice(-1), champ: champ.Name});
+        }
+        else{
+          
+          this.draftBTab.push({pos: "B" + selectorId.slice(-1), champ: champ.Name});
+        }
+      }
+      
+      console.log(this.draftRTab);
+      console.log(this.draftBTab);
+    },
+    showChamps(selectorId){
+      let el = document.getElementById(selectorId);
+      if(el.hasAttribute("hidden")){
+        document.getElementById(selectorId).removeAttribute("hidden");
+      }
+      else{
+        document.getElementById(selectorId).setAttribute("hidden",true);
+      }
+    },
+    setIconToDefault(iconChampId){
+      console.log(iconChampId)
+      //document.getElementById(iconChampId).style.backgroundImage = "url(../../assets/square.png)";
     }
   },
 }
@@ -134,9 +212,15 @@ export default {
   padding: 1%;
 }
 
-.blueSideBans, .redSideBans {
+.blueSideBans{
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+.redSideBans {
+  display: flex;
+  flex-direction: row-reverse;
   justify-content: space-around;
   gap: 10px;
 }
@@ -182,5 +266,18 @@ export default {
   width: 50%;
   height: 300px;
   white-space: pre-line;
+}
+
+.selectChamp{
+  width: 200px;
+  height: 40px;
+  position: absolute;
+  margin-top: 10px;
+  top: auto;
+  left: auto;
+}
+
+.iconChamp{
+  width: 20px;
 }
 </style>
