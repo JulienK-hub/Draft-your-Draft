@@ -226,6 +226,7 @@ export default {
 }
 
 .ban {
+  cursor: pointer;
   --ban-size: 50px;
   border: solid;
   width: var(--ban-size);
@@ -251,6 +252,7 @@ export default {
 }
 
 .pick {
+  cursor: pointer;
   --pick-size: 50px;
   border: solid;
   display: flex;
