@@ -70,8 +70,7 @@
             </template>
         </v-select></div></div>
       </div>
-      <div class="rules test">
-        {{rulesList}}
+      <div id="ruleDisplay" class="rules test">
       </div>
       <div class="redSidePicks test">
         <div v-for="index in 5" :key="index">
@@ -94,6 +93,7 @@
 </template>
 
 <script>
+import dll from '../DLL.js'
 export default {
   name: 'DraftPage',
   data() {
@@ -103,7 +103,7 @@ export default {
       draftSide: "Both", // à changer
       draftBTab: [],
       draftRTab: [],
-      iconNochampBackgroundUrl: document.getElementById("blueBan5").style.backgroundImage
+      iconNochampBackgroundUrl: "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAL2rbcQHIV4Frr_TYK3VJ_rTJn3eMNwMSTzVQ3YMN8AMYE_7wjk49n00ubRUZyCdj2I4&usqp=CAU)"
     }
   },
   methods: {
@@ -120,7 +120,15 @@ export default {
       else{
         this.draftBTab.push({pos: pos, champ: champ.Name});
       }
+      
       console.log("blue draft",this.draftBTab,"red draft", this.draftRTab);
+
+      let displayTabs = []//getDisplays();
+      displayTabs.forEach(ruleDisplay => {
+        let p = document.createElement("p");
+        p.innerText = ruleDisplay[0].text;
+        document.getElementById("ruleDisplay").appendChild(p);
+      });
     },
     showChamps(selectorId){
       let el = document.getElementById(selectorId);
@@ -160,6 +168,15 @@ export default {
           
           return "B" + selectorId.slice(-1);
         }
+    },
+    getDisplays(){
+      var displaysTab= [];
+      this.$store.state.rules.forEach(rule => {
+        if(dll.checkRule(rule.ruleSide,rule.ruleTarget,rule.champsTab,rule.displaysTab,this.draftBTab,this.draftRTab,this.draftSide)){
+          displaysTab.push(rule.displayTabs);
+        }
+      });
+      return displaysTab;
     }
   },
 }
