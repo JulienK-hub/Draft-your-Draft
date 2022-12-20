@@ -111,7 +111,6 @@ var dll = {
         var displaysTab = [];
         var conditionsTab = [];
         var ruleTarget = "";
-        
         if(ruleTab[0].type !== 1){ // if target not mentionned
             ruleTarget = "Both";
         }

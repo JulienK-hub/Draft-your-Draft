@@ -18,94 +18,50 @@
         @dragstart="drag($event)"
         class="box">Ennemi</div>
       </div>
-      <div>
-        <div
-        id="Pick"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">Pick</div>
-      
       <div
-        id="Ban"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">Ban</div>
-      </div>
-      <div
-        id="labelSelector"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box"
-      >
-        <v-select @option:selecting="setSelected($event, 'labelSelector')" :options="availableLabels" label="text" >
-            <template v-slot:option="option">
-            <Label v-bind:Text="option.text"
-                                v-bind:BGColor="option.colorBG"
-                                v-bind:TextColor="option.color">
-                        </Label>
-            </template>
-            <template v-slot:selected-option="option">
-            <Label v-bind:Text="option.text"
-                                v-bind:BGColor="option.colorBG"
-                                v-bind:TextColor="option.color">
-                        </Label>
-            </template>
-        </v-select>
-      </div>
-      <div style="display: flex">
-        <div>
-        <div
-        id="P1"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">P1</div>
-      
-      <div
-        id="P2"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">P2</div>
-      <div
-        id="P3"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">P3</div>
-      <div
-        id="P4"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">P4</div>
-      <div
-        id="P5"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">P5</div></div>
-        <div>
-      <div
-        id="B1"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">B1</div>
-        <div
-        id="B2"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">B2</div>
-        <div
-        id="B3"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">B3</div>
-        <div
-        id="B4"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">B4</div>
-        <div
-        id="B5"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">B5</div></div>
+      id="selectorType2"
+      draggable="true"
+      @dragstart="drag($event)"
+      class="boxType2">
+        <select id="positionChamp" v-on:change="setPosSelected($event.target.value)">
+          <option value="Pick">Pick</option>
+          <option value="Ban">Ban</option>
+          <option value="All">All</option>
+          <option value="P1">P1</option>
+          <option value="P2">P2</option>
+          <option value="P3">P3</option>
+          <option value="P4">P4</option>
+          <option value="P5">P5</option>
+          <option value="B1">B1</option>
+          <option value="B2">B2</option>
+          <option value="B3">B3</option>
+          <option value="B4">B4</option>
+          <option value="B5">B5</option>
+      </select><div>
+      <v-select @option:selecting="setChampSelected($event.text)" :options="availableLabels" label="text" >
+        <template v-slot:option="option">
+        <Label v-bind:Text="option.text"
+                            v-bind:BGColor="option.colorBG"
+                            v-bind:TextColor="option.color">
+                    </Label>
+        </template>
+        <template v-slot:selected-option="option">
+        <Label v-bind:Text="option.text"
+                            v-bind:BGColor="option.colorBG"
+                            v-bind:TextColor="option.color">
+                    </Label>
+        </template>
+    </v-select>
+    <v-select class="style-chooser" @option:selecting="setChampSelected($event.Name)" :options="champList" label="Name" >
+      <template v-slot:selected-option="option">
+      <img class="iconChamp" v-bind:src="option.Img"/>
+      <span>{{option.Name}}</span> 
+      </template>
+      <template v-slot:option="option">
+      <img class="iconChamp" v-bind:src="option.Img"/>
+      <span >{{option.Name}} </span>
+      </template>
+  </v-select></div>
       </div>
 
       <div
@@ -156,7 +112,7 @@
     > 
     <div class="word">SI</div>
       <div v-for="(word,index) in rule" :key="index">
-        <div class="word">{{ word.text }}</div>
+        <div class="word">{{ word.text}}</div>
         <div class="moveWords">
           <div class="leftArrow" @click="moveLeft(index)"></div>
           <div class="cross" @click="deleteCurrent(index)"></div>
@@ -177,12 +133,23 @@ export default {
   render: function (createElement) {},
   data() {
     return {
-      labelSelected: "",
+      champSelected: "",
+      posSelected: "Pick",
       rule: [],
+      ruleSide: "Blue",
       compiled: false,
+      champList: this.$store.state.champsNameAndImg,
     };
   },
   methods: {
+    setChampSelected(champSelected){
+      console.log(champSelected);
+      this.champSelected = champSelected;
+    },
+    setPosSelected(posSelected){
+      console.log(posSelected);
+      this.posSelected = posSelected;
+    },
     goToPage(pageURL) {
       this.$router.push(pageURL);
     },
@@ -207,33 +174,25 @@ export default {
         case "Moi":
           this.rule.push({type: 1, text: value});
           break;
-        case "Ban":
-        case "Pick":
-          this.rule.push({type: 2, text: value});
-          break;
-        case "labelSelector":
-          if(this.labelSelected !== ""){
-            this.rule.push({type: 3, text: this.labelSelected});
-          }
+        case "selectorType2":
+          this.rule.push({type: 2, value: {pos: this.posSelected, champ: this.champSelected}});
+          console.log(this.rule);
           break;
         case "alorsAfficher":
-          this.rule.push({type: 5, text: value});
+          this.rule.push({type: 3, text: value});
           break;
         case "input":
           if( value !== ""){
-            this.rule.push({type: 3, text: value});
+            this.rule.push({type: 6, text: value});
           }
           break;
         case "Et":
         case "Ou":
-          this.rule.push({type: 6, text: value});
+          this.rule.push({type: 4, text: value});
           break;
         case "ParentheseO":
         case "ParentheseF":
-          this.rule.push({type: 7, text: value});
-          break;
-        default:
-          this.rule.push({type: 4,text: "en position " + value});
+          this.rule.push({type: 5, text: value});
           break;
       }
     },
@@ -265,7 +224,9 @@ export default {
       }
     },
     compile(){
-        this.compiled = dll.compiler(this.rule)
+        //this.compiled = dll.compiler(this.rule)
+        const ruleComputed =dll.computeRule(this.rule,this.ruleSide);
+        this.$store.commit('addRule',ruleComputed);
     },
   },
   computed: {
@@ -302,6 +263,15 @@ export default {
   height: 30px;
   border: solid 2px;
 }
+.boxType2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 10px 10px 0 0;
+  width: 300px;
+  height: 40px;
+  border: solid 2px;
+}
 .word {
   font-size: 20px;
   margin: 20px 20px 0px 0px;
@@ -335,5 +305,8 @@ export default {
   background: url(../../assets/rightArrow.png);
   background-size: 100%;
   background-repeat: no-repeat;
+}
+.iconChamp{
+  width: 20px;
 }
 </style>

@@ -123,7 +123,7 @@ export default {
       
       console.log("blue draft",this.draftBTab,"red draft", this.draftRTab);
 
-      let displayTabs = []//getDisplays();
+      let displayTabs = this.getDisplays();
       displayTabs.forEach(ruleDisplay => {
         let p = document.createElement("p");
         p.innerText = ruleDisplay[0].text;
@@ -171,6 +171,7 @@ export default {
     },
     getDisplays(){
       var displaysTab= [];
+      console.log(this.$store.state.rules);
       this.$store.state.rules.forEach(rule => {
         if(dll.checkRule(rule.ruleSide,rule.ruleTarget,rule.champsTab,rule.displaysTab,this.draftBTab,this.draftRTab,this.draftSide)){
           displaysTab.push(rule.displayTabs);
