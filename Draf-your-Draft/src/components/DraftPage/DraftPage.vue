@@ -24,7 +24,7 @@
         <div v-for="index in 5" :key="index">
         <div :id="'blueBan' + index" class="ban" @click="showChamps('blueBanSelector' + index)"></div>
         <div  hidden :id="'blueBanSelector' + index" class="selectChamp">
-          <v-select class="style-chooser" @option:selecting="setChamp($event, 'blueBanSelector' + index)" @option:deselecting="setIconToDefault('blueBan' + index)" :options="champList" label="Name" >
+          <v-select class="style-chooser" @option:selecting="setChamp($event, 'blueBanSelector' + index, 'blueBan' + index)" @input="setIconToDefault($event, 'blueBanSelector' + index , 'blueBan' + index)" :options="champList" label="Name" >
           <template v-slot:selected-option="option">
           <img class="iconChamp" v-bind:src="option.Img"/>
           <span>{{option.Name}}</span> 
@@ -41,7 +41,7 @@
         <div v-for="index in 5" :key="index">
           <div :id="'redBan' + index" class="ban" @click="showChamps('redBanSelector' + index)"></div>
           <div  hidden :id="'redBanSelector'+index" class="selectChamp">
-            <v-select class="style-chooser" @option:selecting="setChamp($event, 'redBanSelector' + index)" @option:deselecting="setIconToDefault('redBan' + index)" :options="champList" label="Name" >
+            <v-select class="style-chooser" @option:selecting="setChamp($event, 'redBanSelector' + index, 'redBan' + index)" @input="setIconToDefault($event, 'redBanSelector' + index , 'redBan' + index)" :options="champList" label="Name" >
             <template v-slot:selected-option="option">
             <img class="iconChamp" v-bind:src="option.Img"/>
             <span>{{option.Name}}</span> 
@@ -59,7 +59,7 @@
         <div v-for="index in 5" :key="index">
           <div :id="'bluePick' + index" class="pick" @click="showChamps('bluePickSelector' + index)"></div>
           <div  hidden :id="'bluePickSelector' + index" class="selectChamp">
-            <v-select class="style-chooser" @option:selecting="setChamp($event, 'bluePickSelector' + index)" @option:deselecting="setIconToDefault('bluePick' + index)" :options="champList" label="Name" >
+            <v-select class="style-chooser" @option:selecting="setChamp($event, 'bluePickSelector' + index, 'bluePick' + index)" @input="setIconToDefault($event, 'bluePickSelector' + index , 'bluePick' + index)" :options="champList" label="Name" >
             <template v-slot:selected-option="option">
             <img class="iconChamp" v-bind:src="option.Img"/>
             <span>{{option.Name}}</span> 
@@ -77,7 +77,7 @@
         <div v-for="index in 5" :key="index">
           <div :id="'redPick' + index" class="pick" @click="showChamps('redPickSelector' + index)"></div>
           <div  hidden :id="'redPickSelector'+index" class="selectChamp">
-            <v-select class="style-chooser" @option:selecting="setChamp($event, 'redPickSelector' + index)" @option:deselecting="setIconToDefault('redPick' + index)" :options="champList" label="Name" >
+            <v-select class="style-chooser" @option:selecting="setChamp($event, 'redPickSelector' + index, 'redPick' + index)" @input="setIconToDefault($event, 'redPickSelector' + index , 'redPick' + index)" :options="champList" label="Name" >
             <template v-slot:selected-option="option">
             <img class="iconChamp" v-bind:src="option.Img"/>
             <span>{{option.Name}}</span> 
@@ -102,39 +102,25 @@ export default {
       champList: this.$store.state.champsNameAndImg,
       draftSide: "Both", // à changer
       draftBTab: [],
-      draftRTab: []
+      draftRTab: [],
+      iconNochampBackgroundUrl: document.getElementById("blueBan5").style.backgroundImage
     }
   },
   methods: {
     goToPage(pageURL) {
-      console.log(this.champList)
       this.$router.push(pageURL)
     },
-    setChamp(champ,selectorId){
+    setChamp(champ,selectorId,iconChampId){
       document.getElementById(selectorId).setAttribute("hidden",true);
-      let iconId = selectorId.substr(0,selectorId.length - 9) + selectorId[selectorId.length-1];
-      document.getElementById(iconId).style.backgroundImage = "url("+ champ.Img + ")";
+      document.getElementById(iconChampId).style.backgroundImage = "url("+ champ.Img + ")";
+      let pos = this.getChampPos(selectorId);
       if(selectorId[0] === "r"){
-        if(selectorId[3]=== "P"){
-          this.draftRTab.push({pos: "P" + selectorId.slice(-1), champ: champ.Name});
-        }
-        else{
-          
-          this.draftRTab.push({pos: "B" + selectorId.slice(-1), champ: champ.Name});
-        }
+        this.draftRTab.push({pos: pos, champ: champ.Name});
       }
       else{
-        if(selectorId[4]=== "P"){
-          this.draftBTab.push({pos: "P" + selectorId.slice(-1), champ: champ.Name});
-        }
-        else{
-          
-          this.draftBTab.push({pos: "B" + selectorId.slice(-1), champ: champ.Name});
-        }
+        this.draftBTab.push({pos: pos, champ: champ.Name});
       }
-      
-      console.log(this.draftRTab);
-      console.log(this.draftBTab);
+      console.log("blue draft",this.draftBTab,"red draft", this.draftRTab);
     },
     showChamps(selectorId){
       let el = document.getElementById(selectorId);
@@ -145,9 +131,35 @@ export default {
         document.getElementById(selectorId).setAttribute("hidden",true);
       }
     },
-    setIconToDefault(iconChampId){
-      console.log(iconChampId)
-      //document.getElementById(iconChampId).style.backgroundImage = "url(../../assets/square.png)";
+    setIconToDefault(event,selectorId , iconChampId){
+      if(event === null){
+        document.getElementById(selectorId).setAttribute("hidden",true);
+        document.getElementById(iconChampId).style.backgroundImage = this.iconNochampBackgroundUrl;
+        let pos = this.getChampPos(selectorId);
+        if(selectorId[0] === "r"){
+          this.draftRTab = this.draftRTab.filter(el => el.pos !== pos);
+        }
+        else{
+          this.draftBTab = this.draftBTab.filter(el => el.pos !== pos);
+        }
+        console.log("blue draft",this.draftBTab,"red draft", this.draftRTab);
+      }
+    },
+    getChampPos(selectorId){
+        if(selectorId[3]=== "P"){
+          return "P" + selectorId.slice(-1);
+        }
+        else if (selectorId[3]=== "B"){
+          
+          return "B" + selectorId.slice(-1);
+        }
+        else if(selectorId[4]=== "P"){
+          return "P" + selectorId.slice(-1);
+        }
+        else{
+          
+          return "B" + selectorId.slice(-1);
+        }
     }
   },
 }
