@@ -112,7 +112,7 @@
     > 
     <div class="word">SI</div>
       <div v-for="(word,index) in rule" :key="index">
-        <div class="word">{{ word.text}}</div>
+        <div class="word">{{ word.value}}</div>
         <div class="moveWords">
           <div class="leftArrow" @click="moveLeft(index)"></div>
           <div class="cross" @click="deleteCurrent(index)"></div>
@@ -183,16 +183,16 @@ export default {
           break;
         case "input":
           if( value !== ""){
-            this.rule.push({type: 6, text: value});
+            this.rule.push({type: 6, value: value});
           }
           break;
         case "Et":
         case "Ou":
-          this.rule.push({type: 4, text: value});
+          this.rule.push({type: 4, value: value});
           break;
         case "ParentheseO":
         case "ParentheseF":
-          this.rule.push({type: 5, text: value});
+          this.rule.push({type: 5, value: value});
           break;
       }
     },
@@ -208,7 +208,7 @@ export default {
        const item = this.rule[index-1];
        const item2 = this.rule[index];
         this.rule.splice(index-1,2,item2,item)
-        console.log("moving element to right")
+        console.log("moving element to left")
       }
     },
     deleteCurrent(index){
@@ -220,12 +220,13 @@ export default {
        const item = this.rule[index];
        const item2 = this.rule[index+1];
         this.rule.splice(index,2,item2,item)
-        console.log("moving element to left")
+        console.log("moving element to right")
       }
     },
     compile(){
         //this.compiled = dll.compiler(this.rule)
         const ruleComputed =dll.computeRule(this.rule,this.ruleSide);
+        
         this.$store.commit('addRule',ruleComputed);
     },
   },

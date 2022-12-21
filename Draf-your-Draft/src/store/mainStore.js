@@ -91,6 +91,7 @@ export default new Vuex.Store({
     addRule(state,newRule){
       console.log("adding rule",newRule);
       state.rules.push(newRule);
+      console.log("liste rules",state.rules);
     },
     addSelectedChamp(state, champion){
       if(state.selectedChamps.find(champ => champ.key == champion.key)){
@@ -186,13 +187,6 @@ export default new Vuex.Store({
         }
       }
       return avalaible;
-    },
-    getRules: state => {
-      let temp = "";
-      for (let i=0; i<state.rules.length; i++){
-        temp = temp + state.rules[i].text + "\n"
-      }
-      return temp;
     },
   }
 })

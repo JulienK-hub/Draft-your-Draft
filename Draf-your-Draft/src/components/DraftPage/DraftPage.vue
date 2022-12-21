@@ -192,14 +192,12 @@ export default {
       } else {
         this.draftBTab.push({ pos: pos, champ: champ.Name });
       }
-
-      let displayTabs = this.getDisplays();
-      displayTabs.forEach(ruleDisplay => {
-        let p = document.createElement("p");
-        p.innerText = ruleDisplay[0].text;
-        document.getElementById("ruleDisplay").appendChild(p);
-      });
+      
+      // display texts
+      this.getDisplays();
+      
     },
+
     showChamps(selectorId) {
       let el = document.getElementById(selectorId);
       if (el.hasAttribute("hidden")) {
@@ -209,7 +207,7 @@ export default {
       }
     },
     setIconToDefault(event, selectorId, iconChampId) {
-      if (event === null) {
+      if (event === null) { // if a champ is removed from selector
         document.getElementById(selectorId).setAttribute("hidden", true);
         document.getElementById(
           iconChampId
@@ -221,6 +219,9 @@ export default {
           this.draftBTab = this.draftBTab.filter(el => el.pos !== pos);
         }
         console.log("blue draft", this.draftBTab, "red draft", this.draftRTab);
+        
+        // display texts
+        this.getDisplays();
       }
     },
     getChampPos(selectorId) {
@@ -235,8 +236,7 @@ export default {
       }
     },
     getDisplays(){
-      var displaysTab= [];
-      console.log(this.$store.state.rules);
+      document.getElementById("ruleDisplay").textContent = '';
       this.$store.state.rules.forEach(rule => {
         if (
           dll.checkRule(
@@ -249,10 +249,15 @@ export default {
             this.draftSide
           )
         ) {
-          displaysTab.push(rule.displayTabs);
+          console.log("1 règle validée",rule);
+          let p = document.createElement("p");
+          p.innerText = rule.displaysTab[0].value;
+          document.getElementById("ruleDisplay").appendChild(p);
+        }
+        else{
+          console.log("1 règle pas validée",rule);
         }
       });
-      return displaysTab;
     }
   }
 };

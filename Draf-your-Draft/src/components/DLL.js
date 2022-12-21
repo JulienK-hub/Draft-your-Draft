@@ -109,7 +109,10 @@ var dll = {
     computeRule(ruleTab,ruleSide){
         var index = 0;
         var displaysTab = [];
-        var conditionsTab = [];
+        //var conditionsTab = [];
+        var champsTab = [];
+        const parenthesesTab = [];
+        const operatorsTab = [];
         var ruleTarget = "";
         if(ruleTab[0].type !== 1){ // if target not mentionned
             ruleTarget = "Both";
@@ -122,20 +125,21 @@ var dll = {
             
             if(item.type === 3){
                 displaysTab = ruleTab.slice(index+1);
-                conditionsTab = ruleTab.slice(0,index);
+                champsTab = ruleTab.slice(1,index);
                 return false;
             }
             index++;
             return true
         })
-        var temp = dll.getChampsAndParenthesesTab(conditionsTab);
+        /*var temp = dll.getChampsAndParenthesesTab(conditionsTab);
         const champsTab = temp[0];
         const parenthesesTab = temp[1];
-        const operatorsTab = temp[2];
+        const operatorsTab = temp[2];*/
+        
         return {ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,parenthesesTab: parenthesesTab,operatorsTab: operatorsTab,displaysTab: displaysTab};
     },
 
-    getChampsAndParenthesesTab(ruleTab){
+    /*getChampsAndParenthesesTab(ruleTab){
         var champsTab = [];
         var operatorsTab = [];
         var parenthesesTab = [];
@@ -156,16 +160,16 @@ var dll = {
             else if( element.type === 2){
                 parenthesesTab.push(0);
                 if (element.pos === "Ban"){
-                    champsTab.push({pos: "Ban", champ: element.champ});
+                    champsTab.push({pos: "Ban", champ: element.value.champ});
                 }
                 else if (element.pos === "Pick"){
-                    champsTab.push({pos: "Pick", champ: element.champ});
+                    champsTab.push({pos: "Pick", champ: element.value.champ});
                 }
                 else if (element.pos === "All"){ 
-                    champsTab.push({pos: "All", champ: element.champ});
+                    champsTab.push({pos: "All", champ: element.value.champ});
                 }
                 else{
-                    champsTab.push({pos: element.pos, champ: element.champ});
+                    champsTab.push({pos: element.value.pos, champ: element.value.champ});
                     
                 }
             }
@@ -174,7 +178,7 @@ var dll = {
             }
         });
         return [champsTab,parenthesesTab,operatorsTab];
-    },
+    },*/
 
     buildTree(ruleTab){
         console.log(ruleTab);
