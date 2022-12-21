@@ -72,3 +72,52 @@ input[type="color"]::-webkit-color-swatch-wrapper {
   background: transparent;
   border: transparent;
 } 
+
+.radioBtn {
+  float: left;
+  margin: 40px 20px 50px 0;
+  width: 200px;
+  height: 40px;
+  position: relative;
+}
+.radioBtn label,
+.radioBtn input {
+  padding-top: 8px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f3f3f3;
+  border: 3px solid black;
+  color: black;
+  cursor: pointer;
+}
+
+.radioBtn input[type="radio"] {
+  opacity: 0.011;
+  z-index: 100;
+}
+
+.radioBtn#blueSide input[type="radio"]:checked + label {
+  background: blue;
+  border-radius: 4px;
+  color: white;
+}
+.radioBtn#anySide input[type="radio"]:checked + label {
+  background: grey;
+  border-radius: 4px;
+  color: white;
+}
+.radioBtn#redSide input[type="radio"]:checked + label {
+  background: red;
+  border-radius: 4px;
+  color: white;
+}
+.sideSelection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: medium;
+}

@@ -11,19 +11,19 @@
       <button class="button" v-on:click="goToPage('/RulesPage')">Rules</button>
     </div>
 
-    <div class="side test">
-      <button class="button buttonBlue" @click="handleBlueClick" :style="{
-        background: blueActive ? 'blue' : '#f3f3f3',
-        color: blueActive ? 'white' : 'black',
-      }">Blue</button>
-      <button class="button buttonAny" @click="handleAnyClick" :style="{
-        background: anyActive ? 'grey' : '#f3f3f3',
-        color: anyActive ? 'white' : 'black',
-      }">Any</button>
-      <button class="button buttonRed" @click="handleRedClick" :style="{
-        background: redActive ? 'red' : '#f3f3f3',
-        color: redActive ? 'white' : 'black',
-      }">Red</button>
+    <div class="sideSelection">
+        <div id="blueSide" class="radioBtn"  @click="handleSideSelectionClick('Blue')">
+          <input type="radio" id="Blue" name="sideSelection"/>
+          <label class="radioBtnBlue">BLUE</label>
+        </div>
+        <div id="anySide" class="radioBtn"  @click="handleSideSelectionClick('Both')">
+          <input type="radio" id="Both" name="sideSelection" checked />
+          <label class="radioBtnAny">ANY</label>
+        </div>
+        <div id="redSide" class="radioBtn"  @click="handleSideSelectionClick('Red')">
+          <input type="radio" id="Red" name="sideSelection" />
+          <label class="radioBtnRed">RED</label>
+        </div>
     </div>
 
     <div class="selectChampion test">
@@ -145,12 +145,9 @@ export default {
   name: "DraftPage",
   data() {
     return {
-      blueActive: false,
-      anyActive: false,
-      redActive: false,
       rulesList: this.$store.getters.getRules,
       champList: this.$store.state.champsNameAndImg,
-      draftSide: "Both", // à changer
+      draftSide: "Both",
       draftBTab: [],
       draftRTab: [],
       iconNochampBackgroundUrl:
@@ -158,26 +155,11 @@ export default {
     };
   },
   methods: {
-    handleBlueClick() {
-      this.blueActive = !this.blueActive;
-      if (this.blueActive) {
-        this.anyActive = false;
-        this.redActive = false;
-      }
-    },
-    handleAnyClick() {
-      this.anyActive = !this.anyActive;
-      if (this.anyActive) {
-        this.blueActive = false;
-        this.redActive = false;
-      }
-    },
-    handleRedClick() {
-      this.redActive = !this.redActive;
-      if (this.redActive) {
-        this.blueActive = false;
-        this.anyActive = false;
-      }
+    handleSideSelectionClick(side) {
+      console.log("draft side changed to:", side);
+      this.draftSide = side;
+      // display texts
+      this.getDisplays();
     },
     goToPage(pageURL) {
       this.$router.push(pageURL);

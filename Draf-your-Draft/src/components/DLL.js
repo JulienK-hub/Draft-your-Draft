@@ -43,11 +43,12 @@ var dll = {
      * @returns {boolean} True ou False selon si la règle est appliquée
      */
     checkCondition(condition,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide){
-        if(ruleSide !== draftSide && draftSide !== "Both"){ // traitement du side
+        if(ruleSide !== draftSide && draftSide !== "Both" && ruleSide !== "Both"){ // si (ruleSide === "Blue" && draftSide === "Red") || (ruleSide === "Red" && draftSide === "Blue")
             return false;
         }
+        // AJOUTER  ruleSide === "Both"
         if(ruleTarget === "Both"){ // la règle s'applique aux 2 sides donc on ne regarde pas ruleSide ("Moi ou Ennemi" / Ennemi ou Moi")
-            return dll.compareTabs(condition,draftBTab) || dll.compareTabs(condition,draftRTab)
+            return (dll.compareTabs(condition,draftBTab) || dll.compareTabs(condition,draftRTab));
         }
         else if(ruleSide === "Blue"){
             if(ruleTarget === "Moi"){
@@ -114,18 +115,21 @@ var dll = {
         const parenthesesTab = [];
         const operatorsTab = [];
         var ruleTarget = "";
-        if(ruleTab[0].type !== 1){ // if target not mentionned
-            ruleTarget = "Both";
-        }
-        else{ //   if target is "Moi" or "Ennemi" or "Both"
-            ruleTarget =  ruleTab[0].text;
-        }
+        
 
         ruleTab.every(item =>{ // using .every() is equivalent to .forEach() but we can stop iterating with "return false;"
             
             if(item.type === 3){
                 displaysTab = ruleTab.slice(index+1);
-                champsTab = ruleTab.slice(1,index);
+                
+                if(ruleTab[0].type !== 1){ // if target not mentionned
+                    ruleTarget = "Both";
+                    champsTab = ruleTab.slice(0,index);
+                }
+                else{ //   if target is "Moi" or "Ennemi" or "Both"
+                    champsTab = ruleTab.slice(1,index);
+                    ruleTarget =  ruleTab[0].value;
+                }
                 return false;
             }
             index++;

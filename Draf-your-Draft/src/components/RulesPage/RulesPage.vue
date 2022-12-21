@@ -3,7 +3,20 @@
     <h1>Rules gestion</h1>
     <button v-on:click="goToPage('/LabelsPage')">Labels gestion</button>
     <button v-on:click="goToPage('/DraftPage')">Draft</button>
-
+    <div class="sideSelection">
+        <div id="blueSide" class="radioBtn"  @click="handleSideSelectionClick('Blue')">
+          <input type="radio" id="Blue" name="sideSelection"/>
+          <label class="radioBtnBlue">BLUE</label>
+        </div>
+        <div id="anySide" class="radioBtn"  @click="handleSideSelectionClick('Both')">
+          <input type="radio" id="Both" name="sideSelection" checked />
+          <label class="radioBtnAny">ANY</label>
+        </div>
+        <div id="redSide" class="radioBtn"  @click="handleSideSelectionClick('Red')">
+          <input type="radio" id="Red" name="sideSelection" />
+          <label class="radioBtnRed">RED</label>
+        </div>
+    </div>
     <div class="cornerB">
       <div>
         <div
@@ -136,7 +149,7 @@ export default {
       champSelected: "",
       posSelected: "Pick",
       rule: [],
-      ruleSide: "Blue",
+      ruleSide: "Both",
       compiled: false,
       champList: this.$store.state.champsNameAndImg,
     };
@@ -164,7 +177,10 @@ export default {
         event.dataTransfer.setData("itemValue", event.target.textContent);
       }
     },
-
+    handleSideSelectionClick(side){
+      console.log("side changed to",side);
+      this.ruleSide = side;
+    },
     drop(event) {
       var id = event.dataTransfer.getData("itemID");
       var value = event.dataTransfer.getData("itemValue");
@@ -172,7 +188,7 @@ export default {
       switch (id) {
         case "Ennemi":
         case "Moi":
-          this.rule.push({type: 1, text: value});
+          this.rule.push({type: 1, value: value});
           break;
         case "selectorType2":
           this.rule.push({type: 2, value: {pos: this.posSelected, champ: this.champSelected}});
@@ -243,6 +259,7 @@ export default {
 </script>
 
 <style scoped>
+
 .cornerB {
   border: solid 5px rgb(146, 172, 255);
   display: flex;
