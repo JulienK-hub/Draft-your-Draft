@@ -26,71 +26,6 @@ describe("compareTabsTest", () => {
       expect(dll.compareTabs(condition4,draftTab1)).toEqual(false); 
     });
   });
-/*
-  *  type 1 = "Moi" "Ennemi"
-  *  type 2 = Label Champ et position "All" "B1" "B2" "B3" "B4" "B5" "P1" "P2" "P3" "P4" "P5" "Pick" "Ban"
-  *  type 3 = "Alors Afficher"
-  *  type 4 = "Ou" "Et"
-  *  type 5 = "(" ")"
-  */
-  describe("getChampsAndParenthesesTabTest", () => {
-
-    let tab1 = [{text: "Moi" ,type: 1 },{pos: "P1",champ: "Aatrox" ,type: 2 }];
-    let tab2 = [{text: "Ennemi" ,type: 1 },{pos: "Pick",champ: "Nautilus" ,type: 2 }];
-    let tab3 = [{text: "Moi" ,type: 1 },{pos: "Ban",champ: "Teemo" ,type: 2 }];
-    let tab4 = [{text: "Ennemi" ,type: 1 },{pos: "All",champ: "Kai'sa" ,type: 2 }];
-    let tab5 = [{text: "Moi" ,type: 1 },{pos: "P2",champ: "Aatrox" ,type: 2 },{text: "ou" ,type: 4 },{pos: "B1",champ: "Aatrox" ,type: 2},{text: "et" ,type: 4 },{text: "(" ,type: 5 },{pos: "P3",champ: "Nautilus" ,type: 2 },{text: "ou" ,type: 4 },{text: "(" ,type: 5 },{pos: "B2",champ: "Akali" ,type: 2 },{text: ")" ,type: 5 },{text: ")" ,type: 5 }];
-
-    let tabRes1 = [];
-    let tabRes2 = [];
-    let tabRes3 = [];
-    let res = [];
-      test("1. One champ in pos P1", () => {
-        res = dll.getChampsAndParenthesesTab(tab1);
-        tabRes1 = res[0];
-        tabRes2 = res[1];
-        tabRes3 = res[2];
-        expect(tabRes1).toEqual([{pos: "P1",champ: "Aatrox"}]); 
-        expect(tabRes2).toEqual([0]);
-        expect(tabRes3).toEqual([]);
-      });
-      test("2. One champ in pos 'Pick'", () => {
-        res = dll.getChampsAndParenthesesTab(tab2);
-        tabRes1 = res[0];
-        tabRes2 = res[1];
-        tabRes3 = res[2];
-        expect(tabRes1).toEqual([{pos: "Pick",champ: "Nautilus"}]); 
-        expect(tabRes2).toEqual([0]);
-        expect(tabRes3).toEqual([]);
-      });
-      test("3. One champ in pos 'Ban'", () => {
-        res = dll.getChampsAndParenthesesTab(tab3);
-        tabRes1 = res[0];
-        tabRes2 = res[1];
-        tabRes3 = res[2];
-        expect(tabRes1).toEqual([{pos: "Ban",champ: "Teemo"}]); 
-        expect(tabRes2).toEqual([0]);
-        expect(tabRes3).toEqual([]);
-      });
-      test("4. One champ in pos 'All'", () => {
-        let res = dll.getChampsAndParenthesesTab(tab4);
-        tabRes1 = res[0];
-        tabRes2 = res[1];
-        tabRes3 = res[2];
-        expect(tabRes1).toEqual([{pos: "All",champ: "Kai'sa"}]); 
-        expect(tabRes2).toEqual([0]);
-        expect(tabRes3).toEqual([]);
-      });
-      test("5. multi champ multi parentheses", () => {
-        let res = dll.getChampsAndParenthesesTab(tab5);
-        tabRes1 = res[0];
-        tabRes2 = res[1];
-        tabRes3 = res[2];
-        expect(tabRes1).toEqual([{pos: "P2",champ: "Aatrox"},{pos: "B1",champ: "Aatrox"},{pos: "P3",champ: "Nautilus"},{pos: "B2",champ: "Akali"}]); 
-        expect(tabRes2).toEqual([0,0,1,0,2,0,2,1]);
-        expect(tabRes3).toEqual(["ou","et","ou"]);
-      });
-    });
 
   describe("checkConditionTest", () => {
       /**
@@ -102,10 +37,11 @@ describe("compareTabsTest", () => {
      * draftSide = "Blue" ou "Red" ou "Both" => side choisit par l'utilisateur
      */
     let ruleCondition1 = {pos: "All",champ: "Nautilus"};
+    let ruleCondition2 = {pos: "P1",champ: "Aatrox"};
     let draftTab1 = [{pos: "B1",champ: "Supp"},{pos: "B2",champ: "Ashe"},{pos: "P1",champ: "Supp"},{pos: "B1",champ: "Nautilus"}];
     let draftTab2 = [{pos: "B1",champ: "Renekton"},{pos: "B5",champ: "Supp"},{pos: "B2",champ: "Ashe"},{pos: "P3",champ: "Adc"}];
     let draftTab3 = [{pos: "B4",champ: "Lissandra"},{pos: "B3",champ: "Ahri"},{pos: "P5",champ: "mid"}];
-  
+    let draftTab4 = [{pos: "P2", champ: "Aatrox"}];
       //target is me
           //blue draft corresponds
       test("1. Target is me / Blue draft Corresponds / Rule for blue / Draft is red", () => { 
@@ -197,6 +133,11 @@ describe("compareTabsTest", () => {
       test("26. Target is enemy / Tables don't correspond / Rule for blue / Draft is blue", () => { 
         expect(dll.checkCondition(ruleCondition1,"Ennemi","Blue",draftTab2,draftTab3,"Blue")).toEqual(false); 
       });
+
+      // more tests
+      test("27. Target is enemy / Tables don't correspond / Rule for blue / Draft is blue", () => { 
+        expect(dll.checkCondition(ruleCondition2,"Moi","Both",draftTab2,draftTab4,"Both")).toEqual(false); 
+      });
     });
 
 
@@ -219,8 +160,6 @@ describe("compareTabsTest", () => {
       let ruleSide = "";
       let ruleTarget = "";
       let champsTab = [];
-      let parenthesesTab = [];
-      let operatorsTab = [];
       let displaysTab = [];
       test("1. target is Moi", () => {
         res = dll.computeRule(ruleTab1,ruleSide1);
@@ -228,15 +167,11 @@ describe("compareTabsTest", () => {
         ruleSide = res.ruleSide;
         ruleTarget = res.ruleTarget;
         champsTab = res.champsTab;
-        parenthesesTab = res.parenthesesTab;
-        operatorsTab = res.operatorsTab;
         displaysTab = res.displaysTab;
 
         expect(ruleSide).toEqual("Blue"); 
         expect(ruleTarget).toEqual("Moi");
         expect(champsTab).toEqual([{pos:"B2", champ: "adc"}]);
-        expect(parenthesesTab).toEqual([0]);
-        expect(operatorsTab).toEqual([]);
         expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]);
       });
       test("2. no target (equivalent to Both)", () => {
@@ -245,15 +180,11 @@ describe("compareTabsTest", () => {
         ruleSide = res.ruleSide;
         ruleTarget = res.ruleTarget;
         champsTab = res.champsTab;
-        parenthesesTab = res.parenthesesTab;
-        operatorsTab = res.operatorsTab;
         displaysTab = res.displaysTab;
 
         expect(ruleSide).toEqual("Blue"); 
         expect(ruleTarget).toEqual("Both");
         expect(champsTab).toEqual([{pos:"B2", champ: "adc"}]);
-        expect(parenthesesTab).toEqual([0]);
-        expect(operatorsTab).toEqual([]);
         expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]);
       });
       test("3. target is Both", () => { 
@@ -262,15 +193,11 @@ describe("compareTabsTest", () => {
         ruleSide = res.ruleSide;
         ruleTarget = res.ruleTarget;
         champsTab = res.champsTab;
-        parenthesesTab = res.parenthesesTab;
-        operatorsTab = res.operatorsTab;
         displaysTab = res.displaysTab;
 
         expect(ruleSide).toEqual("Blue"); 
         expect(ruleTarget).toEqual("Both");
         expect(champsTab).toEqual([{pos:"B2", champ: "adc"}]);
-        expect(parenthesesTab).toEqual([0]);
-        expect(operatorsTab).toEqual([]);
         expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]); 
       });
       test("4. integration test", () => { 
@@ -279,15 +206,11 @@ describe("compareTabsTest", () => {
         ruleSide = res.ruleSide;
         ruleTarget = res.ruleTarget;
         champsTab = res.champsTab;
-        parenthesesTab = res.parenthesesTab;
-        operatorsTab = res.operatorsTab;
         displaysTab = res.displaysTab;
 
         expect(ruleSide).toEqual("Blue"); 
         expect(ruleTarget).toEqual("Moi");
         expect(champsTab).toEqual([{pos:"B2", champ: "adc"},{pos:"All", champ: "Nautilus"},{pos:"Pick", champ: "Taric"}]);
-        expect(parenthesesTab).toEqual([1,0,0,1,0]);
-        expect(operatorsTab).toEqual(["Ou","Et"]);
         expect(displaysTab).toEqual([{type: 6,champ: "Faire attention aux HyperCarry"}]);
       });
     }),

@@ -43,11 +43,10 @@ var dll = {
      * @returns {boolean} True ou False selon si la règle est appliquée
      */
     checkCondition(condition,ruleTarget,ruleSide,draftBTab,draftRTab,draftSide){
-        if(ruleSide !== draftSide && draftSide !== "Both" && ruleSide !== "Both"){ // si (ruleSide === "Blue" && draftSide === "Red") || (ruleSide === "Red" && draftSide === "Blue")
-            return false;
+        if(!dll.isConditionDoable(ruleSide,draftSide)){
+            return false
         }
-        // AJOUTER  ruleSide === "Both"
-        if(ruleTarget === "Both"){ // la règle s'applique aux 2 sides donc on ne regarde pas ruleSide ("Moi ou Ennemi" / Ennemi ou Moi")
+        else if(ruleTarget === "Both" || ruleSide === "Both"){ // la règle s'applique aux 2 sides
             return (dll.compareTabs(condition,draftBTab) || dll.compareTabs(condition,draftRTab));
         }
         else if(ruleSide === "Blue"){
@@ -66,8 +65,15 @@ var dll = {
                 return dll.compareTabs(condition,draftBTab);
             }
         }
-        return true;
     },
+    /**
+     * returns true if we can apply the condition
+     */
+    isConditionDoable(ruleSide,draftSide){
+        return ruleSide === draftSide || ruleSide === "Both" || draftSide === "Both"; 
+    },
+
+
     /**
      * returns true if one condition from ruleTard
      */
@@ -110,10 +116,7 @@ var dll = {
     computeRule(ruleTab,ruleSide){
         var index = 0;
         var displaysTab = [];
-        //var conditionsTab = [];
         var champsTab = [];
-        const parenthesesTab = [];
-        const operatorsTab = [];
         var ruleTarget = "";
         
 
@@ -135,57 +138,12 @@ var dll = {
             index++;
             return true
         })
-        /*var temp = dll.getChampsAndParenthesesTab(conditionsTab);
-        const champsTab = temp[0];
-        const parenthesesTab = temp[1];
-        const operatorsTab = temp[2];*/
         
-        return {ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,parenthesesTab: parenthesesTab,operatorsTab: operatorsTab,displaysTab: displaysTab};
+        return {ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,displaysTab: displaysTab};
     },
 
-    /*getChampsAndParenthesesTab(ruleTab){
-        var champsTab = [];
-        var operatorsTab = [];
-        var parenthesesTab = [];
-        var parentheseIndex = 0;
-        ruleTab.forEach(element => {
-            // get the deepest parenthèse number;
-            if(element.type === 5){ 
-                if(element.text === "("){
-                    parentheseIndex++;
-                    parenthesesTab.push(parentheseIndex);
-                }
-                else{
-                    parenthesesTab.push(parentheseIndex);
-                    parentheseIndex--;
-                }
-                
-            }
-            else if( element.type === 2){
-                parenthesesTab.push(0);
-                if (element.pos === "Ban"){
-                    champsTab.push({pos: "Ban", champ: element.value.champ});
-                }
-                else if (element.pos === "Pick"){
-                    champsTab.push({pos: "Pick", champ: element.value.champ});
-                }
-                else if (element.pos === "All"){ 
-                    champsTab.push({pos: "All", champ: element.value.champ});
-                }
-                else{
-                    champsTab.push({pos: element.value.pos, champ: element.value.champ});
-                    
-                }
-            }
-            else if (element.type === 4){
-                operatorsTab.push(element.text);
-            }
-        });
-        return [champsTab,parenthesesTab,operatorsTab];
-    },*/
-
     buildTree(ruleTab){
-        console.log(ruleTab);
+        //console.log(ruleTab);
         if (ruleTab.length ===1){ // If element alone, just resolve
             if (ruleTab[0].type === 2){
                 console.log("Case 1 \n\r");
@@ -232,31 +190,6 @@ var dll = {
         return rule_tree.resolve(ruleTarget,ruleSide,draftBTab,draftRTab,draftSide);
     }, 
 
-    /**
-     * [0,0,1,0,2,0,2,1] besoin de sauver l'opérateur
-     * @param {*} ruleTab 
-     */
-    /*
-    getParenthesesTab(ruleTab){
-        res = [];
-        parentheseIndex = 0;
-        numberItemsBeetwenParentheses = 0;
-        i;
-        while(parentheseMaxIndex >= 0){
-            champsTab.forEach(item => {
-                if (item.text === "("){
-                    parentheseIndex++;
-                }
-                else if (item.text === ")"){
-                    parentheseIndex--;
-                }
-                if(parentheseIndex >= parentheseMaxIndex){
-                    numberItemsBeetwenParentheses++;
-                }
-            });
-            parentheseMaxIndex--;
-        }
-    }**/
   }
 
 
