@@ -195,7 +195,7 @@ export default {
           console.log(this.rule);
           break;
         case "alorsAfficher":
-          this.rule.push({type: 3, text: value});
+          this.rule.push({type: 3, value: value});
           break;
         case "input":
           if( value !== ""){

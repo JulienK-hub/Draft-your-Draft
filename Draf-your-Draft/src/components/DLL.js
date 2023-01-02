@@ -27,7 +27,6 @@ class tree {
 //Méthodes du langage dédié
 var dll = {
 
-    //ruleTab = [{text: "Moi" ,type: 1 },{text: "Pick" ,type: 2 },{text: "adc" ,type: 3 },{text: "en position P2" ,type: 4 },{text: "Alors afficher" ,type: 5 },{text: "pas mal" ,type: 3 },]
     compiler (ruleTab) { 
         console.log(ruleTab);
         return true;
