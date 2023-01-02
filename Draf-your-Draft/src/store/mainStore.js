@@ -134,7 +134,24 @@ export default new Vuex.Store({
     getFilterLabels: (state) => () => {
       return state.filterLabels;
     },
-
+    
+    getLabelsFromChampName : (state, getters) => (championName) => {
+      let champId = getters.getChampbyChampName(championName).key;
+      let labels = getters.getLabelsByChampId(champId);
+      let res = [];
+      labels.forEach(label => {
+        res.push(label.text);
+      })
+      return res;
+      
+    },
+    getChampbyChampName: (state) => (championName) =>{
+      for (let i = 0; i < champData.length; i++) {
+        if (champData[i].id == championName) {
+          return champData[i];
+        }
+      };
+    },
     getLabelsByChampId: (state, getters) => (keyChampion) => {
       var labels = [];
       for (let i = 0; i < state.championsLabels.length; i++) {

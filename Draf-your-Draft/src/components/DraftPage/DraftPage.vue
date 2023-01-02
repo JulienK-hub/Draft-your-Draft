@@ -169,10 +169,21 @@ export default {
       document.getElementById(iconChampId).style.backgroundImage =
         "url(" + champ.Img + ")";
       let pos = this.getChampPos(selectorId);
+      let labelTab = this.$store.getters.getLabelsFromChampName(champ.Name);
       if (selectorId[0] === "r") {
+        this.draftRTab = this.draftRTab.filter(el => el.pos !== pos);
+
         this.draftRTab.push({ pos: pos, champ: champ.Name });
+        labelTab.forEach(label =>{
+          this.draftRTab.push({ pos: pos, champ: label });
+        })
       } else {
+        this.draftBTab = this.draftBTab.filter(el => el.pos !== pos);
+        
         this.draftBTab.push({ pos: pos, champ: champ.Name });
+        labelTab.forEach(label =>{
+          this.draftBTab.push({ pos: pos, champ: label });
+        })
       }
       
       // display texts
