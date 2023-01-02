@@ -2,8 +2,8 @@
   <div class="background">
     <div class="menu">
       <h1>Label gestion</h1>
-      <button v-on:click="goToPage('/RulesPage')">Rules gestion</button>
-      <button v-on:click="goToPage('/DraftPage')">Draft</button>
+      <button class="button menu" v-on:click="goToPage('/RulesPage')">Rules</button>
+      <button class="button menu" v-on:click="goToPage('/DraftPage')">Draft</button>
     </div>
     <div class="containerChampsLists">
       <ChampList class="champList1"></ChampList>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Rules gestion</h1>
-    <button v-on:click="goToPage('/LabelsPage')">Labels gestion</button>
-    <button v-on:click="goToPage('/DraftPage')">Draft</button>
+    <button class="button menu" v-on:click="goToPage('/LabelsPage')">Labels</button>
+    <button class="button menu" v-on:click="goToPage('/DraftPage')">Draft</button>
     <div class="sideSelection">
         <div id="blueSide" class="radioBtn"  @click="handleSideSelectionClick('Blue')">
           <input type="radio" id="Blue" name="sideSelection"/>

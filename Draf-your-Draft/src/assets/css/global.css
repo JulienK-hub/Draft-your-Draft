@@ -39,6 +39,29 @@ input[type="color"]::-webkit-color-swatch-wrapper {
   
 /* ACTIONS BUTTON
    =============== */
+   .button.menu {
+    background: #f3f3f3;
+    padding: 5px 20px;
+    margin: 10px;
+    text-align: center;
+    color: black;
+    border: 3px solid black;
+    transition: all ease 0.25s;
+    width: 200px;
+    font-family: "Beaufort";
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+
+
+  .button.menu:hover {
+    border: 3px solid grey;
+    color: white;
+    background: black;
+    cursor: pointer;
+  }
+
+
 .button.actions {
     border: 3px solid;
     border-radius: 0;

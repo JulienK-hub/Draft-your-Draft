@@ -5,10 +5,10 @@
     <h1>Page de Draft</h1>
 
     <div class="labelsRulesButtons test">
-      <button class="button" v-on:click="goToPage('/LabelsPage')">
+      <button class="button menu" v-on:click="goToPage('/LabelsPage')">
         Labels
       </button>
-      <button class="button" v-on:click="goToPage('/RulesPage')">Rules</button>
+      <button class="button menu" v-on:click="goToPage('/RulesPage')">Rules</button>
     </div>
 
     <div class="sideSelection">
@@ -179,7 +179,7 @@ export default {
         })
       } else {
         this.draftBTab = this.draftBTab.filter(el => el.pos !== pos);
-        
+
         this.draftBTab.push({ pos: pos, champ: champ.Name });
         labelTab.forEach(label =>{
           this.draftBTab.push({ pos: pos, champ: label });
@@ -269,26 +269,7 @@ export default {
   font-size: medium;
 }
 
-.button {
-  background: #f3f3f3;
-  padding: 5px 20px;
-  margin: 10px;
-  text-align: center;
-  color: black;
-  border: 3px solid black;
-  transition: all ease 0.25s;
-  width: 200px;
-  font-family: "Beaufort";
-  text-transform: uppercase;
-  font-size: 18px;
-}
 
-.button:hover {
-  border: 3px solid grey;
-  color: white;
-  background: black;
-  cursor: pointer;
-}
 
 .buttonAny {
   color: black;
