@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h1>Rules gestion</h1>
-    <button class="button menu" v-on:click="goToPage('/LabelsPage')">Labels</button>
-    <button class="button menu" v-on:click="goToPage('/DraftPage')">Draft</button>
+    <div class="menu">
+      <h1>Rules gestion</h1>
+      <button class="button menu" v-on:click="goToPage('/LabelsPage')">Labels</button>
+      <button class="button menu" v-on:click="goToPage('/DraftPage')">Draft</button>
+    </div>
     <div class="sideSelection">
         <div id="blueSide" class="radioBtn"  @click="handleSideSelectionClick('Blue')">
           <input type="radio" id="Blue" name="sideSelection"/>
@@ -77,11 +79,6 @@
   </v-select></div>
       </div>
 
-      <div
-        id="alorsAfficher"
-        draggable="true"
-        @dragstart="drag($event)"
-        class="box">Alors afficher</div>
       <div>
         <div
         id="Et"
@@ -108,11 +105,18 @@
         class="box">)</div>
 
       </div>
+      
+      <div
+        id="alorsAfficher"
+        draggable="true"
+        @dragstart="drag($event)"
+        class="box">Alors afficher</div>
         <input
         id="input"
         type="text"
         draggable="true"
         @dragstart="drag($event)"
+        placeholder="_ _ _ _ _ _ _ _ _"
         class="box"/>
     </div>
     
@@ -123,9 +127,11 @@
       @dragover.prevent
       @dragenter.prevent
     > 
-    <div class="word">SI</div>
+    <div><div class="word">SI</div></div>
       <div v-for="(word,index) in rule" :key="index">
-        <div class="word">{{ word.value}}</div>
+        <div v-if="word.type !== 2" class="word">{{ word.value}}</div>
+        
+        <div v-else class="word">{{word.value.pos}} {{word.value.champ}}</div>
         <div class="moveWords">
           <div class="leftArrow" @click="moveLeft(index)"></div>
           <div class="cross" @click="deleteCurrent(index)"></div>
@@ -134,7 +140,7 @@
       </div>
       
     </div>
-    <button @click="compile()">validate</button>
+    <button class="button actions margin-top" @click="compile()">validate</button>
   </div>
 </template>
 
@@ -191,8 +197,11 @@ export default {
           this.rule.push({type: 1, value: value});
           break;
         case "selectorType2":
+          
+        if(this.champSelected !== ""){
           this.rule.push({type: 2, value: {pos: this.posSelected, champ: this.champSelected}});
           console.log(this.rule);
+        }
           break;
         case "alorsAfficher":
           this.rule.push({type: 3, value: value});
@@ -268,41 +277,63 @@ export default {
 .cornerG {
   border: solid 5px rgb(146, 255, 146);
   display: flex;
-  height: 250px;
+  flex-wrap: wrap;
+  min-height: 250px;
+  height: auto;
 }
 .cornerR {
   border: solid 5px rgb(255, 132, 132);
   display: flex;
-  height: 250px;
+  flex-wrap: wrap;
+  min-height: 250px;
+  height: auto;
 }
 .box {
+  font-size: large;
+  cursor: grab;
   margin: 10px 10px 0 0;
-  width: 100px;
+  width: 130px;
   height: 30px;
   border: solid 2px;
+  background: linear-gradient(#0AC8B9, #0397AB);
+  line-height: 180%;
 }
 .boxType2 {
+  
+  cursor: grab;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   margin: 10px 10px 0 0;
   width: 300px;
-  height: 40px;
+  height: 74px;
   border: solid 2px;
+  background: linear-gradient(#0AC8B9, #0397AB);
 }
 .word {
   font-size: 20px;
   margin: 20px 20px 0px 0px;
   padding: 6px 12px;
-  background: rgba(0, 0, 0, 0.15);
+  background: linear-gradient(#f6c97f, #ca9d4b);
   border-radius: 3px 0 0 3px;
   border: solid;
 }
+.first-word {
+  font-size: 20px;
+  margin: 20px 20px 0px 0px;
+  padding: 6px 12px;
+  background: linear-gradient(#f6c97f, #ca9d4b);
+  border-radius: 3px 0 0 3px;
+  border: solid;
+  height: 50px;
+}
 .moveWords {
   height: 100%;
-  display: flex;
+  display: inline-flex;
+  margin-right: 20px;
 }
 .leftArrow {
+  cursor: pointer;
   width: 30px;
   height:30px;
   background: url(../../assets/leftArrow.png);
@@ -310,14 +341,17 @@ export default {
   background-repeat: no-repeat;
 }
 .cross {
+  cursor: pointer;
   width: 30px;
   height:30px;
+  scale: 90%;
   background: url(../../assets/cross.png);
   background-size: 100%;
   background-position: center center;
   background-repeat: no-repeat;
 }
 .rightArrow {
+  cursor: pointer;
   width: 30px;
   height:30px;
   background: url(../../assets/rightArrow.png);

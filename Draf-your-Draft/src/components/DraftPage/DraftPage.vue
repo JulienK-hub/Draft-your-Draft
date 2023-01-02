@@ -2,14 +2,13 @@
   <div class="page test">
     <!-- J'ajoute la class "test" pour le moment pour tout encadrer et mieux visualiser les div-->
 
+    <div class="menu">
     <h1>Page de Draft</h1>
-
-    <div class="labelsRulesButtons test">
       <button class="button menu" v-on:click="goToPage('/LabelsPage')">
         Labels
       </button>
       <button class="button menu" v-on:click="goToPage('/RulesPage')">Rules</button>
-    </div>
+  </div>
 
     <div class="sideSelection">
         <div id="blueSide" class="radioBtn"  @click="handleSideSelectionClick('Blue')">

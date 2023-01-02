@@ -224,14 +224,7 @@ export default {
 }
 
 /* https://github.com/doceazedo/hextech-css/blob/master/LICENSE */
-.button {
-    font-family: 'Beaufort';
-    text-transform: uppercase;
-    font-size: 18px;
-    color: #242731;
-    padding: .45rem 2rem;
-    margin-bottom: 5px;
-}
+
 
 /* ACTION TO SELECTION
    ====================== */

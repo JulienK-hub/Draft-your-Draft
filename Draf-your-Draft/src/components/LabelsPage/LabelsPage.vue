@@ -29,7 +29,7 @@
         v-bind:TextColor="labelTextColor"
       />
       </div>
-      <button class="button actions" v-on:click="createLabel()">Validate</button>
+      <button class="button actions margin-top" v-on:click="createLabel()">Validate</button>
 
       <h2>LIST OF LABELS</h2>
       <div class="listLabels" v-for="label in allLabels" :key="label.id">
@@ -143,15 +143,6 @@ export default {
 }
 /* ACTIONS
    ========== */
-   .button {
-    font-family: 'Beaufort';
-    text-transform: uppercase;
-    font-size: 18px;
-    color: #242731;
-    padding: .45rem 2rem;
-    margin-bottom: 5px;
-    margin-top: 30px;
-}
 
 .linearTransition{
   height: 100px;
