@@ -243,7 +243,8 @@ export default {
         ) {
           console.log("1 règle validée",rule);
           let p = document.createElement("p");
-          p.innerText = rule.displaysTab[0].value;
+          p.innerText = rule.id + ": " + rule.displaysTab[0].value;
+          p.style.color = rule.ruleSide === 'Both' ? 'black' : rule.ruleSide.toLowerCase();
           document.getElementById("ruleDisplay").appendChild(p);
         }
         else{

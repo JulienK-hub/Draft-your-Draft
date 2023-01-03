@@ -138,15 +138,17 @@
           <div class="rightArrow" @click="moveRight(index)"></div>
         </div>
       </div>
-      
     </div>
     <button class="button actions margin-top" @click="compile()">validate</button>
+    <ListRules @clicked="displayRule" />
+
   </div>
 </template>
 
 <script>
 import Label from '../LabelsPage/Label.vue'
 import dll from '../DLL.js'
+import ListRules from './ListRules.vue';
 export default {
   name: "RulesPage",
   render: function (createElement) {},
@@ -254,6 +256,13 @@ export default {
         
         this.$store.commit('addRule',ruleComputed);
     },
+    displayRule(rule){
+      console.log("display rule clicked",rule );
+      this.rule = rule.ruleNotComputed;
+      this.ruleSide= rule.ruleSide;
+      let radiobtn = document.getElementById(rule.ruleSide);
+      radiobtn.checked = true;
+    }
   },
   computed: {
         availableLabels() {
@@ -262,8 +271,9 @@ export default {
         
     },
   components: {
-      Label
-  }
+    Label,
+    ListRules
+}
 };
 </script>
 
@@ -293,7 +303,7 @@ export default {
   cursor: grab;
   margin: 10px 10px 0 0;
   width: 130px;
-  height: 30px;
+  height: min-content;
   border: solid 2px;
   background: linear-gradient(#0AC8B9, #0397AB);
   line-height: 180%;
@@ -306,7 +316,7 @@ export default {
   justify-content: space-around;
   margin: 10px 10px 0 0;
   width: 300px;
-  height: 74px;
+  height: min-content;
   border: solid 2px;
   background: linear-gradient(#0AC8B9, #0397AB);
 }

@@ -1,5 +1,5 @@
 import { resolveDirective } from "vue";
-
+var id = 0;
 class tree {
     operator;
     left_op;
@@ -117,6 +117,7 @@ var dll = {
         var displaysTab = [];
         var champsTab = [];
         var ruleTarget = "";
+        const ruleNotComputed = ruleTab.slice(); // otherwise the current ruleTab would be kept in the const 
         
 
         ruleTab.every(item =>{ // using .every() is equivalent to .forEach() but we can stop iterating with "return false;"
@@ -137,8 +138,8 @@ var dll = {
             index++;
             return true
         })
-        
-        return {ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,displaysTab: displaysTab};
+        id++;
+        return {id: "rule " + id, ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,displaysTab: displaysTab, ruleNotComputed: ruleNotComputed};
     },
 
     buildTree(ruleTab){
