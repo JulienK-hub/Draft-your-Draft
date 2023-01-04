@@ -99,12 +99,16 @@ input[type="color"]::-webkit-color-swatch-wrapper {
   border: solid black;
   text-transform: lowercase;
   font-variant: small-caps;
+  max-height: 250px;
 }
 .style-chooser .vs__selected{
   background: transparent;
   border: transparent;
-} 
+}
 
+
+/* RADIO BUTTONS (side selector)
+   =============== */
 .radioBtn {
   float: left;
   margin: 40px 20px 50px 0;

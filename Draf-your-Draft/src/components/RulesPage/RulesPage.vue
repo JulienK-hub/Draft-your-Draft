@@ -52,7 +52,7 @@
           <option value="B3">B3</option>
           <option value="B4">B4</option>
           <option value="B5">B5</option>
-      </select><div>
+      </select><div class="selectors">
       <v-select @option:selecting="setChampSelected($event.text)" :options="availableLabels" label="text" >
         <template v-slot:option="option">
         <Label v-bind:Text="option.text"
@@ -370,5 +370,8 @@ export default {
 }
 .iconChamp{
   width: 20px;
+}
+.selectors{
+  min-width: 100px;
 }
 </style>
