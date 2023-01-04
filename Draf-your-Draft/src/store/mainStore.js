@@ -152,7 +152,7 @@ export default new Vuex.Store({
     },
     getChampbyChampName: (state) => (championName) =>{
       for (let i = 0; i < champData.length; i++) {
-        if (champData[i].id == championName) {
+        if (champData[i].name == championName) {
           return champData[i];
         }
       };
