@@ -2,7 +2,7 @@
 <div>
     <div class="linearTransition"/>
     <div class="listRules">
-      <h2>LIST OF RULES</h2>
+      <h2>LISTE DES RÈGLES</h2>
       
       <div class="list" v-for="rule in allRules" :key="rule.id">
         <button v-on:click="deleteRule(rule.id)" class="delete-button">
@@ -12,7 +12,7 @@
         <Label  class="labelMargin"
         v-bind:Text="rule.id"
         v-bind:BGColor="rule.ruleSide === 'Both' ? 'grey' : rule.ruleSide.toLowerCase()"
-        v-bind:TextColor="'black'"
+        v-bind:TextColor="'white'"
       /></div>
     </div>
     </div>

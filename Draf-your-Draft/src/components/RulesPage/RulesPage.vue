@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="menu">
-      <h1>Rules gestion</h1>
+      <h1>Gestion des règles</h1>
       <button class="button menu" v-on:click="goToPage('/LabelsPage')">Labels</button>
       <button class="button menu" v-on:click="goToPage('/DraftPage')">Draft</button>
     </div>
@@ -12,7 +12,7 @@
         </div>
         <div id="anySide" class="radioBtn"  @click="handleSideSelectionClick('Both')">
           <input type="radio" id="Both" name="sideSelection" checked />
-          <label class="radioBtnAny">ANY</label>
+          <label class="radioBtnAny">LES DEUX</label>
         </div>
         <div id="redSide" class="radioBtn"  @click="handleSideSelectionClick('Red')">
           <input type="radio" id="Red" name="sideSelection" />
@@ -41,7 +41,7 @@
         <select id="positionChamp" v-on:change="setPosSelected($event.target.value)">
           <option value="Pick">Pick</option>
           <option value="Ban">Ban</option>
-          <option value="All">All</option>
+          <option value="All">Pick/Ban</option>
           <option value="P1">P1</option>
           <option value="P2">P2</option>
           <option value="P3">P3</option>
@@ -139,7 +139,7 @@
         </div>
       </div>
     </div>
-    <button class="button actions margin-top" @click="compile()">validate</button>
+    <button class="button actions margin-top" @click="compile()">VALIDER</button>
     <ListRules @clicked="displayRule" />
 
   </div>
@@ -280,19 +280,19 @@ export default {
 <style scoped>
 
 .cornerB {
-  border: solid 5px rgb(146, 172, 255);
+  /*border: solid 5px rgb(146, 172, 255);*/
   display: flex;
   height: 250px;
 }
 .cornerG {
-  border: solid 5px rgb(146, 255, 146);
+  /*border: solid 5px rgb(146, 255, 146);*/
   display: flex;
   flex-wrap: wrap;
   min-height: 250px;
   height: auto;
 }
 .cornerR {
-  border: solid 5px rgb(255, 132, 132);
+  /*border: solid 5px rgb(255, 132, 132);*/
   display: flex;
   flex-wrap: wrap;
   min-height: 250px;
@@ -305,7 +305,7 @@ export default {
   width: 130px;
   height: min-content;
   border: solid 2px;
-  background: linear-gradient(#0AC8B9, #0397AB);
+  background: linear-gradient(#f6c97f, #ca9d4b);
   line-height: 180%;
 }
 .boxType2 {
@@ -318,14 +318,14 @@ export default {
   width: 300px;
   height: min-content;
   border: solid 2px;
-  background: linear-gradient(#0AC8B9, #0397AB);
+  background: linear-gradient(#f6c97f, #ca9d4b);
 }
 .word {
   font-size: 20px;
   margin: 20px 20px 0px 0px;
   padding: 6px 12px;
-  background: linear-gradient(#f6c97f, #ca9d4b);
   border-radius: 3px 0 0 3px;
+  background: linear-gradient(#0AC8B9, #0397AB);
   border: solid;
 }
 .first-word {

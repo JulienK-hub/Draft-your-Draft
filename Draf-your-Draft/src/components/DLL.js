@@ -139,7 +139,7 @@ var dll = {
             return true
         })
         id++;
-        return {id: "rule " + id, ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,displaysTab: displaysTab, ruleNotComputed: ruleNotComputed};
+        return {id: "Règle " + id, ruleSide: ruleSide ,ruleTarget: ruleTarget,champsTab: champsTab,displaysTab: displaysTab, ruleNotComputed: ruleNotComputed};
     },
 
     buildTree(ruleTab){

@@ -1,6 +1,6 @@
 <template lang="">
     <div >
-        <button class="button actions" v-on:click="unselectAll()">Unselect all</button>
+        <button class="button actions" v-on:click="unselectAll()">Tout désélectionner</button>
         <div class="champList">
             <div v-on:click.ctrl="unselectChampion(champion)" v-on:click.shift="addOrRemoveUnderSelectedChamp(champion)" 
             v-for="champion in selectedChampions">
@@ -23,37 +23,14 @@
             </template>
         </v-select>
             <div class="config-selected">
-                <!-- 
-                <div class="tg">                    
-                    <button class="button actions"  v-on:click="isAddLabelHidden = !isAddLabelHidden">
-                        Choisir label
-                        </button>
-                    <div class="active-label" v-for="label in activeLabels">                        
-                        <Label v-bind:Text="label.text"
-                                v-bind:BGColor="label.colorBG"
-                                v-bind:TextColor="label.color">
-                        </Label>
-                        <button :id="label.id" v-on:click="deleteActiveLabel(label)">-</button>
-                    </div>
-                </div>
-
-                <div class="addLabels" v-if="!isAddLabelHidden">
-                    <div class="label" v-for="label in availableLabels">
-                        <Label v-bind:Text="label.text"
-                                v-bind:BGColor="label.colorBG"
-                                v-bind:TextColor="label.color">
-                        </Label>
-                        <button :id="label.id" v-on:click="addActiveLabel(label)">+</button>
-                    </div>
-                </div> -->
                 <div class="columnButtons">
                     <div class="rowButtons">
-                    <button class="button selection" v-on:click="addActivesLabelsToChampions(underSelectedChamp)">Add label to selection</button>
-                    <button class="button selection" v-on:click="deleteActivesLabelsToChampions(underSelectedChamp)">Remove label from selection</button>
+                    <button class="button selection" v-on:click="addActivesLabelsToChampions(underSelectedChamp)">ajouter à la sous-sélection</button>
+                    <button class="button selection" v-on:click="deleteActivesLabelsToChampions(underSelectedChamp)">retirer de la sous-sélection</button>
                     </div>
                      <div class="rowButtons">
-                    <button class="button all" v-on:click="addActivesLabelsToChampions(selectedChampions)">Add label to all</button>
-                    <button class="button all" v-on:click="deleteActivesLabelsToChampions(selectedChampions)">Remove label from all</button>
+                    <button class="button all" v-on:click="addActivesLabelsToChampions(selectedChampions)">ajouter à tous</button>
+                    <button class="button all" v-on:click="deleteActivesLabelsToChampions(selectedChampions)">retirer de tous</button>
                     </div>
                 </div>
                 

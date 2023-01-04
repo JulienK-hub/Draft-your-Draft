@@ -1,8 +1,8 @@
 <template>
   <div class="background">
     <div class="menu">
-      <h1>Label gestion</h1>
-      <button class="button menu" v-on:click="goToPage('/RulesPage')">Rules</button>
+      <h1>Gestion des Labels</h1>
+      <button class="button menu" v-on:click="goToPage('/RulesPage')">Règles</button>
       <button class="button menu" v-on:click="goToPage('/DraftPage')">Draft</button>
     </div>
     <div class="containerChampsLists">
@@ -11,17 +11,17 @@
     </div>
     <div class="linearTransition"/>
     <div class="createLabel">
-      <h2 class="title">CREATE A LABEL</h2>
+      <h2 class="title">CRÉER UN LABEL</h2>
       <div class="labelParameters">
-      <a>Name :</a> <input id="inputText" v-model="labelName" type="text" /> 
-      <a class="marginLeft">Color :</a>
+      <a>Nom :</a> <input id="inputText" v-model="labelName" type="text" /> 
+      <a class="marginLeft">Couleur :</a>
       <input
         v-model="labelBGColor"
         type="color"
         id="colorpicker"
         value="#0000ff"
       />
-      <a class="marginLeft">Black :</a> <input id="checkBox" type="checkbox" @change="changeTextLabelColor()" />
+      <a class="marginLeft">Noir :</a> <input id="checkBox" type="checkbox" @change="changeTextLabelColor()" />
       <br /><br />
       <Label class="labelMargin"
         v-bind:Text="labelName"
@@ -29,9 +29,9 @@
         v-bind:TextColor="labelTextColor"
       />
       </div>
-      <button class="button actions margin-top" v-on:click="createLabel()">Validate</button>
+      <button class="button actions margin-top" v-on:click="createLabel()">VALIDER</button>
 
-      <h2>LIST OF LABELS</h2>
+      <h2>LISTE DES LABELS</h2>
       <div class="listLabels" v-for="label in allLabels" :key="label.id">
         <button v-on:click="deleteLabel(label.id)" class="delete-button">
           x

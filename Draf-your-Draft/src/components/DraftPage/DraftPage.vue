@@ -1,5 +1,5 @@
 <template>
-  <div class="page test">
+  <div class="page">
     <!-- J'ajoute la class "test" pour le moment pour tout encadrer et mieux visualiser les div-->
 
     <div class="menu">
@@ -7,7 +7,7 @@
       <button class="button menu" v-on:click="goToPage('/LabelsPage')">
         Labels
       </button>
-      <button class="button menu" v-on:click="goToPage('/RulesPage')">Rules</button>
+      <button class="button menu" v-on:click="goToPage('/RulesPage')">Règles</button>
   </div>
 
     <div class="sideSelection">
@@ -17,7 +17,7 @@
         </div>
         <div id="anySide" class="radioBtn"  @click="handleSideSelectionClick('Both')">
           <input type="radio" id="Both" name="sideSelection" checked />
-          <label class="radioBtnAny">ANY</label>
+          <label class="radioBtnAny">LES DEUX</label>
         </div>
         <div id="redSide" class="radioBtn"  @click="handleSideSelectionClick('Red')">
           <input type="radio" id="Red" name="sideSelection" />
@@ -25,11 +25,11 @@
         </div>
     </div>
 
-    <div class="selectChampion test">
+    <!-- <div class="selectChampion">
       <h1>Choix du champion</h1>
-    </div>
-
-    <div class="bans test">
+    </div> -->
+  <div class="test">
+    <div class="bans">
       <div class="blueSideBans">
         <div v-for="index in 5" :key="index">
           <div :id="'blueBan' + index" class="ban" @click="showChamps('blueBanSelector' + index)"></div>
@@ -82,8 +82,8 @@
       </div>
     </div>
 
-    <div class="picksAndRules test">
-      <div class="blueSidePicks test">
+    <div class="picksAndRules">
+      <div class="blueSidePicks">
         <div v-for="index in 5" :key="index">
           <div :id="'bluePick' + index" class="pick" @click="showChamps('bluePickSelector' + index)"></div>
           <div hidden :id="'bluePickSelector' + index" class="selectChamp">
@@ -108,8 +108,8 @@
           </div>
         </div>
       </div>
-      <div id="ruleDisplay" class="rules test"></div>
-      <div class="redSidePicks test">
+      <div id="ruleDisplay" class="rules"></div>
+      <div class="redSidePicks">
         <div v-for="index in 5" :key="index">
           <div :id="'redPick' + index" class="pick" @click="showChamps('redPickSelector' + index)"></div>
           <div hidden :id="'redPickSelector' + index" class="selectChamp">
@@ -134,7 +134,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div></div>
   </div>
 </template>
 
@@ -313,19 +313,19 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  gap: 10px;
+  gap: 20px;
 }
 
 .redSideBans {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-around;
-  gap: 10px;
+  gap: 20px;
 }
 
 .ban {
   cursor: pointer;
-  --ban-size: 50px;
+  --ban-size: 70px;
   border: solid;
   width: var(--ban-size);
   height: var(--ban-size);
@@ -341,7 +341,7 @@ export default {
 
 .blueSidePicks,
 .redSidePicks {
-  width: 25%;
+  width: 15%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -351,7 +351,10 @@ export default {
 
 .pick {
   cursor: pointer;
-  --pick-size: 50px;
+  --pick-size: 70px;
+  margin-top: 10px;
+  
+  margin-bottom: 10px;
   border: solid;
   display: flex;
   width: var(--pick-size);
@@ -364,7 +367,7 @@ export default {
 
 .rules {
   width: 50%;
-  height: 300px;
+  height: auto;
   white-space: pre-line;
 }
 
